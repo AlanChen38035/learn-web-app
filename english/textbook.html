@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>課文朗讀</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/header.css">
+    <style>
+        body { padding-bottom: 100px; }
+        header { justify-content: space-between; padding: 10px; position: relative; z-index: 2000; background: #fff; }
+        .text-list { max-width: 800px; margin: 0 auto; padding: 10px; }
+        .sent-row { padding: 18px; border-bottom: 1px solid #eee; cursor: pointer; background: #fff; transition: background 0.2s; }
+        .sent-row:hover { background: #fcfcfc; }
+        .sent-row.active { background: var(--primary-light); color: var(--primary); border-left: 4px solid var(--primary); }
+        .s-en { font-size: 1.15rem; line-height: 1.6; margin-bottom: 6px; color: #333; }
+        .s-ch { font-size: 1rem; color: #666; display: none; }
+        .focus-overlay { display: none; position: fixed; top: 70px; left: 0; right: 0; bottom: 80px; background: var(--bg-color); z-index: 1500; flex-direction: column; align-items: center; justify-content: center; padding: 30px; text-align: center; overflow-y: auto; }
+        .focus-overlay.show { display: flex; }
+        .focus-card { background: #fff; padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow); width: 100%; max-width: 600px; }
+        .f-en { font-size: 1.6rem; color: var(--primary); margin-bottom: 20px; font-weight: 700; line-height: 1.4; }
+        .f-ch { font-size: 1.2rem; color: #444; line-height: 1.4; }
+        .bottom-nav-fixed { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #ddd; z-index: 1000; display: flex; justify-content: center; }
+        .bottom-nav-content { width: 100%; max-width: 980px; padding: 10px 0; display: flex; justify-content: space-evenly; align-items: center; }
+        .nav-item-btn { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; color: #555; width: 60px; font-size: 0.8rem; }
+        .nav-item-btn svg { width: 24px; height: 24px; margin-bottom: 4px; fill: currentColor; }
+        .nav-item-btn:hover { color: var(--primary); }
+        .back-link { text-decoration: none; color: inherit !important; font-size: 1.5rem; margin-right: 10px; }
+        .back-link:visited { color: inherit !important; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="english.html" class="back-link">⬅</a></div>
+        <div style="font-weight:bold; font-size:1.1rem;">課文朗讀</div>
+        <button class="icon-btn" onclick="toggleFocus()" style="width:auto; border-radius:8px; padding:0 10px;">
+            <svg viewBox="0 0 24 24" style="margin-right:4px;"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+            <span style="font-size:0.9rem;">中/英</span>
+        </button>
+    </header>
+
+    <div id="text-container" class="text-list page-container"></div>
+
+    <div id="focus-view" class="focus-overlay">
+        <div class="focus-card">
+            <div class="f-en" id="focus-en"></div>
+            <div class="f-ch" id="focus-ch"></div>
+        </div>
+    </div>
+
+    <div class="bottom-nav-fixed">
+        <div class="bottom-nav-content">
+            <button class="nav-item-btn" onclick="toggleSpeed()"><svg viewBox="0 0 24 24"><path d="M20.38 8.57l-1.23 1.85a8 8 0 0 1-.22 7.58H5.07A8 8 0 0 1 15.58 6.85l1.85-1.23A10 10 0 0 0 3.35 19a2 2 0 0 0 1.72 1h13.85a2 2 0 0 0 1.74-1 10 10 0 0 0-.27-10.44zm-9.79 6.84a2 2 0 0 0 2.83 0l5.66-8.49-8.49 5.66a2 2 0 0 0 0 2.83z"/></svg><span id="spd-txt">正常速度</span></button>
+            <button class="nav-item-btn" onclick="playPrev()"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg><span>上一句</span></button>
+            <button class="nav-item-btn" onclick="togglePlay()"><svg id="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span id="txt-play">連續播放</span></button>
+            <button class="nav-item-btn" onclick="playNext()"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg><span>下一句</span></button>
+            <button class="nav-item-btn" onclick="stopAll()"><svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg><span>停止</span></button>
+        </div>
+    </div>
+
+    <script src="../scripts/utils.js"></script>
+    <script>
+        let sents=[], idx=0, play=false, slow=false, focus=false;
+
+        (async()=>{
+            const sel = JSON.parse(localStorage.getItem('sel_lessons')||'[]');
+            if(!sel.length) { alert('未選課'); location.href='english.html'; return; }
+            try {
+                const r = await fetch('../data/english-textbook.json'); const d=await r.json();
+                d.sources.forEach(s=>{ s.lessons.forEach(l=>{
+                    if(sel.some(x=>x.source===s.name && x.lesson===l.lesson)) {
+                        sents.push({en:l.title, ch:'標題', isT:true}); sents.push(...l.sentences);
+                    }
+                })});
+                render();
+            } catch(e){console.error(e);}
+        })();
+
+        function render() {
+            const c=document.getElementById('text-container'); c.innerHTML='';
+            sents.forEach((s,i)=>{
+                const d=document.createElement('div'); d.className='sent-row'; d.id='sent-'+i;
+                if(s.isT) d.style.textAlign='center';
+                // 使用 stripMarkdown 清除朗讀符號
+                d.onclick=()=>{ stopAll(); idx=i; hl(i); speak(stripMarkdown(s.en)); };
+                // 使用 parseMarkdown 顯示格式
+                d.innerHTML=`<div class="s-en">${parseMarkdown(s.en)}</div><div class="s-ch">${parseMarkdown(s.ch)}</div>`;
+                c.appendChild(d);
+            });
+        }
+
+        function hl(i) {
+            document.querySelectorAll('.active').forEach(e=>e.classList.remove('active'));
+            const el=document.getElementById('sent-'+i);
+            if(el) { el.classList.add('active'); el.scrollIntoView({behavior:'smooth',block:'center'}); }
+            if(focus) upF(i);
+        }
+
+        function toggleFocus() {
+            focus=!focus; document.getElementById('focus-view').className=`focus-overlay ${focus?'show':''}`;
+            if(focus) { upF(idx); document.getElementById('text-container').style.display='none'; }
+            else { document.getElementById('text-container').style.display='block'; hl(idx); }
+        }
+
+        function upF(i) { 
+            if(sents[i]) { 
+                document.getElementById('focus-en').innerHTML=parseMarkdown(sents[i].en); 
+                document.getElementById('focus-ch').innerHTML=parseMarkdown(sents[i].ch); 
+            } 
+        }
+
+        function togglePlay() {
+            if(play) { play=false; window.speechSynthesis.cancel(); upI(false); }
+            else { play=true; upI(true); loop(idx); }
+        }
+
+        function loop(i) {
+            if(!play || i>=sents.length) { stopAll(); return; }
+            idx=i; hl(i);
+            speak(stripMarkdown(sents[i].en), ()=>loop(i+1));
+        }
+
+        function stopAll() { play=false; window.speechSynthesis.cancel(); upI(false); idx=0; hl(0); }
+        function playPrev() { if(idx>0) { idx--; hl(idx); window.speechSynthesis.cancel(); if(play) loop(idx); else speak(stripMarkdown(sents[idx].en)); } }
+        function playNext() { if(idx<sents.length-1) { idx++; hl(idx); window.speechSynthesis.cancel(); if(play) loop(idx); else speak(stripMarkdown(sents[idx].en)); } }
+        function toggleSpeed() { slow=!slow; document.getElementById('spd-txt').innerText=slow?'慢速':'正常速度'; }
+        
+        function upI(on) {
+            const ico=document.getElementById('icon-play'); const txt=document.getElementById('txt-play');
+            ico.innerHTML=on?'<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>':'<path d="M8 5v14l11-7z"/>';
+            txt.innerText=on?'暫停':'連續播放';
+        }
+
+        function speak(t,cb) {
+            window.speechSynthesis.cancel();
+            const u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=slow?0.7:1;
+            if(cb) u.onend=cb;
+            window.speechSynthesis.speak(u);
+        }
+    </script>
+    <script src="../scripts/utils.js"></script>
+</body>
+</html>

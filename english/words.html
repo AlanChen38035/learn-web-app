@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>單字背誦</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/header.css">
+    <style>
+        body { padding-bottom: 100px; }
+        header { justify-content: space-between; padding: 10px 15px; }
+        .head-actions { display: flex; gap: 12px; }
+        
+        .back-link { text-decoration: none; color: inherit !important; font-size: 1.5rem; margin-right: 10px; }
+        .back-link:visited { color: inherit !important; }
+
+        .icon-btn { background: none; border: none; cursor: pointer; padding: 5px; color: var(--primary); border-radius: 50%; transition: background 0.2s; }
+        .icon-btn:hover { background: rgba(11,118,209,0.1); }
+        .icon-btn svg { width: 28px; height: 28px; fill: currentColor; }
+        .icon-btn.active { color: #f1c40f; }
+        .icon-btn.mistake-active { color: #e74c3c; background: rgba(231, 76, 60, 0.1); }
+
+        .content-area { max-width: 800px; margin: 10px auto; padding: 0 15px; }
+
+        /* --- 搜尋與篩選區塊 --- */
+        .search-section {
+            margin-bottom: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            background-color: var(--bg-color);
+            padding: 10px 0;
+        }
+        
+        .search-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .search-input-group {
+            position: relative;
+            flex: 1; 
+        }
+        .search-icon-hint {
+            position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+            color: #999; pointer-events: none;
+        }
+        .search-input {
+            width: 100%;
+            padding: 12px 15px 12px 42px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            outline: none; transition: all 0.2s ease;
+        }
+        .search-input:focus { border-color: var(--primary); box-shadow: 0 4px 12px rgba(11,118,209,0.15); }
+
+        /* 詞性篩選選單 */
+        .pos-select {
+            padding: 0 10px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            font-size: 0.9rem;
+            color: #333;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            outline: none;
+            min-width: 110px;
+            max-width: 140px;
+        }
+        .pos-select:focus { border-color: var(--primary); }
+
+        /* ----------------------- */
+        
+        /* 列表模式樣式 */
+        .word-list-item { padding: 16px; padding-left: 24px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .word-list-item.playing { background: var(--primary-light); border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary) inset; }
+        .w-info h3 { margin: 0; font-size: 1.2rem; }
+        .w-info p { margin: 4px 0 0; color: #666; display: none; }
+        .w-info p.show { display: block; }
+
+        .list-actions { display: flex; align-items: center; gap: 5px; }
+
+        /* 網格卡片模式 */
+        .word-card-grid { display: none; }
+        .flash-card-mini { padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; position: relative; cursor: pointer; }
+        .flash-card-mini.playing { background: var(--primary-light); border: 2px solid var(--primary); transform: scale(1.03); }
+        .fc-word { font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-bottom: 10px; line-height: 1.2; }
+        .fc-ch { font-size: 1rem; color: #555; display: none; }
+        .fc-ch.show { display: block; }
+        
+        .card-btn-top-right { position: absolute; top: 8px; right: 8px; background: none; border: none; cursor: pointer; font-size: 1.5rem; color: #e0e0e0; padding: 5px; z-index: 2; }
+        .card-btn-top-left { position: absolute; top: 8px; left: 12px; background: none; border: none; cursor: pointer; font-size: 1.2rem; color: #e0e0e0; padding: 5px; z-index: 2; }
+
+        .btn-star.active { color: #f1c40f; }
+        .btn-mistake { color: #e0e0e0; transition: color 0.2s; }
+        .btn-mistake.active { color: #e74c3c; }
+        .btn-mistake:hover { color: #ff9a9e; }
+        .list-icon-btn { font-size: 1.5rem; background: none; border: none; cursor: pointer; color: #e0e0e0; padding: 0 5px; }
+        
+        .word-item-base { position: relative; overflow: hidden; }
+        .is-mistake::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background-color: #e74c3c; z-index: 1; }
+        .playing:not(.is-mistake)::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background-color: var(--primary); z-index: 1; }
+
+        .play-ctrl-group { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .play-main-btn { width: 56px; height: 56px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: 0 4px 10px rgba(11,118,209,0.3); border: none; cursor: pointer; }
+        .play-main-btn svg { width: 28px; height: 28px; fill: #fff; }
+        .select-styled { border: 1px solid #ddd; border-radius: 6px; padding: 4px 8px; font-size: 1.2rem; background:#fff; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="english.html" class="back-link">⬅</a></div>
+        <div class="head-actions">
+            <a href="quiz.html" class="icon-btn" title="測驗"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></a>
+            <button class="icon-btn" onclick="toggleView()" title="切換視圖">
+                <svg viewBox="0 0 24 24"><path d="M4 14h4v-4H4v4zm0 5h4v-4H4v4zM4 9h4V5H4v4zm5 5h12v-4H9v4zm0 5h12v-4H9v4zM9 5v4h12V5H9z"/></svg>
+            </button>
+            <button class="icon-btn" onclick="toggleLang()" title="中英切換">
+                <svg viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0014.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+            </button>
+            <button class="icon-btn" id="btn-mistake-filter" onclick="toggleMistakeFilter()" title="只顯示常錯單字">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+            </button>
+            <button class="icon-btn" id="btn-fav" onclick="toggleFavFilter()" title="只顯示最愛">
+                <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="page-container">
+        <div class="search-section">
+            <div class="search-row">
+                <div class="search-input-group">
+                    <svg class="search-icon-hint" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    <input type="text" id="search-input" class="search-input" placeholder="搜尋..." autocomplete="off">
+                </div>
+                
+                <select id="pos-filter" class="pos-select">
+                    <option value="">所有詞性</option>
+                    <option value="adj.">adj.</option>
+                    <option value="adv.">adv.</option>
+                    <option value="n.">n.</option>
+                    <option value="n. [C]">n. [C]</option>
+                    <option value="n. [U]">n. [U]</option>
+                    <option value="vi.">vi.</option>
+                    <option value="vt.">vt.</option>
+                    <option value="pron.">pron.</option>
+                    <option value="prep.">prep.</option>
+                    <option value="conj.">conj.</option>
+                    <option value="interj.">interj.</option>
+                    <option value="pl.">pl.</option>
+                    <option value="sing.">sing.</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="list-view"></div>
+        <div id="grid-view" class="grid-layout word-card-grid"></div>
+    </div>
+
+    <div class="bottom-nav-fixed">
+        <div class="bottom-nav-content" style="justify-content: space-between; padding: 0 20px;">
+            <div class="play-ctrl-group" onclick="toggleLoopAll()" style="cursor:pointer; color:#666;" id="loop-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46A7.93 7.93 0 0020 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74A7.93 7.93 0 004 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+                <span style="font-size:0.75rem;">全部循環</span>
+            </div>
+            <div class="play-ctrl-group">
+                <button class="play-main-btn" onclick="playSequence()">
+                    <svg id="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+                <span id="play-txt" style="font-size:0.75rem; color:#666;">循環播放</span>
+            </div>
+            <div class="play-ctrl-group">
+                <select id="rpt-cnt" class="select-styled">
+                    <option value="1">播放 1 次</option><option value="2">播放 2 次</option>
+                    <option value="3">播放 3 次</option><option value="4">播放 4 次</option><option value="5">播放 5 次</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allWords=[], dispWords=[];
+        let favs=JSON.parse(localStorage.getItem('my_favs')||'[]');
+        let mistakes=JSON.parse(localStorage.getItem('english_mistakes')||'[]');
+        
+        let isList=true, showCh=false;
+        let onlyFav=false, onlyMistake=false;
+        let searchText = '';
+        let filterPos = '';
+        let isPlaying=false, loopAll=false, currIdx=0;
+
+        (async()=>{
+            const sel = JSON.parse(localStorage.getItem('sel_lessons')||'[]');
+            if(!sel.length) { alert('未選課'); location.href='english.html'; return; }
+            const res = await fetch('../data/english.json'); const d=await res.json();
+            d.sources.forEach(s=>{ s.lessons.forEach(l=>{
+                if(sel.some(x=>x.source===s.name && x.lesson===l.lesson)) allWords.push(...l.vocabulary);
+            })});
+            
+            document.getElementById('search-input').addEventListener('input', (e) => {
+                searchText = e.target.value.toLowerCase().trim();
+                stop(); currIdx = 0; refresh();
+            });
+
+            document.getElementById('pos-filter').addEventListener('change', (e) => {
+                filterPos = e.target.value;
+                stop(); currIdx = 0; refresh();
+            });
+
+            refresh();
+        })();
+
+        function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function refresh() {
+            let baseList = [];
+            if(onlyMistake) baseList = allWords.filter(w => mistakes.includes(w.word));
+            else if(onlyFav) baseList = allWords.filter(w => favs.includes(w.word));
+            else baseList = allWords;
+
+            dispWords = baseList.filter(w => {
+                const matchSearch = !searchText || 
+                                    w.word.toLowerCase().includes(searchText) || 
+                                    w.chinese.includes(searchText);
+                
+                let matchPos = true;
+                if (filterPos) {
+                    if (!w.pos) {
+                        matchPos = false;
+                    } else {
+                        const regex = new RegExp(`(^|[^a-zA-Z])${escapeRegExp(filterPos)}`, 'i');
+                        matchPos = regex.test(w.pos);
+                    }
+                }
+
+                return matchSearch && matchPos;
+            });
+
+            renderList(); renderGrid();
+        }
+
+        function renderList() {
+            const c = document.getElementById('list-view'); c.innerHTML='';
+            if(!dispWords.length) { 
+                let msg = '無符合單字';
+                if(searchText || filterPos) msg = '找不到符合條件的單字';
+                else if(onlyMistake) msg = '目前沒有常錯單字記錄';
+                else if(onlyFav) msg = '尚無最愛單字';
+                c.innerHTML=`<p style="text-align:center; color:#666; margin-top:40px;">${msg}</p>`; 
+                return; 
+            }
+            dispWords.forEach((w,i)=>{
+                const el = document.createElement('div');
+                const isM = mistakes.includes(w.word);
+                const isF = favs.includes(w.word);
+
+                el.className = `std-card word-list-item word-item-base ${isM ? 'is-mistake' : ''} ${i===currIdx && isPlaying?'playing':''}`;
+                el.id = `list-${i}`;
+                el.onclick = (e) => { if(e.target.tagName!=='BUTTON' && e.target.tagName!=='svg' && e.target.tagName!=='path') clickItem(i); };
+
+                // --- 修改處：決定顯示文字 (標準答案優先) 與 詞性 ---
+                const displayText = w.standard_ans || w.word;
+                const posText = w.pos ? ` <small>(${w.pos})</small>` : '';
+
+                el.innerHTML = `
+                    <div class="w-info">
+                        <h3>${displayText}${posText}</h3>
+                        <p class="${showCh?'show':''}">${w.chinese}</p>
+                    </div>
+                    <div class="list-actions">
+                        <button class="list-icon-btn btn-mistake ${isM?'active':''}" onclick="togMistake('${w.word}',this)" title="標記為常錯">
+                            <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:currentColor;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                        </button>
+                        <button class="list-icon-btn btn-star ${isF?'active':''}" onclick="togFav('${w.word}',this)">★</button>
+                    </div>
+                `;
+                c.appendChild(el);
+            });
+        }
+
+        function renderGrid() {
+            const c = document.getElementById('grid-view'); c.innerHTML='';
+            dispWords.forEach((w,i)=>{
+                const el = document.createElement('div');
+                const isM = mistakes.includes(w.word);
+                const isF = favs.includes(w.word);
+
+                el.className = `std-card flash-card-mini word-item-base ${isM ? 'is-mistake' : ''} ${i===currIdx && isPlaying?'playing':''}`;
+                el.id = `grid-${i}`;
+                el.onclick = (e) => { if(e.target.tagName!=='BUTTON' && e.target.tagName!=='svg' && e.target.tagName!=='path') clickItem(i); };
+
+                // --- 修改處：決定顯示文字 與 詞性 ---
+                const displayText = w.standard_ans || w.word;
+                const posHtml = w.pos ? `<div style="font-size:0.8rem; color:#999;">(${w.pos})</div>` : '';
+
+                el.innerHTML = `
+                    <button class="card-btn-top-left btn-mistake ${isM?'active':''}" onclick="togMistake('${w.word}',this)" title="標記為常錯">
+                        <svg viewBox="0 0 24 24" style="width:24px;height:24px;fill:currentColor;"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                    </button>
+                    <button class="card-btn-top-right btn-star ${isF?'active':''}" onclick="togFav('${w.word}',this)">★</button>
+                    
+                    <div class="fc-word">${displayText}</div>
+                    <div class="fc-ch ${showCh?'show':''}">${w.chinese}</div>
+                    ${posHtml}
+                `;
+                c.appendChild(el);
+            });
+        }
+
+        function clickItem(i) {
+            stop(); currIdx=i;
+            document.querySelectorAll('.playing').forEach(e=>e.classList.remove('playing'));
+            const lItem = document.getElementById(`list-${i}`); if(lItem) lItem.classList.add('playing');
+            const gItem = document.getElementById(`grid-${i}`); if(gItem) gItem.classList.add('playing');
+            speak(dispWords[i].word);
+        }
+
+        function toggleView() {
+            isList = !isList;
+            document.getElementById('list-view').style.display = isList?'block':'none';
+            document.getElementById('grid-view').style.display = isList?'none':'grid';
+            scrollCurr();
+        }
+        function toggleLang() { showCh = !showCh; refresh(); }
+
+        function toggleFavFilter() { 
+            onlyFav = !onlyFav; 
+            if(onlyFav) { onlyMistake = false; document.getElementById('btn-mistake-filter').classList.remove('mistake-active'); }
+            document.getElementById('btn-fav').classList.toggle('active', onlyFav); 
+            currIdx=0; stop(); refresh(); 
+        }
+
+        function toggleMistakeFilter() {
+            onlyMistake = !onlyMistake;
+            if(onlyMistake) { onlyFav = false; document.getElementById('btn-fav').classList.remove('active'); }
+            document.getElementById('btn-mistake-filter').classList.toggle('mistake-active', onlyMistake);
+            currIdx=0; stop(); refresh(); 
+        }
+
+        function togFav(w, btn) {
+            if(favs.includes(w)) favs=favs.filter(x=>x!==w); else favs.push(w);
+            localStorage.setItem('my_favs', JSON.stringify(favs));
+            if(onlyFav) refresh(); 
+            else {
+                const relatedBtns = document.querySelectorAll(`button[onclick*="togFav('${w}'"]`);
+                relatedBtns.forEach(b => b.classList.toggle('active'));
+            }
+        }
+
+        function togMistake(w, btn) {
+            if(mistakes.includes(w)) mistakes=mistakes.filter(x=>x!==w); else mistakes.push(w);
+            localStorage.setItem('english_mistakes', JSON.stringify(mistakes));
+            if(onlyMistake) refresh(); 
+            else {
+                const listEl = [...document.querySelectorAll('.word-list-item')].find(el => el.innerHTML.includes(`'${w}'`));
+                const gridEl = [...document.querySelectorAll('.flash-card-mini')].find(el => el.innerHTML.includes(`'${w}'`));
+                const toggleClass = mistakes.includes(w) ? 'add' : 'remove';
+                if(listEl) listEl.classList[toggleClass]('is-mistake');
+                if(gridEl) gridEl.classList[toggleClass]('is-mistake');
+
+                const relatedBtns = document.querySelectorAll(`button[onclick*="togMistake('${w}'"]`);
+                relatedBtns.forEach(b => b.classList.toggle('active'));
+            }
+        }
+
+        function toggleLoopAll() { loopAll=!loopAll; document.getElementById('loop-btn').style.color = loopAll?'var(--primary)':'#666'; }
+
+        function playSequence() {
+            if(isPlaying) stop(); else { isPlaying=true; updatePlayUI(true); currIdx=0; playStep(0); }
+        }
+        function playStep(cnt) {
+            if(!isPlaying) return;
+            if(currIdx >= dispWords.length) {
+                if(loopAll) { currIdx=0; } else { stop(); return; }
+            }
+            document.querySelectorAll('.playing').forEach(e=>e.classList.remove('playing'));
+            const lItem = document.getElementById(`list-${currIdx}`); if(lItem) lItem.classList.add('playing');
+            const gItem = document.getElementById(`grid-${currIdx}`); if(gItem) gItem.classList.add('playing');
+            scrollCurr();
+
+            const max = parseInt(document.getElementById('rpt-cnt').value);
+            speak(dispWords[currIdx].word, () => {
+                if(!isPlaying) return;
+                if(cnt < max-1) setTimeout(()=>playStep(cnt+1), 500);
+                else { currIdx++; setTimeout(()=>playStep(0), 800); }
+            });
+        }
+        function stop() { isPlaying=false; window.speechSynthesis.cancel(); updatePlayUI(false); document.querySelectorAll('.playing').forEach(e=>e.classList.remove('playing')); }
+        function updatePlayUI(on) {
+            document.getElementById('play-icon').innerHTML = on ? '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>' : '<path d="M8 5v14l11-7z"/>';
+            document.getElementById('play-txt').innerText = on ? '暫停' : '循環播放';
+        }
+        function scrollCurr() {
+            const id = isList ? `list-${currIdx}` : `grid-${currIdx}`;
+            const el = document.getElementById(id);
+            if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+        }
+        function speak(txt, cb) {
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(txt); u.lang='en-US'; u.rate=0.9;
+            if(cb) u.onend = cb;
+            window.speechSynthesis.speak(u);
+        }
+    </script>
+</body>
+</html>

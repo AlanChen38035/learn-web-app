@@ -1,0 +1,394 @@
+/* 主要區塊 */
+.quiz-container{
+  max-width: var(--max-width);
+  margin: 12px auto;
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,255,0.9));
+  border-radius: var(--radius);
+  padding:18px;
+  box-shadow: var(--shadow);
+}
+
+/* 面板風格 */
+.panel{
+  background: linear-gradient(180deg, var(--card-bg), var(--glass));
+  border-radius:8px;
+  padding:12px 14px;
+  margin: 12px 0;
+  border:1px solid rgba(15,23,42,0.04);
+}
+
+/* 標題 */
+h2,h3{ margin:6px 0 12px; font-weight:700; color:#07243a; }
+h2{ font-size:1.4rem; }
+
+/* 按鈕 */
+.btn{
+  background: linear-gradient(to right, rgba(125, 125, 255), rgba(11, 118, 209));
+  color:#fff;
+  border:none;
+  padding:10px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  box-shadow: 0 6px 14px rgba(11,118,209,0.16);
+  transition: box-shadow .12s ease, background .12s ease;
+}
+.btn:hover{ transform: none; box-shadow: 0 8px 18px rgba(2,6,23,0.04); }
+.btn.secondary{
+  background: linear-gradient(180deg,#f3f4f6,#e5e7eb);
+  color:#111827;
+  box-shadow:none;
+}
+
+/* meta 區 (進度 / 計時 / 分數) */
+.meta{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+  padding:8px 6px;
+}
+
+#progress, #score{
+  background: rgba(11,118,209,0.06);
+  color:var(--primary);
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:700;
+}
+
+#timer{
+  min-width:86px;
+  text-align:center;
+  background: linear-gradient(180deg,#fff,#f6fbff);
+  border-radius:999px;
+  padding:8px 12px;
+  font-weight:800;
+  color:#0b76d1;
+  border:1px solid rgba(11,118,209,0.08);
+  box-shadow: 0 6px 12px rgba(11,118,209,0.06);
+  transition: transform .18s ease, background .18s;
+}
+#timer.low{
+  background: linear-gradient(180deg,#fff4f4,#fff0f0);
+  color: var(--danger);
+  transform: scale(1.04);
+  box-shadow: 0 8px 20px rgba(231,76,60,0.12);
+}
+
+/* 題目區 */
+.question-area{
+  padding:14px;
+  border-radius:8px;
+  background: linear-gradient(180deg,#ffffff, #fbfdff);
+  min-height:140px;
+}
+
+/* 問題標題 */
+.q-header{
+  position: relative;
+  display:flex;
+  flex-direction:column; /* 改為垂直排列，詞性會在單字下方 */
+  align-items:center;
+  justify-content: center;
+  gap:8px;
+  border:1px solid rgba(2,6,23,0.08);
+  border-radius: 8px;
+  min-height: 160px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* 單字樣式維持原本的 q-text */
+.q-text{
+  font-size:2.4rem;    /* 題目文字加大 */
+  font-weight:900;
+  color:#062733;
+  text-align:center;
+  line-height: 1.05;
+}
+
+/* q-pos 放在單字下方、無背景、顏色較淡 */
+.q-pos{
+  margin-top:10px;
+  font-size:0.85rem;   /* 較小字體 */
+  color: rgba(0, 0, 0, 0.55); /* 較淡的藍色以區別主題詞 */
+  font-weight:600;
+  display:block;
+  padding:0;
+  background: transparent;
+}
+
+/* 選項按鈕 */
+.options{ display:flex; flex-wrap:wrap; gap:12px; }
+.option{
+  flex:1 1 calc(100% - 12px);
+  min-width:160px;
+  background:#fff;
+  border:1px solid rgba(2,6,23,0.06);
+  padding:12px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+  font-size: 20px;
+  color:#062733;
+  transition: box-shadow .12s ease, background .12s ease;
+  box-shadow: 0 6px 12px rgba(2,6,23,0.03);
+}
+.option:hover{ transform: none; box-shadow: 0 8px 18px rgba(2,6,23,0.04); }
+.option.correct{
+  background: linear-gradient(180deg,#eaffef,#ddffea);
+  border-color: rgba(46,204,113,0.6);
+  color: #0b5f2f;
+  box-shadow: 0 10px 30px rgba(46,204,113,0.08);
+}
+.option.wrong{
+  background: linear-gradient(180deg,#fff3f3,#ffecec);
+  border-color: rgba(231,76,60,0.6);
+  color: #6b0f12;
+  box-shadow: 0 10px 30px rgba(231,76,60,0.06);
+}
+.option.disabled{
+  opacity:0.55;
+  pointer-events:none;
+  transform:none;
+}
+.spell-input{
+  width:100%;
+  max-width:520px;
+  padding:12px 18px;
+  border-radius:10px;
+  border:1px solid rgba(2,6,23,0.06);
+  font-size:1.5rem;
+  box-shadow: inset 0 2px 6px rgba(2,6,23,0.03);
+  outline: none;
+  background-image: linear-gradient(to right, rgba(15,23,42,0.08), rgba(15,23,42,0.08));
+  background-repeat: no-repeat;
+  background-position: left 100%;
+  background-size: 100% 6px;
+  transition: background-image .18s ease, box-shadow .12s ease;
+  outline: none; /* 保留原本樣式的外框處理 */
+}
+/* 聚焦時顯示藍色底（使用 --primary 變數） */
+.spell-input:focus {
+  background-image: linear-gradient(to right, rgba(125, 125, 255, 0.7), rgba(11, 118, 209, 0.7));
+}/* 拼字輸入 */
+.spell-result{
+  margin-top:10px;
+  font-weight:800;
+}
+
+/* 控制列 */
+.controls{ margin-top:12px; display:flex; gap:8px; justify-content:flex-end; }
+
+/* 結果 */
+.result{ text-align:center; padding:18px; }
+#result-summary{ font-size:1.1rem; font-weight:700; color:#0b76d1; margin-bottom:12px; }
+
+/* 課別按鈕 */
+.lesson-list{ display:flex; flex-wrap:wrap; gap:8px; }
+.lesson-btn{
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid rgba(2,6,23,0.06);
+  background:linear-gradient(180deg,#fff,#fbfdff);
+  cursor:pointer;
+  font-weight:700;
+  color:#062733;
+  transition: box-shadow .12s ease, background .12s ease;
+  box-shadow: 0 6px 12px rgba(2,6,23,0.03);
+}
+.lesson-btn:hover{ transform: none; box-shadow: 0 8px 18px rgba(2,6,23,0.04); }
+.lesson-btn.active{
+  background: linear-gradient(180deg,#e8f4ff,#dff1ff);
+  border-color: rgba(11,118,209,0.14);
+  color: var(--primary);
+  box-shadow: 0 10px 30px rgba(11,118,209,0.06);
+}
+
+/* 版本按鈕群組：使用與課別相同樣式 */
+.version-list{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+.version-btn{
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid rgba(2,6,23,0.06);
+  background:linear-gradient(180deg,#fff,#fbfdff);
+  cursor:pointer;
+  font-weight:700;
+  color:#062733;
+  box-shadow: 0 6px 12px rgba(2,6,23,0.03);
+  transition: box-shadow .12s ease, background .12s ease;
+}
+.version-btn:hover{ transform: none; box-shadow: 0 8px 18px rgba(2,6,23,0.04); }
+.version-btn.active{
+  background: linear-gradient(180deg,#e8f4ff,#dff1ff);
+  border-color: rgba(11,118,209,0.14);
+  color: var(--primary);
+  box-shadow: 0 10px 30px rgba(11,118,209,0.06);
+}
+
+/* 題數圓形選擇 */
+.num-select{ display:flex; gap:12px; align-items:center; }
+.num-item{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  border:2px solid rgba(2,6,23,0.06);
+  background:#fff;
+  cursor:pointer;
+  font-weight:800;
+  color:#062733;
+  transition: box-shadow .12s ease, background .12s ease;
+}
+.num-item input{ display:none; }
+.num-item span{ font-size:1rem; }
+.num-item:hover{ transform: none; box-shadow: 0 8px 18px rgba(2,6,23,0.04); }
+
+/* 利用 .num-item:has 來標出選取（若瀏覽器不支援，JS 仍可操作） */
+.num-item:has(input:checked),
+.num-item.selected{
+  background: linear-gradient(180deg,#e8f4ff,#dff1ff);
+  border-color: rgba(11,118,209,0.16);
+  color: var(--primary);
+  box-shadow: 0 6px 18px rgba(11,118,209,0.05);
+}
+
+/* 隱藏分數顯示 */
+#score { display:none !important; }
+
+/* 顯示拼字答案（直接顯示正確英文） */
+.answer-display{
+  margin-top:12px;
+  margin-left: 10px;
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:900;
+  font-size:1.3rem;
+  display:inline-block;
+}
+.answer-display.correct{
+  background: linear-gradient(180deg,#eaffef,#ddffea);
+  color: #0b5f2f;
+  border:1px solid rgba(46,204,113,0.3);
+  box-shadow: 0 8px 20px rgba(46,204,113,0.06);
+}
+.answer-display.wrong{
+  background: linear-gradient(180deg,#fff3f3,#ffecec);
+  color: #6b0f12;
+  border:1px solid rgba(231,76,60,0.22);
+  box-shadow: 0 8px 20px rgba(231,76,60,0.04);
+}
+
+/* 小調整：確保選項按鈕和拼字輸入間距 */
+.question-area .controls, .question-area .spell-input { margin-top:8px; }
+
+/* 退出確認 Modal 樣式 */
+.exit-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+}
+.exit-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2,6,23,0.45);
+  backdrop-filter: blur(2px);
+}
+.exit-modal-dialog {
+  position: relative;
+  background: #fff;
+  border-radius: 10px;
+  padding: 18px;
+  max-width: 420px;
+  width: calc(100% - 40px);
+  box-shadow: 0 12px 40px rgba(2,6,23,0.16);
+  z-index: 1;
+  text-align: center;
+}
+.exit-modal-dialog h3 { margin: 0 0 8px; font-size: 1.1rem; color: #07243a; }
+.exit-modal-dialog p { margin: 0 0 14px; color: var(--muted); }
+.exit-modal-actions { display:flex; gap:10px; justify-content:center; }
+/* 美化版本選擇下拉 */
+#version-select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  width: 100%;
+  max-width: 320px;
+  padding: 10px 42px 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(11,118,209,0.12);
+  background: linear-gradient(180deg,#ffffff,#f6fbff);
+  color: #062733;
+  font-weight: 700;
+  box-shadow: 0 6px 16px rgba(11,118,209,0.05);
+  cursor: pointer;
+  transition: box-shadow .16s ease, border-color .12s ease, transform .08s ease;
+  background-image:
+    linear-gradient(180deg,#ffffff,#f6fbff),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24'><path fill='%230b76d1' d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat, no-repeat;
+  background-position: right 12px center, right 12px center;
+  background-size: auto 60%, 18px;
+}
+
+/* focus / keyboard 可見化 */
+#version-select:focus{
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 10px 30px rgba(11,118,209,0.10);
+}
+
+/* 在 panel 中提供小標與下拉排列 */
+.panel > h3 + #version-select,
+.panel > #version-select {
+  margin-top: 8px;
+  display: block;
+}
+
+/* 手機調整 */
+@media (max-width: 520px){
+  #version-select{ max-width: 100%; }
+  .q-text { font-size: 1.6rem; }
+  .q-pos  { font-size: 0.8rem; }
+}
+.tts-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: #0b76d1; /* 使用主色調 */
+  opacity: 0.5;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tts-btn:hover {
+  opacity: 1;
+  background-color: rgba(11, 118, 209, 0.05);
+  transform: scale(1.1);
+}
+
+.tts-btn:active {
+  transform: scale(0.95);
+}
+
+/* 讓 SVG icon 大小適中 */
+.tts-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}

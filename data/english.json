@@ -1,0 +1,1467 @@
+{
+  "sources": [
+    {
+      "name": "龍騰",
+      "lessons": [
+        {
+          "lesson": 4,
+          "title": "第四課",
+          "vocabulary": [
+            {
+              "word": "sensitive",
+              "pos": "adj.",
+              "chinese": "敏感的"
+            },
+            {
+              "word": "keen",
+              "pos": "adj.",
+              "chinese": "敏銳的"
+            },
+            {
+              "word": "keen",
+              "pos": "adj.",
+              "chinese": "渴望的；熱衆的"
+            },
+            {
+              "word": "detect",
+              "pos": "vt.",
+              "chinese": "偵測到；察覺"
+            },
+            {
+              "word": "item",
+              "pos": "n. [C]",
+              "chinese": "一向物品"
+            },
+            {
+              "word": "accomplish",
+              "pos": "vt.",
+              "chinese": "達成"
+            },
+            {
+              "word": "accomplishment",
+              "pos": "n. [C]",
+              "chinese": "成就"
+            },
+            {
+              "word": "disease",
+              "pos": "n. [C][U]",
+              "chinese": "疾病"
+            },
+            {
+              "word": "infected",
+              "pos": "adj.",
+              "chinese": "遭感染的"
+            },
+            {
+              "word": "infect",
+              "pos": "vt.",
+              "chinese": "感染"
+            },
+            {
+              "word": "infection",
+              "pos": "n. [C][U]",
+              "chinese": "感染"
+            },
+            {
+              "word": "locate",
+              "pos": "vt.",
+              "chinese": "找到……（的位置）"
+            },
+            {
+              "word": "location",
+              "pos": "n. [C]",
+              "chinese": "地點"
+            },
+            {
+              "word": "reward",
+              "pos": "n. [C][U]",
+              "chinese": "獎勵：報酬"
+            },
+            {
+              "word": "reward",
+              "pos": "vt.",
+              "chinese": "獎賞；提供報酬"
+            },
+            {
+              "word": "ability",
+              "pos": "n. sing.",
+              "chinese": "能力"
+            },
+            {
+              "word": "predict",
+              "pos": "vt.",
+              "chinese": "預測"
+            },
+            {
+              "word": "manage",
+              "pos": "vt. vi.",
+              "chinese": "設法成功做到；能夠應付"
+            },
+            {
+              "word": "manage",
+              "pos": "vt.",
+              "chinese": "明智地使用、管理（金錢、時間等）"
+            },
+            {
+              "word": "management",
+              "pos": "n. [U]",
+              "chinese": "管理"
+            },
+            {
+              "word": "create",
+              "pos": "vt.",
+              "chinese": "創造；產生出"
+            },
+            {
+              "word": "creation",
+              "pos": "n. [C][U]",
+              "chinese": "創造；創作物"
+            },
+            {
+              "word": "creative",
+              "pos": "adj.",
+              "chinese": "有創造力的；創新的"
+            },
+            {
+              "word": "creativity",
+              "pos": "n. [U]",
+              "chinese": "創造力；創新力"
+            },
+            {
+              "word": "expose",
+              "pos": "vt.",
+              "chinese": "使接觸；使體驗"
+            },
+            {
+              "word": "expose",
+              "pos": "vt.",
+              "chinese": "使暴露於；使遭受（危險或不快）"
+            },
+            {
+              "word": "exposure",
+              "pos": "n. [U]",
+              "chinese": "暴露"
+            },
+            {
+              "word": "perform",
+              "pos": "vt.",
+              "chinese": "做某事；做某種行為"
+            },
+            {
+              "word": "perform",
+              "pos": "vt. vi.",
+              "chinese": "表演"
+            },
+            {
+              "word": "performance",
+              "pos": "n.",
+              "chinese": "表演"
+            },
+            {
+              "word": "behavior",
+              "pos": "n. [U]",
+              "chinese": "行為"
+            },
+            {
+              "word": "behave",
+              "pos": "vi.",
+              "chinese": "表現"
+            },
+            {
+              "word": "alert",
+              "pos": "n.",
+              "chinese": "警示"
+            },
+            {
+              "word": "alert",
+              "pos": "adj.",
+              "chinese": "警覺的"
+            },
+            {
+              "word": "complete",
+              "pos": "adj.",
+              "chinese": "已完成的；已結束的"
+            },
+            {
+              "word": "complete",
+              "pos": "adj.",
+              "chinese": "完成的"
+            },
+            {
+              "word": "complete",
+              "pos": "vt.",
+              "chinese": "完成"
+            },
+            {
+              "word": "assign",
+              "pos": "vt.",
+              "chinese": "指派"
+            },
+            {
+              "word": "assignment",
+              "pos": "n. [C]",
+              "chinese": "（分派的）作業；工作"
+            },
+            {
+              "word": "specific",
+              "pos": "adj.",
+              "chinese": "特定的"
+            }
+          ]
+        },
+        {
+          "lesson": 5,
+          "title": "第五課",
+          "vocabulary": [
+            {
+              "word": "plastic",
+              "pos": "adj.",
+              "chinese": "塑膠（製）的"
+            },
+            {
+              "word": "plastic",
+              "pos": "n.",
+              "chinese": "塑膠"
+            },
+            {
+              "word": "convenience",
+              "pos": "n.",
+              "chinese": "便利"
+            },
+            {
+              "word": "eagerly",
+              "pos": "adv.",
+              "chinese": "渴望地"
+            },
+            {
+              "word": "eager",
+              "pos": "adj.",
+              "chinese": "渴望的"
+            },
+            {
+              "word": "surround",
+              "pos": "vt.",
+              "chinese": "圍繞"
+            },
+            {
+              "word": "surroundings",
+              "pos": "n. pl.",
+              "chinese": "環境"
+            },
+            {
+              "word": "drift",
+              "pos": "vi.",
+              "chinese": "漂流"
+            },
+            {
+              "word": "envy",
+              "pos": "vt.",
+              "chinese": "羨慕"
+            },
+            {
+              "word": "envy",
+              "pos": "n.",
+              "chinese": "羨慕"
+            },
+            {
+              "word": "crowded",
+              "pos": "adj.",
+              "chinese": "擠滿的；擁擠的"
+            },
+            {
+              "word": "crowd",
+              "pos": "n. [C]",
+              "chinese": "人群"
+            },
+            {
+              "word": "obviously",
+              "pos": "adv.",
+              "chinese": "顯然"
+            },
+            {
+              "word": "obvious",
+              "pos": "adj.",
+              "chinese": "明顯的"
+            },
+            {
+              "word": "product",
+              "pos": "n. [C]",
+              "chinese": "產品"
+            },
+            {
+              "word": "produce",
+              "pos": "vt.",
+              "chinese": "製造；生產"
+            },
+            {
+              "word": "prodution",
+              "pos": "n. [U]",
+              "chinese": "製造"
+            },
+            {
+              "word": "consume",
+              "pos": "vt.",
+              "chinese": "吃喝"
+            },
+            {
+              "word": "consume",
+              "pos": "vt.",
+              "chinese": "消耗"
+            },
+            {
+              "word": "consumer",
+              "pos": "n. [C]",
+              "chinese": "消費者"
+            },
+            {
+              "word": "poisonous",
+              "pos": "adj.",
+              "chinese": "有毒的"
+            },
+            {
+              "word": "poison",
+              "pos": "vt.",
+              "chinese": "毒害"
+            },
+            {
+              "word": "poison",
+              "pos": "n. [C][U]",
+              "chinese": "毒藥；毒素"
+            },
+            {
+              "word": "substance",
+              "pos": "n.",
+              "chinese": "物質"
+            },
+            {
+              "word": "recycling",
+              "pos": "n. [U]",
+              "chinese": "回收"
+            },
+            {
+              "word": "recycle",
+              "pos": "vt.",
+              "chinese": "回收"
+            },
+            {
+              "word": "harm",
+              "pos": "n. [U]",
+              "chinese": "傷害"
+            },
+            {
+              "word": "harm",
+              "pos": "vt.",
+              "chinese": "傷害"
+            },
+            {
+              "word": "harmful",
+              "pos": "adj.",
+              "chinese": "有害的"
+            },
+            {
+              "word": "environment",
+              "pos": "n. sing.",
+              "chinese": "自然環境"
+            },
+            {
+              "word": "environment",
+              "pos": "n. [C][U]",
+              "chinese": "環境"
+            },
+            {
+              "word": "environmental",
+              "pos": "adj.",
+              "chinese": "自然環境的"
+            },
+            {
+              "word": "properly",
+              "pos": "adv.",
+              "chinese": "適當地"
+            },
+            {
+              "word": "proper",
+              "pos": "adj.",
+              "chinese": "適當的"
+            }
+          ]
+        },
+        {
+          "lesson": 6,
+          "title": "第六課",
+          "vocabulary": [
+            {
+              "word": "freedom",
+              "pos": "n. [U]",
+              "chinese": "自由"
+            },
+            {
+              "word": "statue",
+              "pos": "n. [C]",
+              "chinese": "雕像"
+            },
+            {
+              "word": "remove",
+              "pos": "vt.",
+              "chinese": "移除"
+            },
+            {
+              "word": "celebration",
+              "pos": "n. [U]",
+              "chinese": "慶祝"
+            },
+            {
+              "word": "celebration",
+              "pos": "n. [C]",
+              "chinese": "慶祝活動"
+            },
+            {
+              "word": "celebrate",
+              "pos": "vt. vi.",
+              "chinese": "慶祝"
+            },
+            {
+              "word": "independence",
+              "pos": "n. [U]",
+              "chinese": "獨立"
+            },
+            {
+              "word": "independent",
+              "pos": "adj.",
+              "chinese": "獨立的"
+            },
+            {
+              "word": "monument",
+              "pos": "n. [C]",
+              "chinese": "紀念牌"
+            },
+            {
+              "word": "symbolize",
+              "pos": "vt.",
+              "chinese": "象徵；代表"
+            },
+            {
+              "word": "symbol",
+              "pos": "n. [C]",
+              "chinese": "象徵"
+            },
+            {
+              "word": "symbolic",
+              "pos": "adj.",
+              "chinese": "作為象徵的；象徵性的"
+            },
+            {
+              "word": "firmly",
+              "pos": "adv.",
+              "chinese": "牢固地；堅定地"
+            },
+            {
+              "word": "firm",
+              "pos": "adj.",
+              "chinese": "堅實的；結實的"
+            },
+            {
+              "word": "represent",
+              "pos": "vt.",
+              "chinese": "作為……的象徵；代表"
+            },
+            {
+              "word": "representation",
+              "pos": "n. [C][U]",
+              "chinese": "表現（形式）；塑像"
+            },
+            {
+              "word": "ancient",
+              "pos": "adj.",
+              "chinese": "古代的；古老的"
+            },
+            {
+              "word": "slavery",
+              "pos": "n. [U]",
+              "chinese": "奴隸制；奴隸身分"
+            },
+            {
+              "word": "slave",
+              "pos": "n. [C]",
+              "chinese": "奴隸"
+            },
+            {
+              "word": "unfair",
+              "pos": "adj.",
+              "chinese": "不公正的；不公平的"
+            },
+            {
+              "word": "treatment",
+              "pos": "n. [C]",
+              "chinese": "對待；待遇"
+            },
+            {
+              "word": "tourist",
+              "pos": "n. [C]",
+              "chinese": "遊客"
+            },
+            {
+              "word": "tourism",
+              "pos": "n. [U]",
+              "chinese": "旅遊業；觀光業"
+            },
+            {
+              "word": "attraction",
+              "pos": "n. [C]",
+              "chinese": "有吸引力的事物或地點"
+            },
+            {
+              "word": "attract",
+              "pos": "vt.",
+              "chinese": "招引；吸引"
+            },
+            {
+              "word": "attractive",
+              "pos": "adj.",
+              "chinese": "吸引人的"
+            },
+            {
+              "word": "landmark",
+              "pos": "n. [C]",
+              "chinese": "地標"
+            },
+            {
+              "word": "globe",
+              "pos": "n. sing.",
+              "chinese": "地球；全球"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "引導式翻譯",
+      "lessons": [
+        {
+          "lesson": 4,
+          "title": "第四課",
+          "vocabulary": [
+            {
+              "word": "Scott, who(m) I have known since childhood, is able to speak five languages fluently.",
+              "standard_ans": "Scott, who(m) I have known since childhood, is able to speak five languages fluently.",
+              "chinese": "我從小就認識Scott，他能流利地說五種語言。(形容詞子句)",
+              "pos": "",
+              "type-ch2en": false,
+              "type-en2ch": false,
+              "time-spell": 40
+            }
+          ]
+        },
+        {
+          "lesson": 5,
+          "title": "第五課",
+          "vocabulary": []
+        },
+        {
+          "lesson": 6,
+          "title": "第六課",
+          "vocabulary": []
+        }
+      ]
+    },
+    {
+      "name": "字彙字識+ L3&4",
+      "lessons": [
+        {
+          "lesson": 21,
+          "title": "2-1",
+          "vocabulary": [
+            {
+              "word": "accomplish",
+              "pos": "vt.",
+              "chinese": "達成"
+            },
+            {
+              "word": "adapt",
+              "pos": "vt. vi.",
+              "chinese": "（使）適應"
+            },
+            {
+              "word": "afford",
+              "pos": "vt.",
+              "chinese": "負擔得起"
+            },
+            {
+              "word": "aggressive",
+              "pos": "adj.",
+              "chinese": "好鬥的；具侵略性的"
+            },
+            {
+              "word": "alert",
+              "pos": "adj.",
+              "chinese": "警覺的"
+            },
+            {
+              "word": "ambition",
+              "pos": "n. [C][U]",
+              "chinese": "雄心；抱負"
+            },
+            {
+              "word": "ambitious",
+              "pos": "adj.",
+              "chinese": "有雄心壯志的；野心勃勃的"
+            },
+            {
+              "word": "authority",
+              "pos": "n. [U]",
+              "chinese": "權威"
+            },
+            {
+              "word": "awake",
+              "pos": "vt. vi.",
+              "chinese": "醒來；喚醒"
+            },
+            {
+              "word": "awaken",
+              "pos": "vt. vi.",
+              "chinese": "喚醒"
+            },
+            {
+              "word": "aware",
+              "pos": "adj.",
+              "chinese": "注意到的；意識到的"
+            },
+            {
+              "word": "awkward",
+              "pos": "adj.",
+              "chinese": "尷尬的；棘手的"
+            },
+            {
+              "word": "blad",
+              "pos": "adj.",
+              "chinese": "禿頭的"
+            },
+            {
+              "word": "behavior",
+              "pos": "n. [U]",
+              "chinese": "行為"
+            },
+            {
+              "word": "bold",
+              "pos": "adj.",
+              "chinese": "大膽的"
+            },
+            {
+              "word": "bravery",
+              "pos": "n. [U]",
+              "chinese": "勇敢；勇氣"
+            },
+            {
+              "word": "broke",
+              "pos": "adj.",
+              "chinese": "身無分文的；破產的"
+            },
+            {
+              "word": "brutal",
+              "pos": "adj.",
+              "chinese": "殘忍的"
+            },
+            {
+              "word": "capable",
+              "pos": "adj.",
+              "chinese": "能夠…"
+            },
+            {
+              "word": "charm",
+              "pos": "vt.",
+              "chinese": "吸引；迷住"
+            },
+            {
+              "word": "clumsy",
+              "pos": "adj.",
+              "chinese": "笨手笨腳的"
+            },
+            {
+              "word": "concentrate",
+              "pos": "vt. vi.",
+              "chinese": "專心；集中"
+            },
+            {
+              "word": "concentration",
+              "pos": "n. [U]",
+              "chinese": "注意力；集中"
+            },
+            {
+              "word": "confidence",
+              "pos": "n. [U]",
+              "chinese": "信心；信任"
+            },
+            {
+              "word": "conquer",
+              "pos": "vt.",
+              "chinese": "克服；征服"
+            },
+            {
+              "word": "conscious",
+              "pos": "adj.",
+              "chinese": "有意識的"
+            },
+            {
+              "word": "conservative",
+              "pos": "adj.",
+              "chinese": "保守的；守舊的"
+            },
+            {
+              "word": "conventional",
+              "pos": "adj.",
+              "chinese": "傳統的；慣例的"
+            },
+            {
+              "word": "courageous",
+              "pos": "adj.",
+              "chinese": "無謂的；有勇氣的"
+            },
+            {
+              "word": "courtesy",
+              "pos": "n. [U]",
+              "chinese": "禮貌；殷勤"
+            },
+            {
+              "word": "creative",
+              "pos": "adj.",
+              "chinese": "有創造力的；獨創的"
+            },
+            {
+              "word": "creativity",
+              "pos": "n. [U]",
+              "chinese": "創造力"
+            },
+            {
+              "word": "cruel",
+              "pos": "adj.",
+              "chinese": "殘酷的"
+            },
+            {
+              "word": "cruelty",
+              "pos": "n. [U]",
+              "chinese": "殘忍；殘酷"
+            },
+            {
+              "word": "cunning",
+              "pos": "adj.",
+              "chinese": "狡猾的"
+            },
+            {
+              "word": "determine",
+              "pos": "vt.",
+              "chinese": "決定"
+            },
+            {
+              "word": "diligence",
+              "pos": "n. [U]",
+              "chinese": "勤勉；勤奮"
+            },
+            {
+              "word": "diligent",
+              "pos": "adj.",
+              "chinese": "勤勉的"
+            },
+            {
+              "word": "dishonest",
+              "pos": "adj.",
+              "chinese": "不誠實的"
+            },
+            {
+              "word": "drowsy",
+              "pos": "adj.",
+              "chinese": "昏昏欲睡的"
+            },
+            {
+              "word": "drunk",
+              "pos": "adj.",
+              "chinese": "醉的"
+            },
+            {
+              "word": "dumb",
+              "pos": "adj.",
+              "chinese": "啞的；說不出話的（過時用法）"
+            },
+            {
+              "word": "dynamic",
+              "pos": "adj.",
+              "chinese": "有活力的"
+            },
+            {
+              "word": "earnest",
+              "pos": "adj.",
+              "chinese": "認真的；誠摯的"
+            }
+          ]
+        },
+        {
+          "lesson": 22,
+          "title": "2-2",
+          "vocabulary": [
+            {
+              "word": "efficient",
+              "pos": "adj.",
+              "chinese": "效率高的；有效益的"
+            },
+            {
+              "word": "elderly",
+              "pos": "adj.",
+              "chinese": "上了年紀的"
+            },
+            {
+              "word": "elegant",
+              "pos": "adj.",
+              "chinese": "優雅的；優美的"
+            },
+            {
+              "word": "energetic",
+              "pos": "adj.",
+              "chinese": "精力充沛的"
+            },
+            {
+              "word": "excellence",
+              "pos": "n. [U]",
+              "chinese": "卓越；優秀"
+            },
+            {
+              "word": "faint",
+              "pos": "vi.",
+              "chinese": "昏倒"
+            },
+            {
+              "word": "faithful",
+              "pos": "adj.",
+              "chinese": "忠實的"
+            },
+            {
+              "word": "fluent",
+              "pos": "adj.",
+              "chinese": "流利的"
+            },
+            {
+              "word": "fortunate",
+              "pos": "adj.",
+              "chinese": "幸運的"
+            },
+            {
+              "word": "frank",
+              "pos": "adj.",
+              "chinese": "坦白的；直率的"
+            },
+            {
+              "word": "fulfill",
+              "pos": "vt.",
+              "chinese": "實現；履行；完成"
+            },
+            {
+              "word": "generosity",
+              "pos": "n. [U]",
+              "chinese": "慷慨"
+            },
+            {
+              "word": "genius",
+              "pos": "n. [U]",
+              "chinese": "天賦；天資"
+            },
+            {
+              "word": "gifted",
+              "pos": "adj.",
+              "chinese": "有天賦的；有才能的"
+            },
+            {
+              "word": "graceful",
+              "pos": "adj.",
+              "chinese": "優美的；體面的"
+            },
+            {
+              "word": "gracious",
+              "pos": "adj.",
+              "chinese": "親切的"
+            },
+            {
+              "word": "greedy",
+              "pos": "adj.",
+              "chinese": "貪婪的"
+            },
+            {
+              "word": "honesty",
+              "pos": "n. [U]",
+              "chinese": "誠實"
+            },
+            {
+              "word": "humorous",
+              "pos": "adj.",
+              "chinese": "幽默的"
+            },
+            {
+              "word": "ignorance",
+              "pos": "n. [U]",
+              "chinese": "無知；不知道"
+            },
+            {
+              "word": "ignorant",
+              "pos": "adj.",
+              "chinese": "無知的；不知曉的"
+            },
+            {
+              "word": "imaginative",
+              "pos": "adj.",
+              "chinese": "富有想像力的；有創意的"
+            },
+            {
+              "word": "influential",
+              "pos": "adj.",
+              "chinese": "有影響力的"
+            },
+            {
+              "word": "innocent",
+              "pos": "adj.",
+              "chinese": "無罪的"
+            },
+            {
+              "word": "intellectual",
+              "pos": "adj.",
+              "chinese": "智力的；腦力的"
+            },
+            {
+              "word": "intelligence",
+              "pos": "n. [U]",
+              "chinese": "智能；智慧"
+            },
+            {
+              "word": "intelligent",
+              "pos": "adj.",
+              "chinese": "聰明的"
+            },
+            {
+              "word": "intend",
+              "pos": "vt.",
+              "chinese": "意圖；打算"
+            },
+            {
+              "word": "intention",
+              "pos": "n.[C][U]",
+              "chinese": "意圖"
+            },
+            {
+              "word": "intimate",
+              "pos": "adj.",
+              "chinese": "親密的"
+            },
+            {
+              "word": "learned",
+              "pos": "adj.",
+              "chinese": "有學問的；精通的"
+            },
+            {
+              "word": "lively",
+              "pos": "adj.",
+              "chinese": "活潑的；輕快的；熱烈的"
+            },
+            {
+              "word": "loyal",
+              "pos": "adj.",
+              "chinese": "忠實的；忠誠的"
+            },
+            {
+              "word": "loyalty",
+              "pos": "n. [U]",
+              "chinese": "忠實"
+            },
+            {
+              "word": "luxurious",
+              "pos": "adj.",
+              "chinese": "奢侈的；豪華的"
+            },
+            {
+              "word": "mild",
+              "pos": "adj.",
+              "chinese": "（人） 溫和的；溫柔的"
+            },
+            {
+              "word": "modest",
+              "pos": "adj.",
+              "chinese": "謙虛的；客氣的；樸實的"
+            },
+            {
+              "word": "modesty",
+              "pos": "n. [U]",
+              "chinese": "謙遜"
+            },
+            {
+              "word": "noble",
+              "pos": "adj.",
+              "chinese": "高尚的"
+            }
+          ]
+        },
+        {
+          "lesson": 23,
+          "title": "2-3",
+          "vocabulary": [
+            {
+              "word": "obedience",
+              "pos": "n. [U]",
+              "chinese": "服從；順從"
+            },
+            {
+              "word": "obedient",
+              "pos": "adj.",
+              "chinese": "服從的"
+            },
+            {
+              "word": "optimistic",
+              "pos": "adj.",
+              "chinese": "樂觀的"
+            },
+            {
+              "word": "overcome",
+              "pos": "vt.",
+              "chinese": "克服"
+            },
+            {
+              "word": "passive",
+              "pos": "adj.",
+              "chinese": "被動的；消極的"
+            },
+            {
+              "word": "patience",
+              "pos": "n. [U]",
+              "chinese": "耐心；耐性"
+            },
+            {
+              "word": "persuasion",
+              "pos": "n. [U]",
+              "chinese": "說服"
+            },
+            {
+              "word": "persuasive",
+              "pos": "adj.",
+              "chinese": "有說服力的；勸誘的"
+            },
+            {
+              "word": "playful",
+              "pos": "adj.",
+              "chinese": "開玩笑的；愛玩耍的"
+            },
+            {
+              "word": "potential",
+              "pos": "adj.",
+              "chinese": "潛在的；有潛力的；可能的"
+            },
+            {
+              "word": "reasonable",
+              "pos": "adj.",
+              "chinese": "講道理的"
+            },
+            {
+              "word": "recall",
+              "pos": "vt.",
+              "chinese": "回想起；記得"
+            },
+            {
+              "word": "relax",
+              "pos": "vt. vi.",
+              "chinese": "（使）放鬆"
+            },
+            {
+              "word": "reliable",
+              "pos": "adj.",
+              "chinese": "可靠的"
+            },
+            {
+              "word": "resolution",
+              "pos": "n. [C]",
+              "chinese": "決心"
+            },
+            {
+              "word": "resolve",
+              "pos": "vt.",
+              "chinese": "決定"
+            },
+            {
+              "word": "retire",
+              "pos": "vi.",
+              "chinese": "退休"
+            },
+            {
+              "word": "romantic",
+              "pos": "adj.",
+              "chinese": "浪漫的"
+            },
+            {
+              "word": "sensible",
+              "pos": "adj.",
+              "chinese": "明理的；明智的"
+            },
+            {
+              "word": "severe",
+              "pos": "adj.",
+              "chinese": "嚴厲的"
+            },
+            {
+              "word": "sexy",
+              "pos": "adj.",
+              "chinese": "性感的"
+            },
+            {
+              "word": "sincere",
+              "pos": "adj.",
+              "chinese": "認真的；真誠的"
+            },
+            {
+              "word": "skillful",
+              "pos": "adj.",
+              "chinese": "有技術的；熟練的"
+            },
+            {
+              "word": "skinny",
+              "pos": "adj.",
+              "chinese": "極瘦的"
+            },
+            {
+              "word": "slender",
+              "pos": "adj.",
+              "chinese": "苗條的；纖細的"
+            },
+            {
+              "word": "stingy",
+              "pos": "adj.",
+              "chinese": "吝嗇的"
+            },
+            {
+              "word": "stubborn",
+              "pos": "adj.",
+              "chinese": "固執的"
+            },
+            {
+              "word": "talent",
+              "pos": "n. [C][U]",
+              "chinese": "天分；有天分者"
+            },
+            {
+              "word": "talkative",
+              "pos": "adj.",
+              "chinese": "健談的；喜歡說話的"
+            },
+            {
+              "word": "temper",
+              "pos": "n. [C]",
+              "chinese": "脾氣；情緒"
+            },
+            {
+              "word": "tender",
+              "pos": "adj.",
+              "chinese": "溫柔的"
+            },
+            {
+              "word": "thoughtful",
+              "pos": "adj.",
+              "chinese": "體貼的"
+            },
+            {
+              "word": "timid",
+              "pos": "adj.",
+              "chinese": "膽小的"
+            },
+            {
+              "word": "tricky",
+              "pos": "adj.",
+              "chinese": "詭計多端的"
+            },
+            {
+              "word": "truthful",
+              "pos": "adj.",
+              "chinese": "誠實的"
+            },
+            {
+              "word": "voluntary",
+              "pos": "adj.",
+              "chinese": "自願的；志願的"
+            },
+            {
+              "word": "waken",
+              "pos": "vt. vi.",
+              "chinese": "喚醒；醒來"
+            },
+            {
+              "word": "wealthy",
+              "pos": "adj.",
+              "chinese": "富有的"
+            },
+            {
+              "word": "wicked",
+              "pos": "adj.",
+              "chinese": "邪惡的"
+            },
+            {
+              "word": "wit",
+              "pos": "n. [U]",
+              "chinese": "機智"
+            },
+            {
+              "word": "youthful",
+              "pos": "adj.",
+              "chinese": "年輕的；有朝氣的"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "空中美語No. 311",
+      "lessons": [
+        {
+          "lesson": 3111,
+          "title": "Unit 1",
+          "vocabulary": [
+            {
+              "word": "thankful",
+              "pos": "adj.",
+              "chinese": "感激的"
+            },
+            {
+              "word": "suitable",
+              "pos": "adj.",
+              "chinese": "適合的"
+            },
+            {
+              "word": "treatment",
+              "pos": "n.",
+              "chinese": "治療"
+            },
+            {
+              "word": "company",
+              "pos": "n.",
+              "chinese": "伴侶；陪伴"
+            },
+            {
+              "word": "log",
+              "pos": "n.",
+              "chinese": "（正式或官方的）日誌，記錄"
+            },
+            {
+              "word": "eager",
+              "pos": "adj.",
+              "chinese": "熱切的；渴望的"
+            },
+            {
+              "word": "shelter",
+              "pos": "n.",
+              "chinese": "收容所"
+            },
+            {
+              "word": "volunteer",
+              "pos": "n.",
+              "chinese": "志工；義工"
+            },
+            {
+              "word": "behavior",
+              "pos": "n.",
+              "chinese": "行為"
+            },
+            {
+              "word": "care for",
+              "pos": "phr.",
+              "chinese": "照顧..."
+            },
+            {
+              "word": "make sure",
+              "pos": "phr.",
+              "chinese": "確認；確保"
+            },
+            {
+              "word": "fill out",
+              "pos": "phr.",
+              "chinese": "填寫...（問卷、表格等）"
+            },
+            {
+              "word": "keep track of",
+              "pos": "phr.",
+              "chinese": "掌握（某物或某人）的所需訊息"
+            },
+            {
+              "word": "playful",
+              "pos": "adj.",
+              "chinese": "愛玩耍的"
+            },
+            {
+              "word": "outdoor",
+              "pos": "adj.",
+              "chinese": "戶外的；露天的"
+            },
+            {
+              "word": "guide",
+              "pos": "v.",
+              "chinese": "教導 / 指導某人做某事"
+            },
+            {
+              "word": "process",
+              "pos": "n.",
+              "chinese": "過程"
+            },
+            {
+              "word": "appreciate",
+              "pos": "v.",
+              "chinese": "對...表示感激"
+            },
+            {
+              "word": "forever",
+              "pos": "adj.",
+              "chinese": "永遠的；永久的"
+            },
+            {
+              "word": "adopt",
+              "pos": "v.",
+              "chinese": "認養；領養"
+            },
+            {
+              "word": "adoption",
+              "pos": "n.",
+              "chinese": "收養；領養"
+            },
+            {
+              "word": "kennel",
+              "pos": "n.",
+              "chinese": "狗窩；狗屋"
+            },
+            {
+              "word": "bond",
+              "pos": "v.",
+              "chinese": "建立感情"
+            },
+            {
+              "word": "full of",
+              "pos": "phr.",
+              "chinese": "充滿..."
+            },
+            {
+              "word": "for a bit",
+              "pos": "phr.",
+              "chinese": "一會兒；一小段時間"
+            },
+            {
+              "word": "roll over",
+              "pos": "phr.",
+              "chinese": "（躺著時）翻身"
+            },
+            {
+              "word": "in good hands",
+              "pos": "phr.",
+              "chinese": "被妥善照顧"
+            }
+          ]
+        },
+        {
+          "lesson": 3117,
+          "title": "Unit 7",
+          "vocabulary": [
+            {
+              "word": "enjoyable",
+              "pos": "adj.",
+              "chinese": "令人愉快的；有樂趣的"
+            },
+            {
+              "word": "laughter",
+              "pos": "n.",
+              "chinese": "笑；笑聲"
+            },
+            {
+              "word": "political",
+              "pos": "adj.",
+              "chinese": "政治的"
+            },
+            {
+              "word": "stage",
+              "pos": "n.",
+              "chinese": "舞台"
+            },
+            {
+              "word": "response",
+              "pos": "n.",
+              "chinese": "回應；回覆；響應"
+            },
+            {
+              "word": "powerful",
+              "pos": "adj.",
+              "chinese": "（感受或影響力）有力的，深刻的，震撼的"
+            },
+            {
+              "word": "burst into",
+              "pos": "phr.",
+              "chinese": "突然開始..."
+            },
+            {
+              "word": "can't get enough of",
+              "pos": "phr.",
+              "chinese": "（非常喜愛因此）對...再多都不膩"
+            },
+            {
+              "word": "turn ... into ...",
+              "pos": "phr.",
+              "chinese": "將...變成..."
+            },
+            {
+              "word": "bring ... together",
+              "pos": "phr.",
+              "chinese": "使...聚集；使...團結"
+            },
+            {
+              "word": "typical",
+              "pos": "adj.",
+              "chinese": "典型的"
+            },
+            {
+              "word": "afterward",
+              "pos": "adv.",
+              "chinese": "之後；後來"
+            },
+            {
+              "word": "studio",
+              "pos": "n.",
+              "chinese": "攝影棚；錄音室"
+            },
+            {
+              "word": "element",
+              "pos": "n.",
+              "chinese": "要素"
+            },
+            {
+              "word": "constantly",
+              "pos": "adv.",
+              "chinese": "經常地；不斷地"
+            },
+            {
+              "word": "connection",
+              "pos": "n.",
+              "chinese": "（人們、群體之間的）關係，聯繫"
+            },
+            {
+              "word": "entertain",
+              "pos": "vt.",
+              "chinese": "給...娛樂"
+            },
+            {
+              "word": "stand the test of time",
+              "pos": "phr.",
+              "chinese": "禁得起時間的考驗"
+            },
+            {
+              "word": "join in",
+              "pos": "phr.",
+              "chinese": "參加（活動等）"
+            },
+            {
+              "word": "over time",
+              "pos": "phr.",
+              "chinese": "隨著時間過去"
+            },
+            {
+              "word": "no longer",
+              "pos": "phr.",
+              "chinese": "不再"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

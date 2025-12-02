@@ -1,0 +1,116 @@
+/* --- styles/style.css --- */
+:root {
+    --primary: #0b76d1;
+    --primary-light: #e3f2fd;
+    --bg-color: #f6fbff;
+    --card-bg: #ffffff;
+    --text-main: #333;
+    --text-sub: #666;
+    --radius: 16px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 8px 20px rgba(11, 118, 209, 0.15);
+    --max-width: 980px;
+    --header-height: 70px;
+    --nav-height: 80px; /* 底部導航高度 */
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    font-family: "Noto Sans TC", sans-serif;
+    color: var(--text-main);
+    padding-bottom: calc(var(--nav-height) + 20px); /* 預留底部空間 */
+}
+
+/* 統一頁面容器 */
+.page-container {
+    max-width: var(--max-width);
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* 統一卡片樣式 */
+.std-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(0,0,0,0.03);
+    overflow: hidden;
+}
+.std-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* 統一按鈕重置 */
+.icon-btn {
+    background: none; border: none; cursor: pointer;
+    padding: 8px; border-radius: 50%;
+    color: var(--primary); transition: background 0.2s;
+    display: flex; align-items: center; justify-content: center;
+}
+.icon-btn:hover { background: var(--primary-light); }
+.icon-btn svg { width: 24px; height: 24px; fill: currentColor; }
+.icon-btn.active { color: #f1c40f; } /* 金色 (星號用) */
+
+/* 統一底部導航欄 */
+.bottom-nav-fixed {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: #fff;
+    height: var(--nav-height);
+    box-shadow: 0 -2px 15px rgba(0,0,0,0.06);
+    z-index: 1000;
+    display: flex; justify-content: center;
+}
+.bottom-nav-content {
+    width: 100%; max-width: var(--max-width);
+    display: flex; justify-content: space-around; align-items: center;
+}
+
+/* 底部導航按鈕 */
+.nav-item-btn {
+    flex: 1; height: 100%; border: none; background: none;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 0.85rem; color: var(--text-sub); cursor: pointer; text-decoration: none;
+    transition: color 0.2s;
+}
+.nav-item-btn:hover { color: var(--primary); background: #fcfcfc; }
+.nav-item-btn svg { width: 24px; height: 24px; margin-bottom: 4px; fill: currentColor; }
+
+/* 返回鍵樣式 */
+.back-btn {
+    text-decoration: none; color: var(--primary) !important;
+    font-size: 1.8rem; margin-right: 12px; line-height: 1;
+    display: flex; align-items: center;
+}
+.back-btn:visited, .back-btn:active { color: var(--primary) !important; }
+
+/* 通用 Grid 佈局 (用於選課、單字卡) */
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+}
+
+.md-bold { 
+    font-weight: 800; 
+    color: #d63384; /* 粉紅色 */
+}
+.md-italic { 
+    font-style: italic; 
+    color: #0b76d1; /* 主色藍 */
+}
+.md-highlight { 
+    background-color: #fff3cd; 
+    padding: 0 4px; 
+    border-radius: 4px; 
+    color: #333;
+}
+.md-strike {
+    text-decoration: line-through;
+    color: #999;
+}

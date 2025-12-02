@@ -1,0 +1,128 @@
+/* 簽到區塊樣式 */
+.checkin-section{
+    /* 置中顯示方塊卡片 */
+    max-width:880px;
+    margin:28px auto;
+    padding:0 20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* 改為方形卡片（響應式） */
+.checkin-card{
+    width: min(420px, 88%);
+    aspect-ratio: 1 / 1; /* 保持正方形 */
+    display:flex;
+    flex-direction:column; /* 垂直置放內容 */
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:22px;
+    box-shadow:var(--shadow);
+    border:1px solid rgba(16,24,40,0.04);
+    transition:transform .18s ease, box-shadow .18s ease;
+}
+
+.checkin-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 14px 40px rgba(16,24,40,0.08);
+}
+
+/* 內容置中 */
+.checkin-left{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    align-items:center;
+    text-align:center;
+}
+
+/* 數字更醒目 */
+#totalDays{
+    display:block;
+    margin-top:6px;
+    font-weight:800;
+    color:var(--accent-dark);
+    font-size:2.2rem;
+    line-height:1;
+}
+
+/* 按鈕放下方，寬度較大 */
+.checkin-right{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:8px;
+}
+
+.checkin-btn{
+    width:70%;
+    max-width:220px;
+    padding:12px 20px;
+    border-radius:999px;
+    font-size:1rem;
+    font-weight:600;
+    box-shadow:0 6px 18px rgba(22,163,74,0.12);
+    transition:transform .12s ease, box-shadow .12s ease, opacity .12s;
+    min-width:110px;
+}
+
+/* 應用於按下、懸停 */
+.checkin-btn:hover:not(:disabled){
+    transform:translateY(-2px);
+    box-shadow:0 10px 24px rgba(22,163,74,0.14);
+}
+
+.checkin-btn:active:not(:disabled){
+    transform:translateY(0);
+}
+
+.checkin-btn:disabled{
+    opacity:0.6;
+    cursor:not-allowed;
+    background:linear-gradient(180deg,#d1fae5,#bbf7d0);
+    box-shadow:none;
+    color:#065f46;
+}
+
+/* 響應式：更小螢幕時調整方塊為稍短的長方形以保留可用空間 */
+@media (max-width:420px){
+    .checkin-card{
+        width:94%;
+        aspect-ratio: 5 / 6;
+        padding:18px;
+    }
+    #totalDays{ font-size:1.8rem; }
+    .checkin-btn{ width:84%; max-width:none; }
+}
+
+/* 將簽到方塊靠左並略為縮小 */
+.checkin-section{
+  display: flex;
+  justify-content: flex-start; /* 靠左 */
+  padding: 20px;
+}
+.checkin-card{
+  width: 320px;            /* 較小寬度 */
+  max-width: calc(100% - 40px);
+  margin-left: 12px;       /* 與左側留白 */
+  padding: 14px;           /* 稍微縮小內距 */
+  box-shadow: 0 6px 18px rgba(2,6,23,0.05);
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+/* 內部左右區塊調整（維持原本結構但縮小比例） */
+.checkin-left h2{ font-size:1.1rem; margin-bottom:6px; }
+.checkin-left p{ font-size:0.95rem; color:var(--muted); }
+.checkin-right{ display:flex; align-items:center; justify-content:center; }
+
+/* 小螢幕時自適應（置中顯示以節省空間） */
+@media (max-width:720px){
+  .checkin-section{ justify-content:center; padding:12px; }
+  .checkin-card{ width:92%; margin-left:0; }
+}

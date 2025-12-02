@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>單字測驗</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/header.css">
+    <link rel="stylesheet" href="../styles/english-quiz.css">
+    <style>
+        /* 錯題訂正區塊樣式 */
+        #mistake-area {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #eee;
+            text-align: center;
+            display: none; /* 預設隱藏 */
+            animation: fadeIn 0.5s ease;
+        }
+        #mistake-btn {
+            width: 100%;
+            margin-top: 10px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            color: #d63031;
+            border: 1px solid #ffcdd2;
+            box-shadow: 0 4px 12px rgba(255, 154, 158, 0.3);
+        }
+        #mistake-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 154, 158, 0.4);
+        }
+        #last-score-info {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="english.html" style="text-decoration:none; color:var(--primary); font-size:1.5rem; margin-right:10px;">⬅</a>
+            <img src="../images/logo.svg" alt="知識庫" height="40px" style="margin-right: 10px;">
+            <span>測驗模式</span>
+        </div>
+    </header>
+    
+    <main class="quiz-container page-container">
+        <!-- 設定與開始區塊 -->
+        <section class="setup">
+            <div class="std-card panel">
+                <h3 style="margin-top:0;">測驗範圍</h3>
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <label style="cursor:pointer; font-size:1.1rem;">
+                        <input type="radio" name="q-scope" value="all" checked onchange="window.updateQuizCount()"> 
+                        所有單字
+                    </label>
+                    <label style="cursor:pointer; font-size:1.1rem;">
+                        <input type="radio" name="q-scope" value="fav" onchange="window.updateQuizCount()"> 
+                        僅最愛單字
+                    </label>
+                </div>
+                <p id="scope-count-msg" style="margin-top:10px; color:#666;">所選範圍共有 0 個單字</p>
+            </div>
+
+            <div class="std-card panel">
+                <h3 style="margin-top:0;">測驗類型（可複選）</h3>
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                    <label><input type="checkbox" id="type-en2ch" checked> 看英文選中文</label>
+                    <label><input type="checkbox" id="type-ch2en" checked> 看中文選英文</label>
+                    <label><input type="checkbox" id="type-spell"> 英文拼字輸入</label>
+                </div>
+            </div>
+
+            <div class="std-card panel">
+                <h3 style="margin-top:0;">題數</h3>
+                <div class="num-select" aria-label="題數選擇">
+                    <label class="num-item"><input type="radio" name="num" value="20" checked> <span>20</span></label>
+                    <label class="num-item"><input type="radio" name="num" value="30"> <span>30</span></label>
+                    <label class="num-item"><input type="radio" name="num" value="all"> <span>全部</span></label>
+                </div>
+            </div>
+
+            <!-- 開始按鈕與錯題訂正區塊 -->
+            <div class="panel" style="border:none; background:none; box-shadow:none; padding:0;">
+                <button id="start-btn" class="btn" style="width:100%; font-size:1.2rem; padding:12px;">開始新測驗</button>
+                
+                <!-- 錯題訂正顯示於此 (原本結果頁功能移至此處) -->
+                <div id="mistake-area">
+                    <div id="last-score-info">上次得分：--</div>
+                    <button id="mistake-btn" class="btn">錯題訂正 (0)</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 測驗進行區 -->
+        <section id="quiz" class="quiz" style="display:none;">
+            <div class="meta">
+                <div id="progress">0 / 0</div>
+                <div id="timer">--</div>
+                <div id="score" style="display:none">得分：0</div>
+            </div>
+
+            <div id="question-area" class="question-area std-card">
+                <!-- JS 動態填入 -->
+            </div>
+
+            <div class="controls">
+                <button id="show-answer" class="btn">看答案</button>
+                <button id="exit-btn" class="btn secondary">退出測驗</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- 退出確認 Modal -->
+    <div id="exit-modal" class="exit-modal" aria-hidden="true" style="display:none;">
+      <div class="exit-modal-backdrop"></div>
+      <div class="exit-modal-dialog">
+        <h3>確認退出</h3>
+        <p>確定要退出測驗？進度將會結束。</p>
+        <div class="exit-modal-actions">
+          <button id="exit-confirm" class="btn">確定</button>
+          <button id="exit-cancel" class="btn secondary">取消</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../scripts/english-quiz.js"></script>
+</body>
+</html>

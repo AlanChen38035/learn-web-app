@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>知識庫首頁</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/announcement.css">
+    <style>
+        /* 首頁專屬佈局調整 */
+        .main-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 980px;
+            margin: 40px auto;
+            padding: 0 20px;
+            align-items: flex-start;
+        }
+
+        /* 左側簽到區 - 覆蓋原本置中樣式 */
+        .checkin-section {
+            flex: 1;
+            min-width: 300px;
+            margin: 0; /* 移除原本的 margin */
+            padding: 0;
+            display: block; /* 移除 flex center */
+        }
+        .checkin-card {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            aspect-ratio: auto; /* 解除強制正方形 */
+            min-height: 320px;
+        }
+
+        /* 右側科目區 */
+        .subjects-section {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .subject-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .subject-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 160px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 上方兩個：寬度各 50% 扣除間距 */
+        .subject-card.top-row {
+            width: calc(50% - 8px);
+        }
+        /* 下方三個：寬度各 33.33% 扣除間距 */
+        .subject-card.bottom-row {
+            width: calc(33.333% - 10px);
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(11,118,209,0.15);
+        }
+
+        .subject-icon svg {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+
+        .subject-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* 手機版變成單欄 */
+        @media (max-width: 768px) {
+            .subject-card.top-row, .subject-card.bottom-row {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/logo.svg" alt="Logo" height="50px">
+            <span>知識酷</span>
+        </div>
+        <div class="links">
+            <a href="index.html" class="link">首頁</a>
+            <a href="english/quiz.html" class="link">試題演練</a>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        <!-- 左側：簽到 -->
+        <section class="checkin-section">
+            <div class="checkin-card">
+                <div class="checkin-left">
+                    <h2>每日簽到</h2>
+                    <p>累積天數：<span id="totalDays">0</span> 天</p>
+                    <p id="checkinMsg" class="checkin-msg"></p>
+                </div>
+                <div class="checkin-right">
+                    <button id="checkinBtn" class="checkin-btn">簽到</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 右側：科目選單 -->
+        <section class="subjects-section">
+            <div class="subject-grid">
+                <!-- 上排 (2個) -->
+                <a href="#" class="subject-card top-row" style="pointer-events:none; opacity:0.6;">
+                    <div class="subject-icon">
+                        <!-- 國文: 書本/筆 -->
+                        <svg viewBox="0 0 24 24" fill="#e74c3c"><path d="M3 3v17a1 1 0 001 1h17v-2H5V3H3m15.25 6.75c.41-.41.41-1.09 0-1.5l-1.5-1.5c-.41-.41-1.09-.41-1.5 0l-8.25 8.25V18h2.25l8.25-8.25m-8.5 5l-3 3 3 3h10v-6h-10z"/></svg>
+                    </div>
+                    <span class="subject-name">國文</span>
+                </a>
+                
+                <a href="#" class="subject-card top-row" style="pointer-events:none; opacity:0.6;">
+                    <div class="subject-icon">
+                        <!-- 數學: 運算符號 -->
+                        <svg viewBox="0 0 24 24" fill="#f1c40f"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-7 3c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1m4 12h-2v-2h2v2m0-4h-2v-2h2v2m-4 4H8v-2h2v2m0-4H8v-2h2v2m-2-4h2v2H8V10m6-2h-2V6h2v2z"/></svg>
+                    </div>
+                    <span class="subject-name">數學</span>
+                </a>
+
+                <!-- 下排 (3個) -->
+                <a href="english/english.html" class="subject-card bottom-row">
+                    <div class="subject-icon">
+                        <!-- 英文: A -->
+                        <svg viewBox="0 0 24 24" fill="#0b76d1"><path d="M11.5 4L6 20h2.2l1.1-4h5.4l1.1 4H18L12.5 4h-1M10 13l2-6 2 6h-4z"/></svg>
+                    </div>
+                    <span class="subject-name">English</span>
+                </a>
+
+                <a href="#" class="subject-card bottom-row" style="pointer-events:none; opacity:0.6;">
+                    <div class="subject-icon">
+                        <!-- 自然: 燒杯 -->
+                        <svg viewBox="0 0 24 24" fill="#2ecc71"><path d="M20.8 18.4L15 5.86V4h1v-2H8v2h1v1.86L3.2 18.4A3.28 3.28 0 006 22h12a3.28 3.28 0 002.8-3.6zM18.5 19l-3.3-5H8.8l-3.3 5H18.5z"/></svg>
+                    </div>
+                    <span class="subject-name">自然</span>
+                </a>
+
+                <a href="#" class="subject-card bottom-row" style="pointer-events:none; opacity:0.6;">
+                    <div class="subject-icon">
+                        <!-- 社會: 地球 -->
+                        <svg viewBox="0 0 24 24" fill="#9b59b6"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    </div>
+                    <span class="subject-name">社會</span>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script src="scripts/header.js"></script>
+    <script>
+        // 保留原有的簽到邏輯
+        (function(){
+            const totalDaysEl = document.getElementById('totalDays');
+            const msgEl = document.getElementById('checkinMsg');
+            const btn = document.getElementById('checkinBtn');
+            function todayKey() { return new Date().toISOString().slice(0,10); }
+            function getTotalDays() { return parseInt(localStorage.getItem('checkin_totalDays') || '0', 10); }
+            function getLastDate() { return localStorage.getItem('checkin_lastDate'); }
+            function setCheckinDoneForToday() {
+                localStorage.setItem('checkin_lastDate', todayKey());
+                localStorage.setItem('checkin_totalDays', String(getTotalDays() + 1));
+            }
+            function updateUI() {
+                totalDaysEl.textContent = getTotalDays();
+                if (getLastDate() === todayKey()) {
+                    btn.disabled = true; btn.textContent = '今日已簽到'; msgEl.textContent = '已成功簽到，明天再來！';
+                } else {
+                    btn.disabled = false; btn.textContent = '簽到'; msgEl.textContent = '每天簽到可累積天數。';
+                }
+            }
+            btn.addEventListener('click', function(){
+                if (getLastDate() === todayKey()) return;
+                setCheckinDoneForToday(); updateUI(); msgEl.textContent = '簽到成功，已累積 ' + getTotalDays() + ' 天';
+            });
+            updateUI();
+        })();
+    </script>
+    <script src="scripts/announcement.js"></script>
+    <script src="scripts/utils.js"></script>
+</body>
+</html>

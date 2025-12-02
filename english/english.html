@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英文科 - 選課</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/header.css">
+    <style>
+        body { padding-bottom: 90px; }
+        
+        /* 課程選擇方塊樣式 */
+        .version-group { margin-bottom: 30px; animation: fadeIn 0.5s ease; }
+        .version-title { font-size: 1.3rem; font-weight: bold; color: var(--primary); margin-bottom: 15px; border-left: 5px solid var(--primary); padding-left: 10px; }
+        
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .lesson-card {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            display: flex;
+            flex-direction: column; /* 改為垂直排列以便顯示小標籤 */
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #555;
+            box-shadow: var(--shadow);
+            min-height: 90px;
+            position: relative;
+        }
+
+        .lesson-card:hover { transform: translateY(-3px); border-color: #ccc; }
+        
+        /* 選中狀態 */
+        .lesson-card.selected {
+            border-color: var(--primary);
+            background-color: var(--primary-light);
+            color: var(--primary);
+            box-shadow: 0 5px 15px rgba(11,118,209,0.2);
+        }
+        .lesson-card.selected::after {
+            content: '✔'; position: absolute; top: 5px; right: 8px; font-size: 0.9rem;
+        }
+
+        /* 資料類型標記 (小圓點) */
+        .card-badges {
+            display: flex;
+            gap: 4px;
+            margin-top: 6px;
+        }
+        .badge {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: #eee;
+            color: #999;
+        }
+        .badge.has-data {
+            background: #d1fae5;
+            color: #065f46;
+            font-weight: normal;
+        }
+
+        .back-link { text-decoration: none; color: inherit !important; margin-right: 15px; font-size: 1.5rem; }
+        .back-link:visited, .back-link:active { color: inherit !important; }
+
+        /* 底部導航 */
+        .bottom-nav-fixed {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: #fff; box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+            z-index: 1000;
+            display: flex; justify-content: center;
+        }
+        .bottom-nav-content {
+            width: 100%; max-width: 980px;
+            height: 80px;
+            display: flex; justify-content: space-around; align-items: center;
+        }
+        .nav-item-btn {
+            flex: 1; height: 100%; border: none; background: none;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-size: 0.9rem; color: #666; cursor: pointer; text-decoration: none;
+            transition: all 0.2s;
+        }
+        .nav-item-btn:hover:not(:disabled) { background: #f9f9f9; color: var(--primary); }
+        .nav-item-btn svg { width: 24px; height: 24px; margin-bottom: 4px; fill: currentColor; }
+
+        /* 按鈕不可用狀態 */
+        .nav-item-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            filter: grayscale(100%);
+            background: #f5f5f5;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="../index.html" class="back-link">⬅</a>
+            <span>英文科選課</span>
+        </div>
+    </header>
+
+    <div class="page-container" id="lesson-container" style="max-width:980px; margin:20px auto; padding:0 20px;">
+        <p style="text-align:center; color:#666; margin-top: 50px;">
+            <span style="display:inline-block; animation: spin 1s infinite linear;">⏳</span> 載入課程資料中...
+        </p>
+    </div>
+
+    <div class="bottom-nav-fixed">
+        <div class="bottom-nav-content">
+            <button class="nav-item-btn" id="btn-words" onclick="goTo('words')" disabled>
+                <svg viewBox="0 0 24 24"><path d="M2 5h20v14H2V5zm2 2v10h16V7H4zm2 2h12v2H6V9zm0 4h8v2H6v-2z"/></svg>
+                <span>單字</span>
+            </button>
+            <button class="nav-item-btn" id="btn-textbook" onclick="goTo('textbook')" disabled>
+                <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                <span>課文</span>
+            </button>
+            <button class="nav-item-btn" id="btn-quiz" onclick="goTo('quiz')" disabled>
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                <span>測驗</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let mergedData = []; // 儲存合併後的資料結構
+
+        // 初始化：同時載入兩個 JSON 檔案
+        Promise.all([
+            fetch('../data/english.json').then(r => r.ok ? r.json() : {sources:[]}).catch(()=>({sources:[]})),
+            fetch('../data/english-textbook.json').then(r => r.ok ? r.json() : {sources:[]}).catch(()=>({sources:[]}))
+        ]).then(([wordData, textData]) => {
+            mergeData(wordData.sources, textData.sources);
+            renderLessons();
+            checkButtonState(); // 初始檢查按鈕狀態
+        }).catch(e => {
+            console.error(e);
+            document.getElementById('lesson-container').innerHTML = '<p style="text-align:center; color:red;">資料載入發生錯誤，請檢查 console。</p>';
+        });
+
+        // 資料合併邏輯：將單字與課文的來源整合成一個列表
+        function mergeData(wordSources, textSources) {
+            const map = new Map();
+
+            // 1. 處理單字資料
+            if (wordSources) {
+                wordSources.forEach(src => {
+                    if (!map.has(src.name)) map.set(src.name, new Map());
+                    const lessonsMap = map.get(src.name);
+                    src.lessons.forEach(l => {
+                        if (!lessonsMap.has(l.lesson)) {
+                            lessonsMap.set(l.lesson, { 
+                                title: l.title, 
+                                hasWords: (l.vocabulary && l.vocabulary.length > 0), 
+                                hasText: false 
+                            });
+                        } else {
+                            // 更新既有課程
+                            const existing = lessonsMap.get(l.lesson);
+                            existing.hasWords = (l.vocabulary && l.vocabulary.length > 0);
+                        }
+                    });
+                });
+            }
+
+            // 2. 處理課文資料 (合併進去)
+            if (textSources) {
+                textSources.forEach(src => {
+                    if (!map.has(src.name)) map.set(src.name, new Map());
+                    const lessonsMap = map.get(src.name);
+                    src.lessons.forEach(l => {
+                        if (!lessonsMap.has(l.lesson)) {
+                            lessonsMap.set(l.lesson, { 
+                                title: l.title, 
+                                hasWords: false, 
+                                hasText: (l.sentences && l.sentences.length > 0) 
+                            });
+                        } else {
+                            const existing = lessonsMap.get(l.lesson);
+                            // 如果課文檔有這課，且句子數 > 0，則標記有課文
+                            if (l.sentences && l.sentences.length > 0) {
+                                existing.hasText = true;
+                            }
+                        }
+                    });
+                });
+            }
+
+            // 3. 轉回陣列格式供渲染使用
+            mergedData = Array.from(map.entries()).map(([sourceName, lessonsMap]) => {
+                const lessons = Array.from(lessonsMap.entries()).map(([lessonNum, info]) => ({
+                    lesson: lessonNum,
+                    title: info.title,
+                    hasWords: info.hasWords,
+                    hasText: info.hasText
+                }));
+                // 排序課程
+                lessons.sort((a, b) => a.lesson - b.lesson);
+                return { name: sourceName, lessons: lessons };
+            });
+        }
+
+        function renderLessons() {
+            const container = document.getElementById('lesson-container');
+            container.innerHTML = '';
+            
+            let saved = [];
+            try { saved = JSON.parse(localStorage.getItem('sel_lessons') || '[]'); } catch (e) {}
+
+            if (mergedData.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#666;">目前沒有任何課程資料。</p>';
+                return;
+            }
+
+            mergedData.forEach(source => {
+                const group = document.createElement('div');
+                group.className = 'version-group';
+                group.innerHTML = `<div class="version-title">${source.name}</div>`;
+                
+                const grid = document.createElement('div');
+                grid.className = 'lesson-grid';
+
+                source.lessons.forEach(lesson => {
+                    const card = document.createElement('div');
+                    card.className = 'lesson-card';
+                    
+                    // 檢查是否已選
+                    const isSelected = saved.some(s => s.source === source.name && s.lesson === lesson.lesson);
+                    if(isSelected) card.classList.add('selected');
+
+                    // 點擊事件：切換選擇並立即檢查按鈕狀態
+                    card.onclick = () => {
+                        card.classList.toggle('selected');
+                        checkButtonState();
+                    };
+                    
+                    // 綁定資料屬性供查詢
+                    card.dataset.source = source.name;
+                    card.dataset.lesson = lesson.lesson;
+                    // 將該課的資料狀態綁在 DOM 上，方便 checkButtonState 讀取
+                    card.dataset.hasWords = lesson.hasWords;
+                    card.dataset.hasText = lesson.hasText;
+
+                    // 內容與標記
+                    card.innerHTML = `
+                        <div>${lesson.title}</div>
+                        <div class="card-badges">
+                            <span class="badge ${lesson.hasWords ? 'has-data' : ''}">單字</span>
+                            <span class="badge ${lesson.hasText ? 'has-data' : ''}">課文</span>
+                        </div>
+                    `;
+
+                    grid.appendChild(card);
+                });
+                
+                group.appendChild(grid);
+                container.appendChild(group);
+            });
+        }
+
+        // 核心邏輯：檢查按鈕是否可用
+        function checkButtonState() {
+            const selectedCards = document.querySelectorAll('.lesson-card.selected');
+            const btnWords = document.getElementById('btn-words');
+            const btnText = document.getElementById('btn-textbook');
+            const btnQuiz = document.getElementById('btn-quiz');
+
+            if (selectedCards.length === 0) {
+                // 未選擇任何課程 -> 全部禁用
+                btnWords.disabled = true;
+                btnText.disabled = true;
+                btnQuiz.disabled = true;
+                return;
+            }
+
+            let anyHasWords = false;
+            let anyHasText = false;
+
+            // 遍歷所有選中的卡片，檢查是否包含資料
+            selectedCards.forEach(card => {
+                if (card.dataset.hasWords === 'true') anyHasWords = true;
+                if (card.dataset.hasText === 'true') anyHasText = true;
+            });
+
+            // 根據檢查結果設定按鈕
+            btnWords.disabled = !anyHasWords;
+            btnQuiz.disabled = !anyHasWords; // 測驗依賴單字
+            btnText.disabled = !anyHasText;
+        }
+
+        function goTo(page) {
+            const selectedCards = document.querySelectorAll('.lesson-card.selected');
+            if(selectedCards.length === 0) return;
+
+            const selection = Array.from(selectedCards).map(card => ({
+                source: card.dataset.source,
+                lesson: parseInt(card.dataset.lesson)
+            }));
+            
+            localStorage.setItem('sel_lessons', JSON.stringify(selection));
+            window.location.href = page + '.html';
+        }
+    </script>
+    <script src="../scripts/utils.js"></script>
+    <script src="../scripts/english-editor.js"></script>
+</body>
+</html>

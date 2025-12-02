@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資料庫編輯器</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/header.css">
+    <style>
+        /* --- 編輯器專用樣式 --- */
+        body { padding-bottom: 120px; background-color: #f8f9fa; }
+
+        .editor-tabs { display: flex; gap: 12px; margin-bottom: 24px; border-bottom: 2px solid #e9ecef; padding-bottom: 12px; }
+        .tab-btn { padding: 10px 24px; background: transparent; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; color: #6c757d; transition: all 0.2s; font-size: 1rem; }
+        .tab-btn:hover { background: #e9ecef; color: #495057; }
+        .tab-btn.active { background: var(--primary-light); color: var(--primary); }
+
+        .edit-container { display: flex; flex-direction: column; gap: 16px; }
+
+        /* 層級結構 */
+        .source-block { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid #e9ecef; overflow: hidden; }
+        
+        .accordion-header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; transition: background 0.2s; }
+        .accordion-header:hover { background-color: #f8f9fa; }
+        .header-left { display: flex; align-items: center; gap: 12px; flex: 1; }
+        .chevron-icon { width: 20px; height: 20px; color: #adb5bd; transition: transform 0.3s ease; }
+        .source-block.expanded > .accordion-header .chevron-icon, .lesson-block.expanded > .accordion-header .chevron-icon { transform: rotate(90deg); }
+        .lesson-container { display: none; padding: 0 20px 20px 20px; }
+        .source-block.expanded > .lesson-container { display: block; }
+        .source-title { font-weight: 700; font-size: 1.1rem; color: #343a40; }
+
+        .lesson-block { border: 1px solid #e9ecef; border-radius: 8px; margin-top: 12px; background: #fff; }
+        .lesson-header { padding: 12px 16px; background: #fff; border-bottom: 1px solid transparent; border-radius: 8px; }
+        .lesson-block.expanded .lesson-header { border-bottom-color: #f1f3f5; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+        .lesson-title { font-weight: 600; color: #495057; font-size: 1rem; }
+
+        .item-list { padding: 0; margin: 0; list-style: none; display: none; }
+        .lesson-block.expanded .item-list { display: block; }
+
+        .data-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #f1f3f5; background: #fff; transition: background 0.2s; position: relative; }
+        .data-item:hover { background: #f8fbff; z-index: 2; }
+        .data-item:last-child { border-bottom: none; }
+
+        /* 分隔線 */
+        .insert-separator { height: 24px; margin-top: -12px; margin-bottom: -12px; position: relative; z-index: 100; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transition: opacity 0.1s ease-in-out; }
+        .insert-separator:hover { opacity: 1; }
+        .insert-line { height: 2px; background: var(--primary); flex: 1; margin: 0 10px; opacity: 0.5; pointer-events: none; }
+        .insert-btn-icon { width: 24px; height: 24px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; line-height: 1; box-shadow: 0 2px 6px rgba(11,118,209,0.3); pointer-events: none; transition: transform 0.2s; }
+        .insert-separator:hover .insert-btn-icon { transform: scale(1.2); }
+
+        .drag-handle { cursor: grab; color: #ced4da; padding: 4px; margin-top: 4px; display: flex; align-items: center; border-radius: 4px; }
+        .drag-handle:hover { color: #6c757d; background: #f1f3f5; }
+        .drag-handle:active { cursor: grabbing; }
+        .drag-handle svg { width: 20px; height: 20px; fill: currentColor; }
+
+        .item-content { flex: 1; min-width: 0; /* 防止 flex item 溢出 */ }
+
+        /* --- 編輯與顯示樣式 --- */
+        .editable-cell { 
+            padding: 8px 10px; border-radius: 6px; cursor: text; min-height: 36px; 
+            display: flex; align-items: center; transition: all 0.2s; border: 1px solid transparent; 
+            white-space: pre-wrap; /* 保留換行 */
+        }
+        .editable-cell:hover { background: #fff; border-color: #dee2e6; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
+        .editable-cell:empty::before { content: '點擊輸入...'; color: #adb5bd; font-size: 0.85rem; font-style: italic; }
+
+        .inline-input, .inline-select, .inline-textarea {
+            width: 100%; padding: 8px 10px; font-size: 1rem;
+            border: 2px solid var(--primary); border-radius: 6px;
+            outline: none; font-family: inherit; background: #fff; 
+            box-shadow: 0 2px 8px rgba(11,118,209,0.1);
+        }
+        .inline-select { cursor: pointer; }
+        .inline-textarea { resize: vertical; min-height: 60px; line-height: 1.5; }
+
+        /* 單字模式 Grid */
+        .word-grid { display: grid; grid-template-columns: 1.5fr 0.6fr 2fr; gap: 12px; width: 100%; align-items: center; }
+        .col-en { font-weight: 600; color: #212529; }
+        .col-pos { color: #1c7ed6; font-weight: 500; font-size: 0.95rem; cursor: pointer; }
+        .col-ch { color: #495057; }
+
+        /* 課文模式 Layout (上下排列) */
+        .textbook-layout { display: flex; flex-direction: column; gap: 8px; }
+        
+        .tb-en { 
+            font-size: 1.1rem; color: #212529; line-height: 1.6; 
+            background: #fafafa; /* 區別英文區塊 */
+        }
+        .tb-ch { font-size: 1rem; color: #666; line-height: 1.5; }
+
+        /* Markdown 樣式 */
+        .md-bold { font-weight: 800; color: #d63384; } /* 粗體用粉紅色強調 */
+        .md-italic { font-style: italic; color: #0d6efd; }
+        .md-highlight { background-color: #fff3cd; padding: 0 4px; border-radius: 4px; }
+
+        .action-group { display: flex; gap: 6px; align-items: center; opacity: 0.6; transition: opacity 0.2s; margin-top: 4px; }
+        .source-block:hover .action-group, .lesson-block:hover .action-group, .data-item:hover .action-group { opacity: 1; }
+
+        .icon-btn-sm { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; border: 1px solid #e9ecef; background: #fff; color: #495057; cursor: pointer; transition: all 0.2s; }
+        .icon-btn-sm:hover { background: #f8f9fa; border-color: #ced4da; color: #212529; }
+        .icon-btn-sm.danger:hover { background: #fff5f5; border-color: #ffc9c9; color: #fa5252; }
+        .icon-btn-sm.primary:hover { background: #e7f5ff; border-color: #a5d8ff; color: #1c7ed6; }
+        .icon-btn-sm svg { width: 16px; height: 16px; fill: currentColor; }
+
+        .btn-add-text {
+            font-size: 0.9rem; 
+            padding: 10px 16px; /* 增加一點內距讓它看起來不像被擠壓 */
+            border-radius: 6px; 
+            background: transparent; 
+            border: 1px dashed #adb5bd; 
+            color: #6c757d; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            
+            /* 關鍵 Flex 設定 */
+            display: flex; 
+            flex-direction: row; /* 確保圖示與文字左右排列 */
+            align-items: center; 
+            justify-content: center; /* 內容置中 */
+            gap: 8px; /* 圖示與文字間距 */
+            
+            /* 關鍵：防止文字因為空間不足而變成直排 */
+            white-space: nowrap; 
+            width: 100%; /* 讓按鈕撐滿容器寬度，避免被擠壓 */
+        }
+        
+        .btn-add-text svg {
+            width: 16px; 
+            height: 16px; 
+            fill: currentColor; 
+        }
+
+        .btn-add-text:hover { 
+            border-color: var(--primary); 
+            color: var(--primary); 
+            background: var(--primary-light); 
+        }
+
+        .floating-footer { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); box-shadow: 0 -4px 20px rgba(0,0,0,0.08); padding: 15px 24px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; border-top: 1px solid #eee; }
+        .status-msg { font-size: 0.85rem; color: #868e96; display: flex; align-items: center; gap: 6px; }
+        .status-dot { width: 8px; height: 8px; background: #51cf66; border-radius: 50%; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(2px); }
+        .modal.show { display: flex; }
+        .modal-card { background: #fff; padding: 24px; border-radius: 16px; width: 90%; max-width: 480px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); animation: slideUp 0.3s ease; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: #495057; }
+        .form-group input { width: 100%; padding: 10px 12px; border: 1px solid #dee2e6; border-radius: 8px; font-size: 1rem; transition: border 0.2s; background: #fff; }
+        .form-group input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px var(--primary-light); }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+        .dragging { opacity: 0.4; background: #e7f5ff; border: 2px dashed var(--primary); }
+        .drag-over { border-top: 2px solid var(--primary); }
+
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @media (max-width: 600px) { .word-grid { grid-template-columns: 1fr; gap: 4px; align-items: start; } .editable-cell { padding: 6px; font-size: 0.95rem; } .col-pos { font-size: 0.85rem; color: #adb5bd; } .col-pos::before { content: '詞性: '; } .header-left { gap: 8px; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="../index.html" class="back-link">⬅</a></div>
+        <span>資料庫編輯器</span>
+    </header>
+
+    <div class="page-container">
+        <div class="std-card" style="padding: 16px; margin-bottom: 24px; background: #fff; border-left: 4px solid var(--accent); display: flex; gap: 12px; align-items: flex-start;">
+            <svg style="width:24px; height:24px; fill:var(--accent); flex-shrink:0; margin-top:2px;" viewBox="0 0 24 24"><path d="M11 15h2v2h-2zm0-8h2v6h-2zm1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+            <div style="font-size: 0.95rem; color:#495057; line-height:1.6;">
+                <strong>操作說明：</strong><br>
+                1. 點擊文字直接編輯。<br>
+                2. 課文支援 Markdown：**粗體**、*斜體*、==螢光筆==。<br>
+                3. 滑鼠移至項目之間點擊「+」插入新行。<br>
+                4. 按住 ☰ 手柄可拖曳排序。<br>
+                5. 完成後請點擊<strong>「儲存並下載」</strong>。
+            </div>
+        </div>
+
+        <div class="editor-tabs">
+            <button class="tab-btn active" id="tab-words" onclick="switchTab('words')">單字庫</button>
+            <button class="tab-btn" id="tab-textbook" onclick="switchTab('textbook')">課文庫</button>
+        </div>
+
+        <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <button class="btn" onclick="addNewSource()" style="display:flex; align-items:center; gap:6px;">
+                <svg style="width:18px;height:18px;fill:currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg> 新增版本
+            </button>
+            <button class="btn secondary" onclick="resetToOriginal()" style="font-size: 0.9rem;">重置</button>
+        </div>
+
+        <div id="editor-content" class="edit-container"></div>
+    </div>
+
+    <div class="floating-footer">
+        <div class="status-msg"><div class="status-dot"></div><span id="auto-save-msg">準備就緒</span></div>
+        <div style="display:flex; gap:12px;">
+            <button class="btn secondary" onclick="clearDraft()">清空暫存</button>
+            <button class="btn" onclick="downloadJSON()" style="display:flex; align-items:center; gap:8px;">
+                <svg style="width:20px;height:20px;fill:currentColor" viewBox="0 0 24 24"><path d="M17 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg> 儲存並下載
+            </button>
+        </div>
+    </div>
+
+    <div id="edit-modal" class="modal">
+        <div class="modal-card">
+            <h3 id="modal-title" style="margin-top:0; margin-bottom:24px; color:#333;">編輯項目</h3>
+            <div id="modal-form"></div>
+            <div class="modal-actions">
+                <button class="btn secondary" onclick="closeModal()">取消</button>
+                <button class="btn" onclick="saveModal()">確定</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/english-editor.js"></script>
+    <script src="../scripts/utils.js"></script>
+    <script src="../scripts/english-editor.js"></script>
+</body>
+</html>

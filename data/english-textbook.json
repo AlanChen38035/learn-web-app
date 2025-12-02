@@ -1,0 +1,126 @@
+{
+  "sources": [
+    {
+      "name": "龍騰",
+      "lessons": [
+        {
+          "lesson": 4,
+          "title": "第四課",
+          "sentences": [
+            {
+              "en": "This is the title of the lesson.",
+              "ch": "這是課文標題。"
+            },
+            {
+              "en": "Dogs can detect many smells.",
+              "ch": "狗可以偵測到許多氣味。"
+            },
+            {
+              "en": "This helps them find items.",
+              "ch": "這幫助牠們找到物品。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "空中美語No. 311",
+      "lessons": [
+        {
+          "lesson": 3111,
+          "title": "Unit 1",
+          "sentences": [
+            {
+              "en": "(Ava arrives at the animal shelter for her first volunteer day.)",
+              "ch": "（Ava 抵達動物收容所進行她第一天的志工服務。）"
+            },
+            {
+              "en": "Josh: Welcome to the shelter. Ready to meet some furry friends?",
+              "ch": "Josh: 歡迎來到收容所。準備好去見見一些毛茸茸的朋友了嗎？"
+            },
+            {
+              "en": "Ava: Yeah! I've always wanted to help animals. What kind of things do we usually do here?",
+              "ch": "Ava: 是的！我一直想幫助動物。我們這裡通常做些什麼事情？"
+            },
+            {
+              "en": "Josh: We're very thankful for your help. ==We care for dogs and cats here and try to find suitable families for them.==",
+              "ch": "Josh: 我們非常感謝妳的幫忙。我們在這裡照顧貓狗，並試著為牠們尋找合適的家庭。"
+            },
+            {
+              "en": "Ava: That's wonderful. How can I help?",
+              "ch": "Ava: 那太棒了。我要怎麼幫忙？"
+            },
+            {
+              "en": "Josh: Some main tasks will be feeding the animals, cleaning their cages, and making sure they have fresh water. If a dog or a cat has medical needs, we will give them medicine or extra treatment.",
+              "ch": "Josh: 一些主要的任務包括餵食動物、清理籠子，並確保牠們有新鮮的水喝。如果貓狗有醫療需求，我們會給予藥物或額外的治療。"
+            },
+            {
+              "en": "Ava: Got it. What else do I need to do?",
+              "ch": "Ava: 了解。我還需要做什麼？"
+            },
+            {
+              "en": "Josh: Your job also includes playing with the animals, keeping them company, and helping them get familiar with humans. You'll also fill out daily logs to keep track of their health and behavior.",
+              "ch": "Josh: 妳的工作也包含陪動物玩、陪伴牠們，並幫助牠們熟悉人類。妳也要填寫日誌來追蹤牠們的健康和行為。"
+            },
+            {
+              "en": "Ava: No problem! I'm ready to start.",
+              "ch": "Ava: 沒問題！我準備好開始了。"
+            },
+            {
+              "en": "Josh: Perfect. Let's go—The animals are eager to meet you!",
+              "ch": "Josh: 太好了。我們走吧——動物們都渴望見到妳！"
+            },
+            {
+              "en": "Josh: Ava, this lady's here to adopt a dog. Can you show her around?",
+              "ch": "Josh: Ava，這位女士是來領養狗的。妳能帶她四處看看嗎？"
+            },
+            {
+              "en": "Ava: Certainly! Follow me. Here are some of the dogs ready for adoption.",
+              "ch": "Ava: 當然！請跟我來。這裡有一些準備好被領養的狗狗。"
+            },
+            {
+              "en": "Visitor: This little guy is full of energy! Can I play with him for a bit?",
+              "ch": "訪客: 這小傢伙充滿了活力！我可以跟牠玩一下嗎？"
+            },
+            {
+              "en": "Ava: Sure! This is Max. He's playful but very gentle. Let's move to the outdoor play area so you can spend some time with him.",
+              "ch": "Ava: 當然！這隻是 Max。牠很愛玩但很溫馴。我們去戶外遊戲區，這樣妳可以花點時間跟牠相處。"
+            },
+            {
+              "en": "(Ava lets Max out of his kennel. Max runs around happily for a while and rests next to the visitor.)",
+              "ch": "（Ava 讓 Max 離開籠子。Max 開心地跑了一會兒，然後在訪客旁休息。）"
+            },
+            {
+              "en": "Visitor: Aww ... he's too sweet!",
+              "ch": "訪客: 噢……牠太貼心了！"
+            },
+            {
+              "en": "Ava: Max bonds quickly with people he likes. He has been waiting for someone like you.",
+              "ch": "Ava: Max 跟他喜歡的人很快就能建立感情。他一直在等像妳這樣的人。"
+            },
+            {
+              "en": "(Max rolls over for belly rubs.)",
+              "ch": "（Max 翻身讓人摸肚子。）"
+            },
+            {
+              "en": "Visitor: I think I just found my new best friend. I'd like to adopt him.",
+              "ch": "訪客: 我想我剛找到了我的新好朋友。我想要領養牠。"
+            },
+            {
+              "en": "Ava: Fantastic! I'll guide you through the process. We'll give you notes about Max's habits, diet, and care instructions.",
+              "ch": "Ava: 太棒了！我會引導妳完成整個程序。我們會給妳關於 Max 的習慣、飲食和照顧須知的筆記。"
+            },
+            {
+              "en": "Visitor: Thanks! I appreciate that.",
+              "ch": "訪客: 謝謝！我很感激。"
+            },
+            {
+              "en": "Ava: Thank you for giving Max his forever home. I know he'll be in good hands.",
+              "ch": "Ava: 謝謝妳給 Max 一個永遠的家。我知道牠會被照顧得很好。"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

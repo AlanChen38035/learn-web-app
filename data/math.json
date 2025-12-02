@@ -1,0 +1,20 @@
+[
+    {
+        "question": "如果 x = 2，則 3x + 5 = ?",
+        "answers": ["9", "11", "7", "10"],
+        "correctAnswer": 1,
+        "explanation": "3*2 + 5 = 6 + 5 = 11。"
+    },
+    {
+        "question": "下列哪一個是質數？",
+        "answers": ["4", "6", "7", "9"],
+        "correctAnswer": 2,
+        "explanation": "7 只有 1 與本身兩個因數，因此為質數。"
+    },
+    {
+        "question": "若半徑為 3 的圓，面積為？(取 π)",
+        "answers": ["9π", "6π", "3π", "18π"],
+        "correctAnswer": 0,
+        "explanation": "面積公式為 πr² = π*3² = 9π。"
+    }
+]
