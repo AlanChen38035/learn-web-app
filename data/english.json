@@ -534,46 +534,6 @@
       ]
     },
     {
-      "name": "引導式翻譯",
-      "lessons": [
-        {
-          "lesson": 4,
-          "title": "第四課",
-          "vocabulary": [
-            {
-              "word": "Scott, who(m) I have known since childhood, is able to speak five languages fluently.",
-              "standard_ans": "Scott, who(m) I have known since childhood, is able to speak five languages fluently.",
-              "chinese": "我從小就認識Scott，他能流利地說五種語言。(形容詞子句)",
-              "pos": "",
-              "type-ch2en": false,
-              "type-en2ch": false,
-              "time-spell": 40
-            }
-          ]
-        },
-        {
-          "lesson": 5,
-          "title": "第五課",
-          "vocabulary": [
-            {
-              "word": "abd/def",
-              "standard_ans": "ghi",
-              "chinese": "我從小就認識Scott，他能流利地說五種語言。(形容詞子句)",
-              "pos": "",
-              "type-ch2en": false,
-              "type-en2ch": false,
-              "time-spell": 40
-            }
-          ]
-        },
-        {
-          "lesson": 6,
-          "title": "第六課",
-          "vocabulary": []
-        }
-      ]
-    },
-    {
       "name": "字彙字識+ L3&4",
       "lessons": [
         {
