@@ -541,7 +541,7 @@
           "title": "第四課",
           "vocabulary": [
             {
-              "word": "Scott, who I have known since childhood, is able to speak five languages fluently./Scott, whom I have known since childhood, is able to speak five languages fluently.",
+              "word": "Scott, who(m) I have known since childhood, is able to speak five languages fluently.",
               "standard_ans": "Scott, who(m) I have known since childhood, is able to speak five languages fluently.",
               "chinese": "我從小就認識Scott，他能流利地說五種語言。(形容詞子句)",
               "pos": "",
@@ -554,7 +554,17 @@
         {
           "lesson": 5,
           "title": "第五課",
-          "vocabulary": []
+          "vocabulary": [
+            {
+              "word": "abd/def",
+              "standard_ans": "ghi",
+              "chinese": "我從小就認識Scott，他能流利地說五種語言。(形容詞子句)",
+              "pos": "",
+              "type-ch2en": false,
+              "type-en2ch": false,
+              "time-spell": 40
+            }
+          ]
         },
         {
           "lesson": 6,
