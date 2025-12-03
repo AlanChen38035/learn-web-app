@@ -534,6 +534,31 @@
       ]
     },
     {
+      "name": "引導式翻譯",
+      "lessons": [
+        {
+          "lesson": 414,
+          "title": "第四課",
+          "vocabulary": [
+            {
+              "word": "Scott,who I've known since childhood,is able to speak five languages fluently.",
+              "chinese": "我從小就認識 Scott，他能流利地說五種語言。（形容詞子句）"
+              "type-ch2en": false,
+              "type-en2ch": false,
+              "time-spell": 40
+            },
+            {
+              "word": "The book that I borrowed from library last week contains interesting information.",
+              "chinese": "我上週從圖書館借的這本書包含有趣的資訊。（形容詞子句）"
+              "type-ch2en": false,
+              "type-en2ch": false,
+              "time-spell": 40
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "字彙字識+ L3&4",
       "lessons": [
         {
