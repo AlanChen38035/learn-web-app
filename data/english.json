@@ -681,6 +681,102 @@
               "chinese": "追求"
             }
           ]
+        },
+        {
+          "lesson": 8,
+          "title": "第八課",
+          "vocabulary": [
+            {
+              "word": "familiar",
+              "pos": "adj.",
+              "chinese": "熟悉的"
+            },
+            {
+              "word": "urge",
+              "pos": "n. [C]",
+              "chinese": "衝動"
+            },
+            {
+              "word": "urge",
+              "pos": "vt.",
+              "chinese": "催促"
+            },
+            {
+              "word": "strategy",
+              "pos": "n. [C]",
+              "chinese": "策略"
+            },
+            {
+              "word": "visible",
+              "pos": "adj.",
+              "chinese": "看得見的"
+            },
+            {
+              "word": "purchase",
+              "pos": "vt.",
+              "chinese": "購買"
+            },
+            {
+              "word": "purchase",
+              "pos": "n. [C]",
+              "chinese": "購買"
+            },
+            {
+              "word": "profitable",
+              "pos": "adj.",
+              "chinese": "有利潤的"
+            },
+            {
+              "word": "profit",
+              "pos": "vt.",
+              "chinese": "獲得好處"
+            },
+            {
+              "word": "profit",
+              "pos": "n. [C]",
+              "chinese": "利潤"
+            },
+            {
+              "word": "similarly",
+              "pos": "adv.",
+              "chinese": "同樣地；相似地"
+            },
+            {
+              "word": "similar",
+              "pos": "adj.",
+              "chinese": "相似地"
+            },
+            {
+              "word": "similarity",
+              "pos": "n. [C][U]",
+              "chinese": "相似性；相似處"
+            },
+            {
+              "word": "aim",
+              "pos": "vt.",
+              "chinese": "針對；對象是"
+            },
+            {
+              "word": "aim",
+              "pos": "n. [C]",
+              "chinese": "目的；目標"
+            },
+            {
+              "word": "impulse",
+              "pos": "n. [C][U]",
+              "chinese": "衝動"
+            },
+            {
+              "word": "display",
+              "pos": "vt.",
+              "chinese": "展示；陣列"
+            },
+            {
+              "word": "display",
+              "pos": "n. [C][U]",
+              "chinese": "展覽；陣列"
+            }
+          ]
         }
       ]
     },
