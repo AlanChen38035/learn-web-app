@@ -679,6 +679,31 @@
               "word": "pursuit",
               "pos": "n. [U]",
               "chinese": "追求"
+            },
+            {
+              "word": "tons of",
+              "pos": "phr.",
+              "chinese": "大量；許多"
+            },
+            {
+              "word": "look for",
+              "pos": "phr.",
+              "chinese": "尋找"
+            },
+            {
+              "word": "make a living",
+              "pos": "phr.",
+              "chinese": "謀生"
+            },
+            {
+              "word": "look forward to",
+              "pos": "phr.",
+              "chinese": "期待"
+            },
+            {
+              "word": "be/get carried away",
+              "pos": "phr.",
+              "chinese": "陶醉"
             }
           ]
         },
@@ -775,6 +800,91 @@
               "word": "display",
               "pos": "n. [C][U]",
               "chinese": "展覽；陣列"
+            },
+            {
+              "word": "offer",
+              "pos": "n. [C]",
+              "chinese": "特價"
+            },
+            {
+              "word": "offer",
+              "pos": "vt.",
+              "chinese": "提供"
+            },
+            {
+              "word": "customer",
+              "pos": "n. [C]",
+              "chinese": "顧客；客戶"
+            },
+            {
+              "word": "advantage",
+              "pos": "n. [C][U]",
+              "chinese": "優勢；有利條件"
+            },
+            {
+              "word": "eventually",
+              "pos": "adv.",
+              "chinese": "最後"
+            },
+            {
+              "word": "eventual",
+              "pos": "adj.",
+              "chinese": "最後的"
+            },
+            {
+              "word": "trap",
+              "pos": "n. [C]",
+              "chinese": "圈套"
+            },
+            {
+              "word": "trap",
+              "pos": "vt.",
+              "chinese": "困住"
+            },
+            {
+              "word": "aware",
+              "pos": "adj.",
+              "chinese": "知道；意識到"
+            },
+            {
+              "word": "awareness",
+              "pos": "n. [U] sing.",
+              "chinese": "意識；認識"
+            },
+            {
+              "word": "clever",
+              "pos": "adj.",
+              "chinese": "聰明的"
+            },
+            {
+              "word": "be likely to...",
+              "pos": "phr.",
+              "chinese": "有可能會"
+            },
+            {
+              "word": "whithin (...) reach",
+              "pos": "phr.",
+              "chinese": "在（……）伸手可及的範圍"
+            },
+            {
+              "word": "line up",
+              "pos": "phr.",
+              "chinese": "排隊"
+            },
+            {
+              "word": "take advantage of",
+              "pos": "phr.",
+              "chinese": "利用"
+            },
+            {
+              "word": "set up",
+              "pos": "phr.",
+              "chinese": "設立；設置"
+            },
+            {
+              "word": "start off",
+              "pos": "phr.",
+              "chinese": "開始"
             }
           ]
         }
