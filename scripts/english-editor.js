@@ -1,7 +1,7 @@
 /* --- scripts/english-editor.js --- */
 
 let currentMode = 'words';
-let currentViewMode = 'list'; // 'list' or 'table'
+let viewMode = 'list'; // 新增：'list' or 'table'
 let dataStore = { words: { sources: [] }, textbook: { sources: [] } };
 let editingTarget = null;
 let isInlineEditing = false;
@@ -29,11 +29,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (expandedKeys.size === 0 && dataStore.words.sources.length > 0) {
         expandedKeys.add('source-0');
     }
-    // 預設渲染
-    refreshCurrentView();
+    
+    // 讀取視圖偏好
+    const savedView = localStorage.getItem('editor_view_mode');
+    if(savedView) viewMode = savedView;
+    updateViewButtons();
+
+    renderEditor();
     
     const scrollY = localStorage.getItem('editor_scroll');
-    if(scrollY && currentViewMode === 'list') window.scrollTo(0, parseInt(scrollY));
+    if(scrollY) window.scrollTo(0, parseInt(scrollY));
 
     if(localStorage.getItem('editor_autosave_words') || localStorage.getItem('editor_autosave_textbook')) {
         updateStatus("已載入草稿");
@@ -41,6 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 async function loadData() {
+    // ... (維持原樣) ...
     const draftWords = localStorage.getItem('editor_autosave_words');
     const draftText = localStorage.getItem('editor_autosave_textbook');
 
@@ -60,11 +66,7 @@ async function loadData() {
         } catch(e) {}
     }
     
-    // 初始化空資料結構，避免報錯
-    if(!dataStore.words) dataStore.words = { sources: [] };
     if(!dataStore.words.sources) dataStore.words.sources = [];
-    
-    if(!dataStore.textbook) dataStore.textbook = { sources: [] };
     if(!dataStore.textbook.sources) dataStore.textbook.sources = [];
 }
 
@@ -73,55 +75,53 @@ function switchTab(mode) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(`tab-${mode}`).classList.add('active');
     
+    // 控制視圖切換器的顯示
+    const switcher = document.getElementById('view-switcher');
+    if(switcher) switcher.style.display = (mode === 'words') ? 'inline-flex' : 'none';
+
     expandedKeys.clear();
-    const sources = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
-    if (sources && sources.length > 0) expandedKeys.add('source-0');
-    
-    refreshCurrentView();
+    if (currentMode === 'words' && dataStore.words.sources.length > 0) expandedKeys.add('source-0');
+    else if (currentMode === 'textbook' && dataStore.textbook.sources.length > 0) expandedKeys.add('source-0');
+    renderEditor();
 }
 
-function switchViewMode(mode) {
-    currentViewMode = mode;
-    const listContainer = document.getElementById('editor-content');
-    const tableContainer = document.getElementById('table-editor-content');
-
-    if (mode === 'list') {
-        listContainer.classList.add('view-mode-active');
-        tableContainer.classList.remove('view-mode-active');
-    } else {
-        listContainer.classList.remove('view-mode-active');
-        tableContainer.classList.add('view-mode-active');
-    }
-    refreshCurrentView();
+function switchView(mode) {
+    viewMode = mode;
+    localStorage.setItem('editor_view_mode', mode);
+    updateViewButtons();
+    renderEditor();
 }
 
-function refreshCurrentView() {
-    if (currentViewMode === 'list') {
-        renderEditor();
-    } else {
-        renderTableEditor();
+function updateViewButtons() {
+    const btnList = document.getElementById('btn-view-list');
+    const btnTable = document.getElementById('btn-view-table');
+    if(btnList && btnTable) {
+        btnList.className = `view-btn ${viewMode === 'list' ? 'active' : ''}`;
+        btnTable.className = `view-btn ${viewMode === 'table' ? 'active' : ''}`;
     }
 }
 
 function autoSave() {
     const currentScroll = window.scrollY;
+    
+    // 儲存前清理空資料 (如果是表格模式且為單字庫)
+    if(currentMode === 'words' && viewMode === 'table') {
+        cleanEmptyRows();
+    }
+
     if(currentMode === 'words') localStorage.setItem('editor_autosave_words', JSON.stringify(dataStore.words));
     else localStorage.setItem('editor_autosave_textbook', JSON.stringify(dataStore.textbook));
     
     updateStatus(`已自動儲存 (${new Date().toLocaleTimeString()})`);
     localStorage.setItem('editor_scroll', currentScroll);
     
-    // 若為列表模式則重繪以更新狀態；表格模式為了效能與焦點，通常不全頁重繪，僅在增刪時重繪
-    if (currentViewMode === 'list') {
-        renderEditor();
-        window.scrollTo(0, currentScroll);
+    // 只有在非輸入焦點狀態下才重繪，避免打字中斷
+    if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        // renderEditor(); // 在表格模式下，輸入時不重繪整個編輯器，避免焦點跑掉
     }
 }
 
-function updateStatus(msg) { 
-    const el = document.getElementById('auto-save-msg');
-    if(el) el.innerText = msg; 
-}
+function updateStatus(msg) { document.getElementById('auto-save-msg').innerText = msg; }
 
 function clearDraft() {
     if(confirm("確定要放棄修改？")) {
@@ -135,11 +135,30 @@ function clearDraft() {
 function resetToOriginal() { clearDraft(); }
 
 // ============================================================
-// Render Logic (List View)
+// Markdown Parser
+// ============================================================
+function parseMarkdown(text) {
+    if (!text) return '';
+    let html = escapeHtml(text);
+    html = html.replace(/\*\*(.*?)\*\*/g, '<span class="md-bold">$1</span>');
+    html = html.replace(/\*(.*?)\*/g, '<span class="md-italic">$1</span>');
+    html = html.replace(/==(.*?)==/g, '<span class="md-highlight">$1</span>');
+    html = html.replace(/\n/g, '<br>');
+    return html;
+}
+
+// ============================================================
+// Render Logic
 // ============================================================
 
 function renderEditor() {
     const container = document.getElementById('editor-content');
+    
+    // 如果正在編輯表格的 input，不要重繪，否則會斷開輸入
+    if(document.activeElement && document.activeElement.classList.contains('table-input')) {
+        return;
+    }
+
     container.innerHTML = '';
     
     const sources = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
@@ -182,7 +201,9 @@ function renderEditor() {
 
                 const lEl = document.createElement('div');
                 lEl.className = `lesson-block ${isLessonExpanded ? 'expanded' : ''}`;
-                lEl.innerHTML = `
+                
+                // Header
+                let headerHTML = `
                     <div class="accordion-header lesson-header" onclick="toggleAccordion('${lessonKey}')">
                         <div class="header-left">
                             ${ICONS.chevron}
@@ -193,69 +214,36 @@ function renderEditor() {
                             <button class="icon-btn-sm danger" title="刪除課程" onclick="delLesson(${srcIdx}, ${lIdx}, event)">${ICONS.delete}</button>
                         </div>
                     </div>
-                    <ul class="item-list ${isLessonExpanded ? 'show' : ''}"></ul>
-                    <div style="padding:10px 16px;">
-                        <button class="btn-add-text" onclick="addItem(${srcIdx}, ${lIdx}, null, event)">${ICONS.add} 新增內容</button>
-                    </div>
                 `;
 
-                const itemContainer = lEl.querySelector('.item-list');
-                setupDragAndDrop(itemContainer, srcIdx, lIdx);
-
-                const items = currentMode === 'words' ? (lesson.vocabulary || []) : (lesson.sentences || []);
+                // Content
+                let contentHTML = '';
                 
-                const topInsert = createInsertSeparator(srcIdx, lIdx, 0);
-                itemContainer.appendChild(topInsert);
-
-                items.forEach((item, iIdx) => {
-                    const iEl = document.createElement('li');
-                    iEl.className = 'data-item';
-                    iEl.draggable = false;
-                    iEl.dataset.idx = iIdx;
-                    
-                    const domId = `item-${srcIdx}-${lIdx}-${iIdx}`;
-                    iEl.id = domId;
-
-                    let contentHtml = '';
-                    // 為了安全使用 parseMarkdown，先檢查是否存在
-                    const safeParse = (typeof parseMarkdown === 'function') ? parseMarkdown : (txt) => escapeHtml(txt);
-
-                    if(currentMode === 'words') {
-                        contentHtml = `
-                            <div class="item-content word-grid">
-                                <div class="editable-cell col-en" id="${domId}-en" onclick="startInlineEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'word')" title="點擊編輯英文">${escapeHtml(item.word)}</div>
-                                <div class="editable-cell col-pos" onclick="startInlineEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'pos')" title="點擊編輯詞性">${escapeHtml(item.pos)}</div>
-                                <div class="editable-cell col-ch" onclick="startInlineEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'chinese')" title="點擊編輯中文">${escapeHtml(item.chinese)}</div>
-                            </div>
-                        `;
-                    } else {
-                        contentHtml = `
-                            <div class="item-content textbook-layout">
-                                <div class="editable-cell tb-en" 
-                                     id="${domId}-en"
-                                     data-raw="${escapeHtml(item.en)}"
-                                     onclick="startInlineEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'en')" 
-                                     title="點擊編輯英文">${safeParse(item.en) || '<span style="color:#ccc">點擊輸入英文 (支援 Markdown)</span>'}</div>
-                                <div class="editable-cell tb-ch" 
-                                     data-raw="${escapeHtml(item.ch)}"
-                                     onclick="startInlineEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'ch')" 
-                                     title="點擊編輯中文">${safeParse(item.ch) || '<span style="color:#ccc">點擊輸入中文</span>'}</div>
-                            </div>
-                        `;
-                    }
-
-                    iEl.innerHTML = `
-                        <div class="drag-handle" title="按住拖曳">${ICONS.drag}</div>
-                        ${contentHtml}
-                        <div class="action-group">
-                            <button class="icon-btn-sm danger" onclick="delItem(${srcIdx}, ${lIdx}, ${iIdx})">${ICONS.delete}</button>
+                // 判斷使用列表模式還是表格模式 (僅限單字)
+                if (currentMode === 'words' && viewMode === 'table') {
+                    // --- 表格模式 ---
+                    contentHTML = `<div class="item-list table-wrapper" style="padding: 0;">`;
+                    contentHTML += renderWordTable(srcIdx, lIdx, lesson.vocabulary || []);
+                    contentHTML += `</div>`;
+                } else {
+                    // --- 列表模式 (原版) ---
+                    contentHTML = `<ul class="item-list ${isLessonExpanded ? 'show' : ''}"></ul>`;
+                    contentHTML += `
+                        <div style="padding:10px 16px;">
+                            <button class="btn-add-text" onclick="addItem(${srcIdx}, ${lIdx}, null, event)">${ICONS.add} 新增內容</button>
                         </div>
                     `;
-                    itemContainer.appendChild(iEl);
-                    
-                    const nextInsert = createInsertSeparator(srcIdx, lIdx, iIdx + 1);
-                    itemContainer.appendChild(nextInsert);
-                });
+                }
+
+                lEl.innerHTML = headerHTML + contentHTML;
+
+                // 如果是列表模式，需要執行原本的渲染邏輯 (Drag & Drop, Inline Edit Divs)
+                if (!(currentMode === 'words' && viewMode === 'table')) {
+                    const itemContainer = lEl.querySelector('.item-list');
+                    if (itemContainer) {
+                        renderListItems(itemContainer, srcIdx, lIdx, lesson);
+                    }
+                }
 
                 lessonWrapper.appendChild(lEl);
             });
@@ -264,110 +252,270 @@ function renderEditor() {
     });
 }
 
+// 拆分出原本的列表渲染邏輯
+function renderListItems(container, srcIdx, lIdx, lesson) {
+    setupDragAndDrop(container, srcIdx, lIdx);
+    const items = currentMode === 'words' ? (lesson.vocabulary || []) : (lesson.sentences || []);
+    
+    const topInsert = createInsertSeparator(srcIdx, lIdx, 0);
+    container.appendChild(topInsert);
+
+    items.forEach((item, iIdx) => {
+        const iEl = document.createElement('li');
+        iEl.className = 'data-item';
+        iEl.draggable = false;
+        iEl.dataset.idx = iIdx;
+        
+        const domId = `item-${srcIdx}-${lIdx}-${iIdx}`;
+        iEl.id = domId;
+
+        let contentHtml = '';
+        if(currentMode === 'words') {
+            contentHtml = `
+                <div class="item-content word-grid">
+                    <div class="editable-cell col-en" id="${domId}-en" onclick="startInlineEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'word')" title="點擊編輯英文">${escapeHtml(item.word)}</div>
+                    <div class="editable-cell col-pos" onclick="startInlineEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'pos')" title="點擊編輯詞性">${escapeHtml(item.pos)}</div>
+                    <div class="editable-cell col-ch" onclick="startInlineEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'chinese')" title="點擊編輯中文">${escapeHtml(item.chinese)}</div>
+                </div>
+            `;
+        } else {
+            contentHtml = `
+                <div class="item-content textbook-layout">
+                    <div class="editable-cell tb-en" 
+                            id="${domId}-en"
+                            data-raw="${escapeHtml(item.en)}"
+                            onclick="startInlineEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'en')" 
+                            title="點擊編輯英文">${parseMarkdown(item.en) || '<span style="color:#ccc">點擊輸入英文 (支援 Markdown)</span>'}</div>
+                    <div class="editable-cell tb-ch" 
+                            data-raw="${escapeHtml(item.ch)}"
+                            onclick="startInlineEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'ch')" 
+                            title="點擊編輯中文">${parseMarkdown(item.ch) || '<span style="color:#ccc">點擊輸入中文</span>'}</div>
+                </div>
+            `;
+        }
+
+        iEl.innerHTML = `
+            <div class="drag-handle" title="按住拖曳">${ICONS.drag}</div>
+            ${contentHtml}
+            <div class="action-group">
+                <button class="icon-btn-sm danger" onclick="delItem(${srcIdx}, ${lIdx}, ${iIdx})">${ICONS.delete}</button>
+            </div>
+        `;
+        container.appendChild(iEl);
+        
+        const nextInsert = createInsertSeparator(srcIdx, lIdx, iIdx + 1);
+        container.appendChild(nextInsert);
+    });
+}
+
 // ============================================================
-// Render Logic (Table View - Excel like)
+// Table Mode Logic (New)
 // ============================================================
 
-function renderTableEditor() {
-    const container = document.getElementById('table-editor-content');
-    container.innerHTML = '';
+function renderWordTable(srcIdx, lIdx, items) {
+    let html = `
+        <table class="editor-table">
+            <thead>
+                <tr>
+                    <th style="width:35%">英文</th>
+                    <th style="width:15%">詞性</th>
+                    <th style="width:40%">中文</th>
+                    <th style="width:10%"></th>
+                </tr>
+            </thead>
+            <tbody id="tbody-${srcIdx}-${lIdx}">
+    `;
 
-    const sources = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
-    if(!sources || sources.length === 0) {
-        container.innerHTML = '<div style="padding:20px; text-align:center;">無資料</div>';
+    // Render existing items
+    items.forEach((item, iIdx) => {
+        html += createTableRow(srcIdx, lIdx, iIdx, item);
+    });
+
+    // Add empty row for new input
+    html += createTableRow(srcIdx, lIdx, items.length, { word: '', pos: '', chinese: '' }, true);
+
+    html += `</tbody></table>`;
+    return html;
+}
+
+function createTableRow(srcIdx, lIdx, iIdx, item, isGhost = false) {
+    const rowClass = isGhost ? 'new-row-hint' : '';
+    return `
+        <tr class="${rowClass}" data-idx="${iIdx}">
+            <td><input type="text" class="table-input" 
+                value="${escapeHtml(item.word)}" 
+                placeholder="輸入英文..."
+                oninput="updateTableData(${srcIdx}, ${lIdx}, ${iIdx}, 'word', this.value)"
+                onkeydown="handleTableKey(event, ${srcIdx}, ${lIdx}, ${iIdx}, 'word')"
+                data-field="word"></td>
+            
+            <td><input type="text" class="table-input" list="pos-list-table"
+                value="${escapeHtml(item.pos)}" 
+                placeholder="詞性"
+                oninput="updateTableData(${srcIdx}, ${lIdx}, ${iIdx}, 'pos', this.value)"
+                onkeydown="handleTableKey(event, ${srcIdx}, ${lIdx}, ${iIdx}, 'pos')"
+                data-field="pos"></td>
+            
+            <td><input type="text" class="table-input" 
+                value="${escapeHtml(item.chinese)}" 
+                placeholder="輸入中文..."
+                oninput="updateTableData(${srcIdx}, ${lIdx}, ${iIdx}, 'chinese', this.value)"
+                onkeydown="handleTableKey(event, ${srcIdx}, ${lIdx}, ${iIdx}, 'chinese')"
+                data-field="chinese"></td>
+            
+            <td class="col-action">
+                ${!isGhost ? `
+                    <button class="table-del-btn" tabindex="-1" onclick="delItem(${srcIdx}, ${lIdx}, ${iIdx})">
+                        ${ICONS.delete}
+                    </button>` : ''}
+            </td>
+        </tr>
+    `;
+}
+
+// 建立詞性 datalist (只需建立一次)
+if (!document.getElementById('pos-list-table')) {
+    const dl = document.createElement('datalist');
+    dl.id = 'pos-list-table';
+    POS_OPTIONS.forEach(opt => {
+        const op = document.createElement('option');
+        op.value = opt;
+        dl.appendChild(op);
+    });
+    document.body.appendChild(dl);
+}
+
+function updateTableData(srcIdx, lIdx, iIdx, field, value) {
+    const list = dataStore.words.sources;
+    const vocabulary = list[srcIdx].lessons[lIdx].vocabulary;
+    
+    // 如果是編輯 "Ghost Row" (最後一列)
+    if (iIdx >= vocabulary.length) {
+        // 新增一個物件
+        const newItem = { word: '', pos: '', chinese: '' };
+        newItem[field] = value;
+        vocabulary.push(newItem);
+        
+        // 渲染新的一行 "Ghost Row" 到 DOM，而不用重繪整個 Table
+        const tbody = document.getElementById(`tbody-${srcIdx}-${lIdx}`);
+        if(tbody) {
+            // 把目前這行變成正常行 (移除 hint class, 加刪除鈕)
+            const currentRow = tbody.lastElementChild;
+            currentRow.classList.remove('new-row-hint');
+            const actionCell = currentRow.querySelector('.col-action');
+            actionCell.innerHTML = `<button class="table-del-btn" tabindex="-1" onclick="delItem(${srcIdx}, ${lIdx}, ${iIdx})">${ICONS.delete}</button>`;
+
+            // 插入新的 Ghost Row
+            const nextIdx = iIdx + 1;
+            const tempRow = document.createElement('tr'); // 暫存容器
+            tempRow.innerHTML = createTableRow(srcIdx, lIdx, nextIdx, {word:'', pos:'', chinese:''}, true);
+            // 只要裡面的 tr 內容
+            const newTrHtml = createTableRow(srcIdx, lIdx, nextIdx, {word:'', pos:'', chinese:''}, true);
+            tbody.insertAdjacentHTML('beforeend', newTrHtml);
+        }
+    } else {
+        // 更新現有資料
+        vocabulary[iIdx][field] = value;
+    }
+    
+    autoSave();
+}
+
+function handleTableKey(e, srcIdx, lIdx, iIdx, field) {
+    // 方向鍵導航
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+        // e.preventDefault(); // 視情況，左右鍵在文字輸入時應保留原生行為
+        navigateTable(e.key, srcIdx, lIdx, iIdx, field, e.target);
         return;
     }
 
-    const table = document.createElement('table');
-    table.className = 'excel-table';
+    // Enter 新增行
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        
+        const list = dataStore.words.sources;
+        const vocabulary = list[srcIdx].lessons[lIdx].vocabulary;
 
-    let theadHtml = `
-        <thead>
-            <tr>
-                <th style="width:120px;">版本</th>
-                <th style="width:150px;">課程</th>
-    `;
-    if (currentMode === 'words') {
-        theadHtml += `
-            <th style="width:150px;">英文 (Word)</th>
-            <th style="width:80px;">詞性 (Pos)</th>
-            <th>中文 (Chinese)</th>
-        `;
-    } else {
-        theadHtml += `
-            <th>英文 (English) - Markdown</th>
-            <th>中文 (Chinese) - Markdown</th>
-        `;
-    }
-    theadHtml += `<th style="width:60px;">操作</th></tr></thead>`;
-    
-    const tbody = document.createElement('tbody');
-    let globalRowIndex = 0;
-    const safeParse = (typeof parseMarkdown === 'function') ? parseMarkdown : (txt) => escapeHtml(txt);
-
-    sources.forEach((src, srcIdx) => {
-        if(src.lessons) {
-            src.lessons.forEach((lesson, lIdx) => {
-                const items = currentMode === 'words' ? (lesson.vocabulary || []) : (lesson.sentences || []);
-                
-                items.forEach((item, iIdx) => {
-                    const tr = document.createElement('tr');
-                    
-                    const infoHtml = `
-                        <td class="cell-readonly">${escapeHtml(src.name)}</td>
-                        <td class="cell-readonly">L${lesson.lesson} ${escapeHtml(lesson.title)}</td>
-                    `;
-                    
-                    let fieldsHtml = '';
-                    if (currentMode === 'words') {
-                        fieldsHtml = `
-                            <td><div class="excel-cell" tabindex="0" data-coord="${globalRowIndex}-0" onclick="tableEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'word')">${escapeHtml(item.word)}</div></td>
-                            <td><div class="excel-cell" tabindex="0" data-coord="${globalRowIndex}-1" onclick="tableEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'pos')">${escapeHtml(item.pos)}</div></td>
-                            <td><div class="excel-cell" tabindex="0" data-coord="${globalRowIndex}-2" onclick="tableEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'chinese')">${escapeHtml(item.chinese)}</div></td>
-                        `;
-                    } else {
-                        fieldsHtml = `
-                            <td><div class="excel-cell" tabindex="0" data-coord="${globalRowIndex}-0" data-raw="${escapeHtml(item.en)}" onclick="tableEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'en')">${safeParse(item.en)}</div></td>
-                            <td><div class="excel-cell" tabindex="0" data-coord="${globalRowIndex}-1" data-raw="${escapeHtml(item.ch)}" onclick="tableEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'ch')">${safeParse(item.ch)}</div></td>
-                        `;
-                    }
-
-                    const actionHtml = `
-                        <td style="text-align:center;">
-                            <button class="icon-btn-sm danger" tabindex="-1" onclick="delItemTable(${srcIdx}, ${lIdx}, ${iIdx})">
-                                <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                            </button>
-                        </td>
-                    `;
-
-                    tr.innerHTML = infoHtml + fieldsHtml + actionHtml;
-                    tbody.appendChild(tr);
-                    globalRowIndex++;
-                });
-
-                // 新增按鈕行
-                const addRow = document.createElement('tr');
-                addRow.innerHTML = `
-                    <td colspan="${currentMode === 'words' ? 6 : 5}" style="background:#fcfcfc; text-align:center; padding:8px; cursor:pointer; color:var(--primary); font-weight:600;" onclick="addItemTable(${srcIdx}, ${lIdx})">
-                        + 新增項目到 [${escapeHtml(src.name)}] L${lesson.lesson}
-                    </td>
-                `;
-                tbody.appendChild(addRow);
-                globalRowIndex++; 
-            });
+        // 如果是在 ghost row 按 enter，不做事，因為輸入內容時已經自動新增了
+        // 但如果是在中間行按 enter，則插入新行
+        if (iIdx < vocabulary.length - 1) {
+            vocabulary.splice(iIdx + 1, 0, { word: '', pos: '', chinese: '' });
+            
+            // 為了簡化 DOM 操作，這裡選擇重繪該 Lesson 的區塊
+            // 雖然效率稍低，但邏輯最穩健
+            renderEditor(); 
+            
+            // 重新聚焦到新的一行
+            setTimeout(() => {
+                const nextInput = document.querySelector(`#tbody-${srcIdx}-${lIdx} tr[data-idx="${iIdx+1}"] input[data-field="word"]`);
+                if(nextInput) nextInput.focus();
+            }, 50);
+        } else {
+            // 如果是在最後一筆實體資料按 enter，聚焦到 ghost row
+            const nextInput = document.querySelector(`#tbody-${srcIdx}-${lIdx} tr[data-idx="${iIdx+1}"] input[data-field="word"]`);
+            if(nextInput) nextInput.focus();
         }
-    });
-
-    table.innerHTML = theadHtml;
-    table.appendChild(tbody);
-    container.appendChild(table);
-
-    setupTableKeydown(container);
+        autoSave();
+    }
 }
 
-// ------------------------------------------------------------
-// Shared Utils
-// ------------------------------------------------------------
+function navigateTable(key, srcIdx, lIdx, iIdx, field, currentInput) {
+    const tbody = document.getElementById(`tbody-${srcIdx}-${lIdx}`);
+    if (!tbody) return;
+
+    let targetRowIdx = iIdx;
+    let targetField = field;
+    
+    // 欄位順序
+    const fields = ['word', 'pos', 'chinese'];
+    const fieldIdx = fields.indexOf(field);
+
+    if (key === 'ArrowUp') targetRowIdx = iIdx - 1;
+    if (key === 'ArrowDown') targetRowIdx = iIdx + 1;
+    
+    if (key === 'ArrowLeft') {
+        // 只有當游標在最左邊時才跳欄 (避免影響打字)
+        if (currentInput.selectionStart === 0 && currentInput.selectionEnd === 0) {
+            if (fieldIdx > 0) targetField = fields[fieldIdx - 1];
+        } else return; 
+    }
+    
+    if (key === 'ArrowRight') {
+        // 只有當游標在最右邊時才跳欄
+        if (currentInput.selectionStart === currentInput.value.length) {
+            if (fieldIdx < fields.length - 1) targetField = fields[fieldIdx + 1];
+        } else return;
+    }
+
+    const targetRow = tbody.querySelector(`tr[data-idx="${targetRowIdx}"]`);
+    if (targetRow) {
+        const targetInput = targetRow.querySelector(`input[data-field="${targetField}"]`);
+        if (targetInput) {
+            targetInput.focus();
+            // 上下移動時，全選文字方便覆蓋 (Excel 風格)
+            // if (key === 'ArrowUp' || key === 'ArrowDown') targetInput.select();
+        }
+    }
+}
+
+// 移除空行 (在儲存/下載前呼叫)
+function cleanEmptyRows() {
+    if(!dataStore.words || !dataStore.words.sources) return;
+    
+    dataStore.words.sources.forEach(src => {
+        src.lessons.forEach(lesson => {
+            if(lesson.vocabulary) {
+                lesson.vocabulary = lesson.vocabulary.filter(v => {
+                    return v.word.trim() !== '' || v.pos.trim() !== '' || v.chinese.trim() !== '';
+                });
+            }
+        });
+    });
+}
+
+// ============================================================
+// Shared Helper Functions (Insert, etc.)
+// ============================================================
 
 function createInsertSeparator(srcIdx, lIdx, insertIndex) {
     const div = document.createElement('div');
@@ -384,12 +532,15 @@ function createInsertSeparator(srcIdx, lIdx, insertIndex) {
 function toggleAccordion(key) {
     if (expandedKeys.has(key)) expandedKeys.delete(key);
     else expandedKeys.add(key);
-    if(currentViewMode === 'list') renderEditor();
+    autoSave(); 
+    renderEditor(); // 需要重繪以顯示/隱藏
 }
 
 // ============================================================
-// Inline Edit (List View)
+// Inline Edit for List Mode (Retained)
 // ============================================================
+// ... (startInlineEdit, finishInlineEdit, saveDataOnly 保持原樣，
+// 但需注意 finishInlineEdit 中的更新邏輯只在 viewMode='list' 時觸發) ...
 
 function startInlineEdit(element, srcIdx, lIdx, iIdx, field) {
     if (isInlineEditing) return; 
@@ -436,8 +587,6 @@ function startInlineEdit(element, srcIdx, lIdx, iIdx, field) {
     element.appendChild(input);
     input.focus();
     input.onclick = (e) => e.stopPropagation();
-    
-    const safeParse = (typeof parseMarkdown === 'function') ? parseMarkdown : (txt) => escapeHtml(txt);
 
     const saveHandler = () => finishInlineEdit(element, input.value, srcIdx, lIdx, iIdx, field);
 
@@ -448,7 +597,7 @@ function startInlineEdit(element, srcIdx, lIdx, iIdx, field) {
             if (e.key === 'Enter') input.blur();
             else if (e.key === 'Escape') {
                 isInlineEditing = false;
-                if (currentMode === 'textbook') element.innerHTML = safeParse(currentValue) || '<span style="color:#ccc">點擊輸入...</span>';
+                if (currentMode === 'textbook') element.innerHTML = parseMarkdown(currentValue) || '<span style="color:#ccc">點擊輸入...</span>';
                 else element.innerHTML = escapeHtml(currentValue);
             }
         });
@@ -476,150 +625,22 @@ function finishInlineEdit(element, newValue, srcIdx, lIdx, iIdx, field) {
 
     if (isEmpty) {
         itemsArray.splice(iIdx, 1);
-        autoSave();
+        autoSave(); 
+        renderEditor(); // 列表模式下刪除需要重繪
     } else {
-        const safeParse = (typeof parseMarkdown === 'function') ? parseMarkdown : (txt) => escapeHtml(txt);
         element.setAttribute('data-raw', newValue);
         if (currentMode === 'textbook') {
-            element.innerHTML = safeParse(newValue) || '<span style="color:#ccc">點擊輸入...</span>';
+            element.innerHTML = parseMarkdown(newValue) || '<span style="color:#ccc">點擊輸入...</span>';
         } else {
             element.innerHTML = escapeHtml(newValue);
         }
-        saveDataOnly();
+        autoSave(); // 改為統一使用 autoSave
     }
 }
 
 // ============================================================
-// Table Edit (Excel Mode)
+// Actions (Add/Del/Modal)
 // ============================================================
-
-function tableEdit(cell, srcIdx, lIdx, iIdx, field) {
-    if (cell.querySelector('input, textarea')) return;
-
-    let rawValue = cell.getAttribute('data-raw');
-    if (rawValue === null) rawValue = cell.innerText;
-
-    cell.innerHTML = '';
-    const input = document.createElement(currentMode === 'textbook' ? 'textarea' : 'input');
-    input.value = rawValue;
-    
-    if (field === 'pos') {
-        const listId = 'pos-list-table';
-        if (!document.getElementById(listId)) {
-            const dl = document.createElement('datalist');
-            dl.id = listId;
-            POS_OPTIONS.forEach(opt => {
-                const op = document.createElement('option');
-                op.value = opt;
-                dl.appendChild(op);
-            });
-            document.body.appendChild(dl);
-        }
-        input.setAttribute('list', listId);
-    }
-
-    cell.appendChild(input);
-    input.focus();
-    
-    const safeParse = (typeof parseMarkdown === 'function') ? parseMarkdown : (txt) => escapeHtml(txt);
-
-    const save = () => {
-        const val = input.value;
-        const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
-        const target = currentMode === 'words' ? list[srcIdx].lessons[lIdx].vocabulary[iIdx] : list[srcIdx].lessons[lIdx].sentences[iIdx];
-        
-        if (target) {
-            target[field] = val;
-            if (currentMode === 'textbook') {
-                cell.setAttribute('data-raw', val);
-                cell.innerHTML = safeParse(val);
-            } else {
-                cell.innerText = val;
-            }
-            saveDataOnly();
-        }
-    };
-
-    input.addEventListener('blur', save);
-    input.addEventListener('keydown', (e) => {
-        e.stopPropagation();
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            input.blur();
-            moveFocusFrom(cell, 1, 0); // 下一行
-        }
-        if (e.key === 'Escape') {
-            if (currentMode === 'textbook') cell.innerHTML = safeParse(rawValue);
-            else cell.innerText = rawValue;
-        }
-    });
-}
-
-function setupTableKeydown(container) {
-    container.onkeydown = (e) => {
-        const active = document.activeElement;
-        if (!active.classList.contains('excel-cell')) return;
-        if (active.querySelector('input, textarea')) return;
-
-        if (e.key === 'ArrowDown' || e.key === 'Enter') {
-            e.preventDefault();
-            moveFocusFrom(active, 1, 0);
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            moveFocusFrom(active, -1, 0);
-        } else if (e.key === 'ArrowRight' || e.key === 'Tab') {
-            e.preventDefault();
-            moveFocusFrom(active, 0, 1);
-        } else if (e.key === 'ArrowLeft') {
-            e.preventDefault();
-            moveFocusFrom(active, 0, -1);
-        } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
-            active.click(); // 直接打字
-        }
-    };
-}
-
-function moveFocusFrom(currentCell, rowDelta, colDelta) {
-    const coord = currentCell.getAttribute('data-coord');
-    if (!coord) return;
-    const [r, c] = coord.split('-').map(Number);
-    const targetCoord = `${r + rowDelta}-${c + colDelta}`;
-    const target = document.querySelector(`.excel-cell[data-coord="${targetCoord}"]`);
-    if (target) target.focus();
-}
-
-function addItemTable(srcIdx, lIdx) {
-    const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
-    const targetArray = currentMode === 'words' ? list[srcIdx].lessons[lIdx].vocabulary : list[srcIdx].lessons[lIdx].sentences;
-    
-    const emptyItem = currentMode === 'words' ? { word: '', pos: '', chinese: '' } : { en: '', ch: '' };
-    targetArray.push(emptyItem);
-    
-    saveDataOnly();
-    renderTableEditor();
-}
-
-function delItemTable(srcIdx, lIdx, iIdx) {
-    if(confirm("確定刪除？")) {
-        const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
-        const lesson = list[srcIdx].lessons[lIdx];
-        if(currentMode === 'words') lesson.vocabulary.splice(iIdx, 1);
-        else lesson.sentences.splice(iIdx, 1);
-        
-        saveDataOnly();
-        renderTableEditor();
-    }
-}
-
-// ------------------------------------------------------------
-// General Actions
-// ------------------------------------------------------------
-
-function saveDataOnly() {
-    if(currentMode === 'words') localStorage.setItem('editor_autosave_words', JSON.stringify(dataStore.words));
-    else localStorage.setItem('editor_autosave_textbook', JSON.stringify(dataStore.textbook));
-    updateStatus(`已自動儲存 (${new Date().toLocaleTimeString()})`);
-}
 
 function addItem(srcIdx, lIdx, insertIndex, e) {
     if(e) e.stopPropagation();
@@ -640,14 +661,29 @@ function addItem(srcIdx, lIdx, insertIndex, e) {
         targetArray.push(emptyItem);
     }
 
-    autoSave();
+    autoSave(); 
+    renderEditor(); // 新增項目必須重繪
 
-    if(currentViewMode === 'list') {
+    // 如果是列表模式，自動聚焦
+    if (viewMode === 'list') {
         setTimeout(() => {
             const domId = `item-${srcIdx}-${lIdx}-${newIdx}-en`;
             const cell = document.getElementById(domId);
             if (cell) cell.click();
         }, 100);
+    }
+}
+
+function delItem(srcIdx, lIdx, iIdx) {
+    // 表格模式下若刪除，不需確認，操作更流暢；或保留確認視個人喜好
+    // 這裡維持確認，避免誤刪
+    if(confirm("確定刪除？")) {
+        const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
+        const lesson = list[srcIdx].lessons[lIdx];
+        if(currentMode === 'words') lesson.vocabulary.splice(iIdx, 1);
+        else lesson.sentences.splice(iIdx, 1);
+        autoSave();
+        renderEditor();
     }
 }
 
@@ -658,6 +694,7 @@ function addNewSource() {
         list.push({ name: name, lessons: [] });
         expandedKeys.add(`source-${list.length-1}`);
         autoSave();
+        renderEditor();
     }
 }
 
@@ -665,7 +702,7 @@ function editSource(idx, e) {
     e.stopPropagation();
     const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
     const newName = prompt("修改版本名稱:", list[idx].name);
-    if(newName) { list[idx].name = newName; autoSave(); }
+    if(newName) { list[idx].name = newName; autoSave(); renderEditor(); }
 }
 
 function delSource(idx, e) {
@@ -674,6 +711,7 @@ function delSource(idx, e) {
         const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
         list.splice(idx, 1);
         autoSave();
+        renderEditor();
     }
 }
 
@@ -694,21 +732,12 @@ function delLesson(srcIdx, lIdx, e) {
         const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
         list[srcIdx].lessons.splice(lIdx, 1);
         autoSave();
-    }
-}
-
-function delItem(srcIdx, lIdx, iIdx) {
-    if(confirm("確定刪除？")) {
-        const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
-        const lesson = list[srcIdx].lessons[lIdx];
-        if(currentMode === 'words') lesson.vocabulary.splice(iIdx, 1);
-        else lesson.sentences.splice(iIdx, 1);
-        autoSave();
+        renderEditor();
     }
 }
 
 // ============================================================
-// Modal & Drag/Drop
+// Modal
 // ============================================================
 
 function openModal(type, params) {
@@ -750,11 +779,18 @@ function saveModal() {
             l.lesson = parseInt(lesson); l.title = title;
         }
     }
-    closeModal(); autoSave();
+    closeModal(); autoSave(); renderEditor();
 }
+
+// ============================================================
+// Drag and Drop
+// ============================================================
 
 let dragSrcEl=null, dragSrcIdx=null, dragLessonIdx=null;
 function setupDragAndDrop(container, sIdx, lIdx) {
+    // 拖曳功能僅在 List 模式有效
+    if(viewMode === 'table' && currentMode === 'words') return;
+
     container.addEventListener('mousedown', (e) => {
         if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) return;
         const item = e.target.closest('.data-item');
@@ -793,13 +829,16 @@ function setupDragAndDrop(container, sIdx, lIdx) {
             const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
             const items = currentMode === 'words' ? list[sIdx].lessons[lIdx].vocabulary : list[sIdx].lessons[lIdx].sentences;
             const el = items[from]; items.splice(from,1); items.splice(to,0,el);
-            autoSave();
+            autoSave(); renderEditor();
         }
         return false;
     });
 }
 
 function downloadJSON() {
+    // 下載前清除空行
+    cleanEmptyRows();
+    
     const data = currentMode === 'words' ? dataStore.words : dataStore.textbook;
     const filename = currentMode === 'words' ? 'english.json' : 'english-textbook.json';
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -807,6 +846,10 @@ function downloadJSON() {
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     if(currentMode === 'words') localStorage.removeItem('editor_autosave_words');
     else localStorage.removeItem('editor_autosave_textbook');
+    
+    // 如果是表格模式，重繪以移除畫面上的空行
+    if(viewMode === 'table') renderEditor();
+    
     updateStatus("檔案已下載，請覆蓋原始檔");
 }
 
