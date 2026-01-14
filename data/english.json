@@ -887,6 +887,197 @@
               "chinese": "開始"
             }
           ]
+        },
+        {
+          "lesson": 9,
+          "title": "第九課",
+          "vocabulary": [
+            {
+              "word": "detailed",
+              "pos": "adj.",
+              "chinese": "詳細的；細緻的"
+            },
+            {
+              "word": "detail",
+              "pos": "n. [c][U]",
+              "chinese": "細節"
+            },
+            {
+              "word": "mess",
+              "pos": "n. sing.",
+              "chinese": "凌亂；髒亂"
+            },
+            {
+              "word": "messy",
+              "pos": "adj.",
+              "chinese": "凌亂的；髒亂的"
+            },
+            {
+              "word": "express",
+              "pos": "vt.",
+              "chinese": "表達"
+            },
+            {
+              "word": "expression",
+              "pos": "n. [C][U]",
+              "chinese": "表達"
+            },
+            {
+              "word": "opinion",
+              "pos": "n. [C]",
+              "chinese": "想法；意見"
+            },
+            {
+              "word": "contrast",
+              "pos": "vt.",
+              "chinese": "對比；對照"
+            },
+            {
+              "word": "contrast",
+              "pos": "n. [C][U]",
+              "chinese": "對比；對照"
+            },
+            {
+              "word": "horror",
+              "pos": "n. [U]",
+              "chinese": "可怕；恐怖"
+            },
+            {
+              "word": "horror",
+              "pos": "n. [U]",
+              "chinese": "恐懼"
+            },
+            {
+              "word": "horrible",
+              "pos": "adj.",
+              "chinese": "可怕的；令人害怕的"
+            },
+            {
+              "word": "horrify",
+              "pos": "vt.",
+              "chinese": "使人恐懼；驚嚇"
+            },
+            {
+              "word": "innocence",
+              "pos": "n. [U]",
+              "chinese": "無辜；純真"
+            },
+            {
+              "word": "innocent",
+              "pos": "adj.",
+              "chinese": "無辜的；純真的"
+            },
+            {
+              "word": "violence",
+              "pos": "n. [U]",
+              "chinese": "暴力"
+            },
+            {
+              "word": "violent",
+              "pos": "adj.",
+              "chinese": "暴力的"
+            },
+            {
+              "word": "visual",
+              "pos": "adj.",
+              "chinese": "視覺的"
+            },
+            {
+              "word": "pollution",
+              "pos": "n. [U]",
+              "chinese": "汙染"
+            },
+            {
+              "word": "pollute",
+              "pos": "vt.",
+              "chinese": "汙染"
+            },
+            {
+              "word": "permission",
+              "pos": "n. [U]",
+              "chinese": "許可；准許"
+            },
+            {
+              "word": "permit",
+              "pos": "vt.",
+              "chinese": "許可；准許"
+            },
+            {
+              "word": "effort",
+              "pos": "n. [C][U]",
+              "chinese": "努力"
+            },
+            {
+              "word": "community",
+              "pos": "n. [C]",
+              "chinese": "社區"
+            },
+            {
+              "word": "associate",
+              "pos": "vt.",
+              "chinese": "聯想"
+            },
+            {
+              "word": "association",
+              "pos": "n. [C]",
+              "chinese": "聯想"
+            },
+            {
+              "word": "criminal",
+              "pos": "adj.",
+              "chinese": "犯罪的"
+            },
+            {
+              "word": "criminal",
+              "pos": "n. [C]",
+              "chinese": "罪犯"
+            },
+            {
+              "word": "crime",
+              "pos": "n. [C][U]",
+              "chinese": "犯罪行為"
+            },
+            {
+              "word": "destructive",
+              "pos": "adj.",
+              "chinese": "破壞性的；毀滅性的"
+            },
+            {
+              "word": "destroy",
+              "pos": "vt.",
+              "chinese": "破壞；毀滅"
+            },
+            {
+              "word": "destruction",
+              "pos": "n. [U]",
+              "chinese": "破壞；毀滅"
+            },
+            {
+              "word": "come in",
+              "pos": "phr.",
+              "chinese": "具有（形狀、尺寸等）"
+            },
+            {
+              "word": "stand for",
+              "pos": "phr.",
+              "chinese": "代表"
+            },
+            {
+              "word": "nothing but",
+              "pos": "phr.",
+              "chinese": "只不過是；僅僅"
+            },
+            {
+              "word": "get rid of",
+              "pos": "phr.",
+              "chinese": "去除；擺脫"
+            },
+            {
+              "word": "when it comes to...",
+              "pos": "phr.",
+              "chinese": "當談到……時"
+            }
+          ]
         }
       ]
     },
