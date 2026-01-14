@@ -60,7 +60,11 @@ async function loadData() {
         } catch(e) {}
     }
     
+    // 初始化空資料結構，避免報錯
+    if(!dataStore.words) dataStore.words = { sources: [] };
     if(!dataStore.words.sources) dataStore.words.sources = [];
+    
+    if(!dataStore.textbook) dataStore.textbook = { sources: [] };
     if(!dataStore.textbook.sources) dataStore.textbook.sources = [];
 }
 
@@ -69,10 +73,9 @@ function switchTab(mode) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(`tab-${mode}`).classList.add('active');
     
-    // Reset expanded keys when switching tabs to avoid confusion, but keep at least one open
     expandedKeys.clear();
     const sources = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
-    if (sources.length > 0) expandedKeys.add('source-0');
+    if (sources && sources.length > 0) expandedKeys.add('source-0');
     
     refreshCurrentView();
 }
@@ -115,7 +118,10 @@ function autoSave() {
     }
 }
 
-function updateStatus(msg) { document.getElementById('auto-save-msg').innerText = msg; }
+function updateStatus(msg) { 
+    const el = document.getElementById('auto-save-msg');
+    if(el) el.innerText = msg; 
+}
 
 function clearDraft() {
     if(confirm("確定要放棄修改？")) {
@@ -211,6 +217,9 @@ function renderEditor() {
                     iEl.id = domId;
 
                     let contentHtml = '';
+                    // 為了安全使用 parseMarkdown，先檢查是否存在
+                    const safeParse = (typeof parseMarkdown === 'function') ? parseMarkdown : (txt) => escapeHtml(txt);
+
                     if(currentMode === 'words') {
                         contentHtml = `
                             <div class="item-content word-grid">
@@ -226,11 +235,11 @@ function renderEditor() {
                                      id="${domId}-en"
                                      data-raw="${escapeHtml(item.en)}"
                                      onclick="startInlineEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'en')" 
-                                     title="點擊編輯英文">${parseMarkdown(item.en) || '<span style="color:#ccc">點擊輸入英文 (支援 Markdown)</span>'}</div>
+                                     title="點擊編輯英文">${safeParse(item.en) || '<span style="color:#ccc">點擊輸入英文 (支援 Markdown)</span>'}</div>
                                 <div class="editable-cell tb-ch" 
                                      data-raw="${escapeHtml(item.ch)}"
                                      onclick="startInlineEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'ch')" 
-                                     title="點擊編輯中文">${parseMarkdown(item.ch) || '<span style="color:#ccc">點擊輸入中文</span>'}</div>
+                                     title="點擊編輯中文">${safeParse(item.ch) || '<span style="color:#ccc">點擊輸入中文</span>'}</div>
                             </div>
                         `;
                     }
@@ -294,6 +303,7 @@ function renderTableEditor() {
     
     const tbody = document.createElement('tbody');
     let globalRowIndex = 0;
+    const safeParse = (typeof parseMarkdown === 'function') ? parseMarkdown : (txt) => escapeHtml(txt);
 
     sources.forEach((src, srcIdx) => {
         if(src.lessons) {
@@ -317,8 +327,8 @@ function renderTableEditor() {
                         `;
                     } else {
                         fieldsHtml = `
-                            <td><div class="excel-cell" tabindex="0" data-coord="${globalRowIndex}-0" data-raw="${escapeHtml(item.en)}" onclick="tableEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'en')">${parseMarkdown(item.en)}</div></td>
-                            <td><div class="excel-cell" tabindex="0" data-coord="${globalRowIndex}-1" data-raw="${escapeHtml(item.ch)}" onclick="tableEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'ch')">${parseMarkdown(item.ch)}</div></td>
+                            <td><div class="excel-cell" tabindex="0" data-coord="${globalRowIndex}-0" data-raw="${escapeHtml(item.en)}" onclick="tableEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'en')">${safeParse(item.en)}</div></td>
+                            <td><div class="excel-cell" tabindex="0" data-coord="${globalRowIndex}-1" data-raw="${escapeHtml(item.ch)}" onclick="tableEdit(this, ${srcIdx}, ${lIdx}, ${iIdx}, 'ch')">${safeParse(item.ch)}</div></td>
                         `;
                     }
 
@@ -335,6 +345,7 @@ function renderTableEditor() {
                     globalRowIndex++;
                 });
 
+                // 新增按鈕行
                 const addRow = document.createElement('tr');
                 addRow.innerHTML = `
                     <td colspan="${currentMode === 'words' ? 6 : 5}" style="background:#fcfcfc; text-align:center; padding:8px; cursor:pointer; color:var(--primary); font-weight:600;" onclick="addItemTable(${srcIdx}, ${lIdx})">
@@ -425,6 +436,8 @@ function startInlineEdit(element, srcIdx, lIdx, iIdx, field) {
     element.appendChild(input);
     input.focus();
     input.onclick = (e) => e.stopPropagation();
+    
+    const safeParse = (typeof parseMarkdown === 'function') ? parseMarkdown : (txt) => escapeHtml(txt);
 
     const saveHandler = () => finishInlineEdit(element, input.value, srcIdx, lIdx, iIdx, field);
 
@@ -435,7 +448,7 @@ function startInlineEdit(element, srcIdx, lIdx, iIdx, field) {
             if (e.key === 'Enter') input.blur();
             else if (e.key === 'Escape') {
                 isInlineEditing = false;
-                if (currentMode === 'textbook') element.innerHTML = parseMarkdown(currentValue) || '<span style="color:#ccc">點擊輸入...</span>';
+                if (currentMode === 'textbook') element.innerHTML = safeParse(currentValue) || '<span style="color:#ccc">點擊輸入...</span>';
                 else element.innerHTML = escapeHtml(currentValue);
             }
         });
@@ -453,7 +466,7 @@ function finishInlineEdit(element, newValue, srcIdx, lIdx, iIdx, field) {
         item[field] = newValue;
     }
 
-    // 空值檢查 (若全空則刪除)
+    // 空值檢查
     let isEmpty = false;
     if (currentMode === 'words') {
         if (!item.word.trim() && !item.pos.trim() && !item.chinese.trim()) isEmpty = true;
@@ -463,11 +476,12 @@ function finishInlineEdit(element, newValue, srcIdx, lIdx, iIdx, field) {
 
     if (isEmpty) {
         itemsArray.splice(iIdx, 1);
-        autoSave(); // 會觸發重繪
+        autoSave();
     } else {
+        const safeParse = (typeof parseMarkdown === 'function') ? parseMarkdown : (txt) => escapeHtml(txt);
         element.setAttribute('data-raw', newValue);
         if (currentMode === 'textbook') {
-            element.innerHTML = parseMarkdown(newValue) || '<span style="color:#ccc">點擊輸入...</span>';
+            element.innerHTML = safeParse(newValue) || '<span style="color:#ccc">點擊輸入...</span>';
         } else {
             element.innerHTML = escapeHtml(newValue);
         }
@@ -506,6 +520,8 @@ function tableEdit(cell, srcIdx, lIdx, iIdx, field) {
 
     cell.appendChild(input);
     input.focus();
+    
+    const safeParse = (typeof parseMarkdown === 'function') ? parseMarkdown : (txt) => escapeHtml(txt);
 
     const save = () => {
         const val = input.value;
@@ -516,7 +532,7 @@ function tableEdit(cell, srcIdx, lIdx, iIdx, field) {
             target[field] = val;
             if (currentMode === 'textbook') {
                 cell.setAttribute('data-raw', val);
-                cell.innerHTML = parseMarkdown(val);
+                cell.innerHTML = safeParse(val);
             } else {
                 cell.innerText = val;
             }
@@ -533,7 +549,7 @@ function tableEdit(cell, srcIdx, lIdx, iIdx, field) {
             moveFocusFrom(cell, 1, 0); // 下一行
         }
         if (e.key === 'Escape') {
-            if (currentMode === 'textbook') cell.innerHTML = parseMarkdown(rawValue);
+            if (currentMode === 'textbook') cell.innerHTML = safeParse(rawValue);
             else cell.innerText = rawValue;
         }
     });
@@ -615,3 +631,186 @@ function addItem(srcIdx, lIdx, insertIndex, e) {
     const emptyItem = currentMode === 'words' 
         ? { word: '', pos: '', chinese: '' }
         : { en: '', ch: '' };
+
+    let newIdx = insertIndex;
+    if (insertIndex !== null && insertIndex !== undefined) {
+        targetArray.splice(insertIndex, 0, emptyItem);
+    } else {
+        newIdx = targetArray.length;
+        targetArray.push(emptyItem);
+    }
+
+    autoSave();
+
+    if(currentViewMode === 'list') {
+        setTimeout(() => {
+            const domId = `item-${srcIdx}-${lIdx}-${newIdx}-en`;
+            const cell = document.getElementById(domId);
+            if (cell) cell.click();
+        }, 100);
+    }
+}
+
+function addNewSource() {
+    const name = prompt("輸入版本名稱:");
+    if(name) {
+        const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
+        list.push({ name: name, lessons: [] });
+        expandedKeys.add(`source-${list.length-1}`);
+        autoSave();
+    }
+}
+
+function editSource(idx, e) {
+    e.stopPropagation();
+    const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
+    const newName = prompt("修改版本名稱:", list[idx].name);
+    if(newName) { list[idx].name = newName; autoSave(); }
+}
+
+function delSource(idx, e) {
+    e.stopPropagation();
+    if(confirm("確定刪除此版本？")) {
+        const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
+        list.splice(idx, 1);
+        autoSave();
+    }
+}
+
+function addLesson(srcIdx, e) {
+    e.stopPropagation();
+    openModal('addLesson', { srcIdx });
+}
+
+function editLesson(srcIdx, lIdx, e) {
+    e.stopPropagation();
+    const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
+    openModal('editLesson', { srcIdx, lIdx, data: list[srcIdx].lessons[lIdx] });
+}
+
+function delLesson(srcIdx, lIdx, e) {
+    e.stopPropagation();
+    if(confirm("確定刪除此課程？")) {
+        const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
+        list[srcIdx].lessons.splice(lIdx, 1);
+        autoSave();
+    }
+}
+
+function delItem(srcIdx, lIdx, iIdx) {
+    if(confirm("確定刪除？")) {
+        const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
+        const lesson = list[srcIdx].lessons[lIdx];
+        if(currentMode === 'words') lesson.vocabulary.splice(iIdx, 1);
+        else lesson.sentences.splice(iIdx, 1);
+        autoSave();
+    }
+}
+
+// ============================================================
+// Modal & Drag/Drop
+// ============================================================
+
+function openModal(type, params) {
+    const modal = document.getElementById('edit-modal');
+    const form = document.getElementById('modal-form');
+    const title = document.getElementById('modal-title');
+    editingTarget = { type, params };
+    form.innerHTML = '';
+    
+    if(type === 'addLesson' || type === 'editLesson') {
+        title.innerText = type === 'addLesson' ? '新增課程' : '編輯課程';
+        const d = params.data || { lesson: '', title: '' };
+        form.innerHTML = `
+            <div class="form-group"><label>課號 (數字)</label><input type="number" id="inp-lesson" value="${d.lesson}"></div>
+            <div class="form-group"><label>標題</label><input type="text" id="inp-title" value="${d.title}"></div>
+        `;
+    } 
+    modal.classList.add('show');
+    const fi = form.querySelector('input'); if(fi) fi.focus();
+}
+
+function closeModal() { document.getElementById('edit-modal').classList.remove('show'); }
+
+function saveModal() {
+    const { type, params } = editingTarget;
+    const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
+    
+    if(type.includes('Lesson')) {
+        const lesson = document.getElementById('inp-lesson').value;
+        const title = document.getElementById('inp-title').value;
+        if(type === 'addLesson') {
+            if(!list[params.srcIdx].lessons) list[params.srcIdx].lessons = [];
+            const newL = { lesson: parseInt(lesson), title: title };
+            if(currentMode === 'words') newL.vocabulary = []; else newL.sentences = [];
+            list[params.srcIdx].lessons.push(newL);
+            expandedKeys.add(`lesson-${params.srcIdx}-${list[params.srcIdx].lessons.length-1}`);
+        } else {
+            const l = list[params.srcIdx].lessons[params.lIdx];
+            l.lesson = parseInt(lesson); l.title = title;
+        }
+    }
+    closeModal(); autoSave();
+}
+
+let dragSrcEl=null, dragSrcIdx=null, dragLessonIdx=null;
+function setupDragAndDrop(container, sIdx, lIdx) {
+    container.addEventListener('mousedown', (e) => {
+        if (['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) return;
+        const item = e.target.closest('.data-item');
+        if (!item) return;
+        if (e.target.closest('.drag-handle')) item.draggable = true;
+        else item.draggable = false;
+    });
+
+    container.addEventListener('dragstart', (e)=>{
+        if(!e.target.classList.contains('data-item') || e.target.draggable === false) { e.preventDefault(); return; }
+        dragSrcEl=e.target; dragSrcIdx=sIdx; dragLessonIdx=lIdx;
+        e.dataTransfer.effectAllowed='move'; e.dataTransfer.setData('text/html',e.target.innerHTML);
+        setTimeout(() => e.target.classList.add('dragging'), 0);
+    });
+    container.addEventListener('dragend', (e)=>{
+        if(e.target.classList) { e.target.classList.remove('dragging'); e.target.draggable = false; }
+        container.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));
+    });
+    container.addEventListener('dragover', (e)=>{
+        e.preventDefault();
+        if(dragSrcIdx!==sIdx || dragLessonIdx!==lIdx) return;
+        const t = e.target.closest('.data-item');
+        if(t && t!==dragSrcEl) t.classList.add('drag-over');
+    });
+    container.addEventListener('dragleave', (e)=>{
+        const t = e.target.closest('.data-item');
+        if(t) t.classList.remove('drag-over');
+    });
+    container.addEventListener('drop', (e)=>{
+        e.stopPropagation();
+        if(dragSrcIdx!==sIdx || dragLessonIdx!==lIdx) return;
+        const t = e.target.closest('.data-item');
+        if(dragSrcEl!==t && t) {
+            const from = parseInt(dragSrcEl.dataset.idx);
+            const to = parseInt(t.dataset.idx);
+            const list = currentMode === 'words' ? dataStore.words.sources : dataStore.textbook.sources;
+            const items = currentMode === 'words' ? list[sIdx].lessons[lIdx].vocabulary : list[sIdx].lessons[lIdx].sentences;
+            const el = items[from]; items.splice(from,1); items.splice(to,0,el);
+            autoSave();
+        }
+        return false;
+    });
+}
+
+function downloadJSON() {
+    const data = currentMode === 'words' ? dataStore.words : dataStore.textbook;
+    const filename = currentMode === 'words' ? 'english.json' : 'english-textbook.json';
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    if(currentMode === 'words') localStorage.removeItem('editor_autosave_words');
+    else localStorage.removeItem('editor_autosave_textbook');
+    updateStatus("檔案已下載，請覆蓋原始檔");
+}
+
+function escapeHtml(text) {
+    if(!text) return "";
+    return String(text).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
