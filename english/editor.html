@@ -16,8 +16,10 @@
         .tab-btn:hover { background: #e9ecef; color: #495057; }
         .tab-btn.active { background: var(--primary-light); color: var(--primary); }
 
-        .edit-container { display: none; flex-direction: column; gap: 16px; }
-        .edit-container.view-mode-active { display: flex; }
+        /* 預設兩個容器都隱藏，只有加上 .view-mode-active 才顯示 */
+        .edit-container, .excel-container { display: none; }
+        .edit-container.view-mode-active { display: flex; flex-direction: column; gap: 16px; }
+        .excel-container.view-mode-active { display: block; }
 
         /* 層級結構 (列表模式) */
         .source-block { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid #e9ecef; overflow: hidden; }
@@ -83,7 +85,6 @@
 
         /* --- Excel 表格模式樣式 --- */
         .excel-container {
-            display: none; /* 預設隱藏 */
             overflow-x: auto;
             background: #fff;
             border-radius: 8px;
@@ -91,7 +92,6 @@
             border: 1px solid #dee2e6;
             margin-bottom: 20px;
         }
-        .excel-container.view-mode-active { display: block; }
 
         .excel-table { width: 100%; border-collapse: collapse; min-width: 800px; }
         .excel-table th {
@@ -230,7 +230,8 @@
         </div>
     </div>
 
-    <script src="../scripts/english-editor.js"></script>
+    <!-- 重要：請務必先載入 utils.js，因為 editor.js 依賴其中的函式 -->
     <script src="../scripts/utils.js"></script>
+    <script src="../scripts/english-editor.js"></script>
 </body>
 </html>
