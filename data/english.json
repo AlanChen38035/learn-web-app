@@ -1722,165 +1722,915 @@
             }
           ]
         },
-         {
-  "lesson": 31,
-  "title": "3-1",
-  "vocabulary": [
-    {"word": "accountant", "pos": "n.", "chinese": "會計師"},
-    {"word": "addict", "pos": "n.", "chinese": "成癮者；迷"},
-    {"word": "adviser / advisor", "pos": "n.", "chinese": "顧問；指導老師"},
-    {"word": "agent", "pos": "n.", "chinese": "經紀人；代理人"},
-    {"word": "amateur", "pos": "n.", "chinese": "業餘者"},
-    {"word": "ambassador", "pos": "n.", "chinese": "大使"},
-    {"word": "ancestor", "pos": "n.", "chinese": "祖先"},
-    {"word": "applicant", "pos": "n.", "chinese": "申請者"},
-    {"word": "assistant", "pos": "n.", "chinese": "助理；助手"},
-    {"word": "athlete", "pos": "n.", "chinese": "運動員"},
-    {"word": "athletic", "pos": "adj.", "chinese": "運動的；善於運動的"},
-    {"word": "banker", "pos": "n.", "chinese": "銀行家"},
-    {"word": "beggar", "pos": "n.", "chinese": "乞丐"},
-    {"word": "bride", "pos": "n.", "chinese": "新娘"},
-    {"word": "bridegroom / groom", "pos": "n.", "chinese": "新郎"},
-    {"word": "burglar", "pos": "n.", "chinese": "竊賊"},
-    {"word": "candidate", "pos": "n.", "chinese": "候選人"},
-    {"word": "capitalist", "pos": "n.", "chinese": "資本家；資本主義者"},
-    {"word": "captain", "pos": "n.", "chinese": "船長；隊長"},
-    {"word": "carpenter", "pos": "n.", "chinese": "木匠"},
-    {"word": "carrier", "pos": "n.", "chinese": "運送者；帶原者"},
-    {"word": "champion", "pos": "n.", "chinese": "冠軍"},
-    {"word": "citizen", "pos": "n.", "chinese": "公民；市民"},
-    {"word": "civilian", "pos": "n.", "chinese": "平民"},
-    {"word": "cleaner", "pos": "n.", "chinese": "清潔工"},
-    {"word": "client", "pos": "n.", "chinese": "顧客；委託人"},
-    {"word": "clown", "pos": "n.", "chinese": "小丑"},
-    {"word": "coach", "pos": "n.", "chinese": "教練"},
-    {"word": "colleague", "pos": "n.", "chinese": "同事"},
-    {"word": "commander", "pos": "n.", "chinese": "指揮官"},
-    {"word": "competitor", "pos": "n.", "chinese": "競爭者"},
-    {"word": "composer", "pos": "n.", "chinese": "作曲家"},
-    {"word": "conductor", "pos": "n.", "chinese": "指揮家；導體"},
-    {"word": "consultant", "pos": "n.", "chinese": "顧問"},
-    {"word": "consumer", "pos": "n.", "chinese": "消費者"},
-    {"word": "controller", "pos": "n.", "chinese": "主管"},
-    {"word": "coward", "pos": "n.", "chinese": "懦夫"},
-    {"word": "creator", "pos": "n.", "chinese": "創作者"},
-    {"word": "criminal", "pos": "n./adj.", "chinese": "罪犯；犯罪的"},
-    {"word": "critic", "pos": "n.", "chinese": "評論家；批評者"},
-    {"word": "dealer", "pos": "n.", "chinese": "商人；業者"},
-    {"word": "designer", "pos": "n.", "chinese": "設計師"},
-    {"word": "detective", "pos": "n.", "chinese": "偵探"},
-    {"word": "diplomat", "pos": "n.", "chinese": "外交官"},
-    {"word": "economist", "pos": "n.", "chinese": "經濟學家"},
-    {"word": "editor", "pos": "n.", "chinese": "編輯"},
-    {"word": "embassy", "pos": "n.", "chinese": "大使館"}
-  ]},
-         {
-  "lesson": 32,
-  "title": "3-2",
-  "vocabulary": [
-    {"word": "emperor", "pos": "n.", "chinese": "皇帝"},
-    {"word": "ethnic", "pos": "adj.", "chinese": "種族的；民族的"},
-    {"word": "fighter", "pos": "n.", "chinese": "戰士；拳擊手"},
-    {"word": "follower", "pos": "n.", "chinese": "追隨者；信徒"},
-    {"word": "founder", "pos": "n.", "chinese": "創始人"},
-    {"word": "freshman", "pos": "n.", "chinese": "大一新生"},
-    {"word": "governor", "pos": "n.", "chinese": "州長"},
-    {"word": "guardian", "pos": "n.", "chinese": "監護人；保護者"},
-    {"word": "hairdresser", "pos": "n.", "chinese": "美髮師"},
-    {"word": "hire", "pos": "vt./n.", "chinese": "僱用；新進員工"},
-    {"word": "historian", "pos": "n.", "chinese": "歷史學家"},
-    {"word": "housekeeper", "pos": "n.", "chinese": "管家"},
-    {"word": "immigrant", "pos": "n.", "chinese": "移民"},
-    {"word": "infant", "pos": "n.", "chinese": "嬰兒"},
-    {"word": "inspector", "pos": "n.", "chinese": "檢查員"},
-    {"word": "instructor", "pos": "n.", "chinese": "講師；教練"},
-    {"word": "inventor", "pos": "n.", "chinese": "發明家"},
-    {"word": "junior", "pos": "adj./n.", "chinese": "資淺的；年少者"},
-    {"word": "knight", "pos": "n.", "chinese": "騎士"},
-    {"word": "labor", "pos": "n.", "chinese": "勞動；勞工"},
-    {"word": "lecturer", "pos": "n.", "chinese": "演講者；講師"},
-    {"word": "liar", "pos": "n.", "chinese": "說謊者"},
-    {"word": "librarian", "pos": "n.", "chinese": "圖書館員"},
-    {"word": "lifeguard", "pos": "n.", "chinese": "救生員"},
-    {"word": "lord", "pos": "n.", "chinese": "貴族；主人"},
-    {"word": "loser", "pos": "n.", "chinese": "輸家；失敗者"},
-    {"word": "lover", "pos": "n.", "chinese": "愛好者；情人"},
-    {"word": "magician", "pos": "n.", "chinese": "魔術師"},
-    {"word": "maid", "pos": "n.", "chinese": "女傭"},
-    {"word": "mankind / humankind", "pos": "n.", "chinese": "人類"},
-    {"word": "manufacturer", "pos": "n.", "chinese": "製造商"},
-    {"word": "mayor", "pos": "n.", "chinese": "市長"},
-    {"word": "mechanic", "pos": "n.", "chinese": "技工"},
-    {"word": "merchant", "pos": "n.", "chinese": "商人"},
-    {"word": "messenger", "pos": "n.", "chinese": "信差"},
-    {"word": "millionaire", "pos": "n.", "chinese": "百萬富翁"},
-    {"word": "miner", "pos": "n.", "chinese": "礦工"},
-    {"word": "minister", "pos": "n.", "chinese": "部長；牧師"},
-    {"word": "monk", "pos": "n.", "chinese": "僧侶"},
-    {"word": "murderer", "pos": "n.", "chinese": "兇手"},
-    {"word": "navy", "pos": "n.", "chinese": "海軍"},
-    {"word": "novelist", "pos": "n.", "chinese": "小說家"},
-    {"word": "nun", "pos": "n.", "chinese": "修女"},
-    {"word": "occupation", "pos": "n.", "chinese": "職業；佔領"},
-    {"word": "orphan", "pos": "n.", "chinese": "孤兒"},
-    {"word": "painter", "pos": "n.", "chinese": "畫家"},
-    {"word": "pal", "pos": "n.", "chinese": "朋友；夥伴"}
-  ]
-         },
-         {
-  "lesson": 33,
-  "title": "3-3",
-  "vocabulary": [
-    {"word": "passenger", "pos": "n.", "chinese": "乘客"},
-    {"word": "peer", "pos": "n./v.", "chinese": "同儕；仔細看"},
-    {"word": "philosopher", "pos": "n.", "chinese": "哲學家"},
-    {"word": "photographer", "pos": "n.", "chinese": "攝影師"},
-    {"word": "physician", "pos": "n.", "chinese": "內科醫師"},
-    {"word": "physicist", "pos": "n.", "chinese": "物理學家"},
-    {"word": "pilot", "pos": "n.", "chinese": "飛行員"},
-    {"word": "pioneer", "pos": "n./v.", "chinese": "拓荒者；先驅"},
-    {"word": "plumber", "pos": "n.", "chinese": "水電工"},
-    {"word": "politician", "pos": "n.", "chinese": "政治人物"},
-    {"word": "producer", "pos": "n.", "chinese": "製作人；製造者"},
-    {"word": "profession", "pos": "n.", "chinese": "職業；專業"},
-    {"word": "professional", "pos": "adj./n.", "chinese": "專業的；專業人士"},
-    {"word": "professor", "pos": "n.", "chinese": "教授"},
-    {"word": "psychologist", "pos": "n.", "chinese": "心理學家"},
-    {"word": "publisher", "pos": "n.", "chinese": "出版商"},
-    {"word": "refugee", "pos": "n.", "chinese": "難民"},
-    {"word": "represent", "pos": "v.", "chinese": "代表；象徵"},
-    {"word": "representative", "pos": "n.", "chinese": "代表"},
-    {"word": "researcher", "pos": "n.", "chinese": "研究人員"},
-    {"word": "robber", "pos": "n.", "chinese": "強盜"},
-    {"word": "scholar", "pos": "n.", "chinese": "學者"},
-    {"word": "scientist", "pos": "n.", "chinese": "科學家"},
-    {"word": "scout", "pos": "n.", "chinese": "童子軍；星探"},
-    {"word": "senior", "pos": "adj./n.", "chinese": "資深的；年長者；高年級生"},
-    {"word": "settler", "pos": "n.", "chinese": "移民；殖民者"},
-    {"word": "shepherd", "pos": "n.", "chinese": "牧羊人"},
-    {"word": "slave", "pos": "n.", "chinese": "奴隸"},
-    {"word": "spy", "pos": "n./v.", "chinese": "間諜；監視"},
-    {"word": "surgeon", "pos": "n.", "chinese": "外科醫師"},
-    {"word": "survivor", "pos": "n.", "chinese": "倖存者"},
-    {"word": "tailor", "pos": "n.", "chinese": "裁縫師"},
-    {"word": "technician", "pos": "n.", "chinese": "技術人員"},
-    {"word": "teenage", "pos": "adj.", "chinese": "青少年的"},
-    {"word": "tourist", "pos": "n.", "chinese": "觀光客"},
-    {"word": "trader", "pos": "n.", "chinese": "商人"},
-    {"word": "translator", "pos": "n.", "chinese": "翻譯員"},
-    {"word": "traveler", "pos": "n.", "chinese": "旅行者"},
-    {"word": "tutor", "pos": "n./vt.", "chinese": "家教；指導"},
-    {"word": "twin", "pos": "n.", "chinese": "雙胞胎之一"},
-    {"word": "vacancy", "pos": "n.", "chinese": "空缺；空房"},
-    {"word": "vegetarian", "pos": "n.", "chinese": "素食者"},
-    {"word": "victim", "pos": "n.", "chinese": "受害者"},
-    {"word": "volunteer", "pos": "n./vt.", "chinese": "志工；自願"},
-    {"word": "voter", "pos": "n.", "chinese": "選民"},
-    {"word": "witch", "pos": "n.", "chinese": "巫婆"},
-    {"word": "wizard", "pos": "n.", "chinese": "巫師"},
-    {"word": "youngster", "pos": "n.", "chinese": "年輕人"}
-  ]
-         }
+        {
+          "lesson": 31,
+          "title": "3-1",
+          "vocabulary": [
+            {
+              "word": "accountant",
+              "pos": "n.",
+              "chinese": "會計師"
+            },
+            {
+              "word": "addict",
+              "pos": "n.",
+              "chinese": "成癮者；迷"
+            },
+            {
+              "word": "adviser / advisor",
+              "pos": "n.",
+              "chinese": "顧問；指導老師"
+            },
+            {
+              "word": "agent",
+              "pos": "n.",
+              "chinese": "經紀人；代理人"
+            },
+            {
+              "word": "amateur",
+              "pos": "n.",
+              "chinese": "業餘者"
+            },
+            {
+              "word": "ambassador",
+              "pos": "n.",
+              "chinese": "大使"
+            },
+            {
+              "word": "ancestor",
+              "pos": "n.",
+              "chinese": "祖先"
+            },
+            {
+              "word": "applicant",
+              "pos": "n.",
+              "chinese": "申請者"
+            },
+            {
+              "word": "assistant",
+              "pos": "n.",
+              "chinese": "助理；助手"
+            },
+            {
+              "word": "athlete",
+              "pos": "n.",
+              "chinese": "運動員"
+            },
+            {
+              "word": "athletic",
+              "pos": "adj.",
+              "chinese": "運動的；善於運動的"
+            },
+            {
+              "word": "banker",
+              "pos": "n.",
+              "chinese": "銀行家"
+            },
+            {
+              "word": "beggar",
+              "pos": "n.",
+              "chinese": "乞丐"
+            },
+            {
+              "word": "bride",
+              "pos": "n.",
+              "chinese": "新娘"
+            },
+            {
+              "word": "bridegroom / groom",
+              "pos": "n.",
+              "chinese": "新郎"
+            },
+            {
+              "word": "burglar",
+              "pos": "n.",
+              "chinese": "竊賊"
+            },
+            {
+              "word": "candidate",
+              "pos": "n.",
+              "chinese": "候選人"
+            },
+            {
+              "word": "capitalist",
+              "pos": "n.",
+              "chinese": "資本家；資本主義者"
+            },
+            {
+              "word": "captain",
+              "pos": "n.",
+              "chinese": "船長；隊長"
+            },
+            {
+              "word": "carpenter",
+              "pos": "n.",
+              "chinese": "木匠"
+            },
+            {
+              "word": "carrier",
+              "pos": "n.",
+              "chinese": "運送者；帶原者"
+            },
+            {
+              "word": "champion",
+              "pos": "n.",
+              "chinese": "冠軍"
+            },
+            {
+              "word": "citizen",
+              "pos": "n.",
+              "chinese": "公民；市民"
+            },
+            {
+              "word": "civilian",
+              "pos": "n.",
+              "chinese": "平民"
+            },
+            {
+              "word": "cleaner",
+              "pos": "n.",
+              "chinese": "清潔工"
+            },
+            {
+              "word": "client",
+              "pos": "n.",
+              "chinese": "顧客；委託人"
+            },
+            {
+              "word": "clown",
+              "pos": "n.",
+              "chinese": "小丑"
+            },
+            {
+              "word": "coach",
+              "pos": "n.",
+              "chinese": "教練"
+            },
+            {
+              "word": "colleague",
+              "pos": "n.",
+              "chinese": "同事"
+            },
+            {
+              "word": "commander",
+              "pos": "n.",
+              "chinese": "指揮官"
+            },
+            {
+              "word": "competitor",
+              "pos": "n.",
+              "chinese": "競爭者"
+            },
+            {
+              "word": "composer",
+              "pos": "n.",
+              "chinese": "作曲家"
+            },
+            {
+              "word": "conductor",
+              "pos": "n.",
+              "chinese": "指揮家；導體"
+            },
+            {
+              "word": "consultant",
+              "pos": "n.",
+              "chinese": "顧問"
+            },
+            {
+              "word": "consumer",
+              "pos": "n.",
+              "chinese": "消費者"
+            },
+            {
+              "word": "controller",
+              "pos": "n.",
+              "chinese": "主管"
+            },
+            {
+              "word": "coward",
+              "pos": "n.",
+              "chinese": "懦夫"
+            },
+            {
+              "word": "creator",
+              "pos": "n.",
+              "chinese": "創作者"
+            },
+            {
+              "word": "criminal",
+              "pos": "n./adj.",
+              "chinese": "罪犯；犯罪的"
+            },
+            {
+              "word": "critic",
+              "pos": "n.",
+              "chinese": "評論家；批評者"
+            },
+            {
+              "word": "dealer",
+              "pos": "n.",
+              "chinese": "商人；業者"
+            },
+            {
+              "word": "designer",
+              "pos": "n.",
+              "chinese": "設計師"
+            },
+            {
+              "word": "detective",
+              "pos": "n.",
+              "chinese": "偵探"
+            },
+            {
+              "word": "diplomat",
+              "pos": "n.",
+              "chinese": "外交官"
+            },
+            {
+              "word": "economist",
+              "pos": "n.",
+              "chinese": "經濟學家"
+            },
+            {
+              "word": "editor",
+              "pos": "n.",
+              "chinese": "編輯"
+            },
+            {
+              "word": "embassy",
+              "pos": "n.",
+              "chinese": "大使館"
+            }
+          ]
+        },
+        {
+          "lesson": 32,
+          "title": "3-2",
+          "vocabulary": [
+            {
+              "word": "emperor",
+              "pos": "n.",
+              "chinese": "皇帝"
+            },
+            {
+              "word": "ethnic",
+              "pos": "adj.",
+              "chinese": "種族的；民族的"
+            },
+            {
+              "word": "fighter",
+              "pos": "n.",
+              "chinese": "戰士；拳擊手"
+            },
+            {
+              "word": "follower",
+              "pos": "n.",
+              "chinese": "追隨者；信徒"
+            },
+            {
+              "word": "founder",
+              "pos": "n.",
+              "chinese": "創始人"
+            },
+            {
+              "word": "freshman",
+              "pos": "n.",
+              "chinese": "大一新生"
+            },
+            {
+              "word": "governor",
+              "pos": "n.",
+              "chinese": "州長"
+            },
+            {
+              "word": "guardian",
+              "pos": "n.",
+              "chinese": "監護人；保護者"
+            },
+            {
+              "word": "hairdresser",
+              "pos": "n.",
+              "chinese": "美髮師"
+            },
+            {
+              "word": "hire",
+              "pos": "vt./n.",
+              "chinese": "僱用；新進員工"
+            },
+            {
+              "word": "historian",
+              "pos": "n.",
+              "chinese": "歷史學家"
+            },
+            {
+              "word": "housekeeper",
+              "pos": "n.",
+              "chinese": "管家"
+            },
+            {
+              "word": "immigrant",
+              "pos": "n.",
+              "chinese": "移民"
+            },
+            {
+              "word": "infant",
+              "pos": "n.",
+              "chinese": "嬰兒"
+            },
+            {
+              "word": "inspector",
+              "pos": "n.",
+              "chinese": "檢查員"
+            },
+            {
+              "word": "instructor",
+              "pos": "n.",
+              "chinese": "講師；教練"
+            },
+            {
+              "word": "inventor",
+              "pos": "n.",
+              "chinese": "發明家"
+            },
+            {
+              "word": "junior",
+              "pos": "adj./n.",
+              "chinese": "資淺的；年少者"
+            },
+            {
+              "word": "knight",
+              "pos": "n.",
+              "chinese": "騎士"
+            },
+            {
+              "word": "labor",
+              "pos": "n.",
+              "chinese": "勞動；勞工"
+            },
+            {
+              "word": "lecturer",
+              "pos": "n.",
+              "chinese": "演講者；講師"
+            },
+            {
+              "word": "liar",
+              "pos": "n.",
+              "chinese": "說謊者"
+            },
+            {
+              "word": "librarian",
+              "pos": "n.",
+              "chinese": "圖書館員"
+            },
+            {
+              "word": "lifeguard",
+              "pos": "n.",
+              "chinese": "救生員"
+            },
+            {
+              "word": "lord",
+              "pos": "n.",
+              "chinese": "貴族；主人"
+            },
+            {
+              "word": "loser",
+              "pos": "n.",
+              "chinese": "輸家；失敗者"
+            },
+            {
+              "word": "lover",
+              "pos": "n.",
+              "chinese": "愛好者；情人"
+            },
+            {
+              "word": "magician",
+              "pos": "n.",
+              "chinese": "魔術師"
+            },
+            {
+              "word": "maid",
+              "pos": "n.",
+              "chinese": "女傭"
+            },
+            {
+              "word": "mankind / humankind",
+              "pos": "n.",
+              "chinese": "人類"
+            },
+            {
+              "word": "manufacturer",
+              "pos": "n.",
+              "chinese": "製造商"
+            },
+            {
+              "word": "mayor",
+              "pos": "n.",
+              "chinese": "市長"
+            },
+            {
+              "word": "mechanic",
+              "pos": "n.",
+              "chinese": "技工"
+            },
+            {
+              "word": "merchant",
+              "pos": "n.",
+              "chinese": "商人"
+            },
+            {
+              "word": "messenger",
+              "pos": "n.",
+              "chinese": "信差"
+            },
+            {
+              "word": "millionaire",
+              "pos": "n.",
+              "chinese": "百萬富翁"
+            },
+            {
+              "word": "miner",
+              "pos": "n.",
+              "chinese": "礦工"
+            },
+            {
+              "word": "minister",
+              "pos": "n.",
+              "chinese": "部長；牧師"
+            },
+            {
+              "word": "monk",
+              "pos": "n.",
+              "chinese": "僧侶"
+            },
+            {
+              "word": "murderer",
+              "pos": "n.",
+              "chinese": "兇手"
+            },
+            {
+              "word": "navy",
+              "pos": "n.",
+              "chinese": "海軍"
+            },
+            {
+              "word": "novelist",
+              "pos": "n.",
+              "chinese": "小說家"
+            },
+            {
+              "word": "nun",
+              "pos": "n.",
+              "chinese": "修女"
+            },
+            {
+              "word": "occupation",
+              "pos": "n.",
+              "chinese": "職業；佔領"
+            },
+            {
+              "word": "orphan",
+              "pos": "n.",
+              "chinese": "孤兒"
+            },
+            {
+              "word": "painter",
+              "pos": "n.",
+              "chinese": "畫家"
+            },
+            {
+              "word": "pal",
+              "pos": "n.",
+              "chinese": "朋友；夥伴"
+            }
+          ]
+        },
+        {
+          "lesson": 33,
+          "title": "3-3",
+          "vocabulary": [
+            {
+              "word": "passenger",
+              "pos": "n.",
+              "chinese": "乘客"
+            },
+            {
+              "word": "peer",
+              "pos": "n./v.",
+              "chinese": "同儕；仔細看"
+            },
+            {
+              "word": "philosopher",
+              "pos": "n.",
+              "chinese": "哲學家"
+            },
+            {
+              "word": "photographer",
+              "pos": "n.",
+              "chinese": "攝影師"
+            },
+            {
+              "word": "physician",
+              "pos": "n.",
+              "chinese": "內科醫師"
+            },
+            {
+              "word": "physicist",
+              "pos": "n.",
+              "chinese": "物理學家"
+            },
+            {
+              "word": "pilot",
+              "pos": "n.",
+              "chinese": "飛行員"
+            },
+            {
+              "word": "pioneer",
+              "pos": "n./v.",
+              "chinese": "拓荒者；先驅"
+            },
+            {
+              "word": "plumber",
+              "pos": "n.",
+              "chinese": "水電工"
+            },
+            {
+              "word": "politician",
+              "pos": "n.",
+              "chinese": "政治人物"
+            },
+            {
+              "word": "producer",
+              "pos": "n.",
+              "chinese": "製作人；製造者"
+            },
+            {
+              "word": "profession",
+              "pos": "n.",
+              "chinese": "職業；專業"
+            },
+            {
+              "word": "professional",
+              "pos": "adj./n.",
+              "chinese": "專業的；專業人士"
+            },
+            {
+              "word": "professor",
+              "pos": "n.",
+              "chinese": "教授"
+            },
+            {
+              "word": "psychologist",
+              "pos": "n.",
+              "chinese": "心理學家"
+            },
+            {
+              "word": "publisher",
+              "pos": "n.",
+              "chinese": "出版商"
+            },
+            {
+              "word": "refugee",
+              "pos": "n.",
+              "chinese": "難民"
+            },
+            {
+              "word": "represent",
+              "pos": "v.",
+              "chinese": "代表；象徵"
+            },
+            {
+              "word": "representative",
+              "pos": "n.",
+              "chinese": "代表"
+            },
+            {
+              "word": "researcher",
+              "pos": "n.",
+              "chinese": "研究人員"
+            },
+            {
+              "word": "robber",
+              "pos": "n.",
+              "chinese": "強盜"
+            },
+            {
+              "word": "scholar",
+              "pos": "n.",
+              "chinese": "學者"
+            },
+            {
+              "word": "scientist",
+              "pos": "n.",
+              "chinese": "科學家"
+            },
+            {
+              "word": "scout",
+              "pos": "n.",
+              "chinese": "童子軍；星探"
+            },
+            {
+              "word": "senior",
+              "pos": "adj./n.",
+              "chinese": "資深的；年長者；高年級生"
+            },
+            {
+              "word": "settler",
+              "pos": "n.",
+              "chinese": "移民；殖民者"
+            },
+            {
+              "word": "shepherd",
+              "pos": "n.",
+              "chinese": "牧羊人"
+            },
+            {
+              "word": "slave",
+              "pos": "n.",
+              "chinese": "奴隸"
+            },
+            {
+              "word": "spy",
+              "pos": "n./v.",
+              "chinese": "間諜；監視"
+            },
+            {
+              "word": "surgeon",
+              "pos": "n.",
+              "chinese": "外科醫師"
+            },
+            {
+              "word": "survivor",
+              "pos": "n.",
+              "chinese": "倖存者"
+            },
+            {
+              "word": "tailor",
+              "pos": "n.",
+              "chinese": "裁縫師"
+            },
+            {
+              "word": "technician",
+              "pos": "n.",
+              "chinese": "技術人員"
+            },
+            {
+              "word": "teenage",
+              "pos": "adj.",
+              "chinese": "青少年的"
+            },
+            {
+              "word": "tourist",
+              "pos": "n.",
+              "chinese": "觀光客"
+            },
+            {
+              "word": "trader",
+              "pos": "n.",
+              "chinese": "商人"
+            },
+            {
+              "word": "translator",
+              "pos": "n.",
+              "chinese": "翻譯員"
+            },
+            {
+              "word": "traveler",
+              "pos": "n.",
+              "chinese": "旅行者"
+            },
+            {
+              "word": "tutor",
+              "pos": "n./vt.",
+              "chinese": "家教；指導"
+            },
+            {
+              "word": "twin",
+              "pos": "n.",
+              "chinese": "雙胞胎之一"
+            },
+            {
+              "word": "vacancy",
+              "pos": "n.",
+              "chinese": "空缺；空房"
+            },
+            {
+              "word": "vegetarian",
+              "pos": "n.",
+              "chinese": "素食者"
+            },
+            {
+              "word": "victim",
+              "pos": "n.",
+              "chinese": "受害者"
+            },
+            {
+              "word": "volunteer",
+              "pos": "n./vt.",
+              "chinese": "志工；自願"
+            },
+            {
+              "word": "voter",
+              "pos": "n.",
+              "chinese": "選民"
+            },
+            {
+              "word": "witch",
+              "pos": "n.",
+              "chinese": "巫婆"
+            },
+            {
+              "word": "wizard",
+              "pos": "n.",
+              "chinese": "巫師"
+            },
+            {
+              "word": "youngster",
+              "pos": "n.",
+              "chinese": "年輕人"
+            }
+          ]
+        },
+        {
+          "lesson": 41,
+          "title": "4-1",
+          "vocabulary": [
+            {
+              "word": "access",
+              "pos": "n. [C][U]",
+              "chinese": "通道；路口"
+            },
+            {
+              "word": "afterward(s)",
+              "pos": "adv.",
+              "chinese": "後來"
+            },
+            {
+              "word": "alley",
+              "pos": "n. [C]",
+              "chinese": "小巷；弄"
+            },
+            {
+              "word": "anniversary",
+              "pos": "n. [C]",
+              "chinese": "周年紀念日"
+            },
+            {
+              "word": "annual",
+              "pos": "adj.",
+              "chinese": "每年的；年度的"
+            },
+            {
+              "word": "apart",
+              "pos": "adv.",
+              "chinese": "相距"
+            },
+            {
+              "word": "aquarium",
+              "pos": "n. [C]",
+              "chinese": "水族館；水族箱"
+            },
+            {
+              "word": "aside",
+              "pos": "adv.",
+              "chinese": "在一旁；到（或向）一邊"
+            },
+            {
+              "word": "avenue",
+              "pos": "n. [C]",
+              "chinese": "（林蔭）大道"
+            },
+            {
+              "word": "barely",
+              "pos": "adv.",
+              "chinese": "幾乎不"
+            },
+            {
+              "word": "basement",
+              "pos": "n. [C]",
+              "chinese": "地下室"
+            },
+            {
+              "word": "beneath",
+              "pos": "prep.",
+              "chinese": "在…下面；到…下面"
+            },
+            {
+              "word": "cafeteria",
+              "pos": "n. [C]",
+              "chinese": "（大學或大樓的）自助餐廳"
+            },
+            {
+              "word": "campus",
+              "pos": "n. [C]",
+              "chinese": "校園；校區"
+            },
+            {
+              "word": "casual",
+              "pos": "adj.",
+              "chinese": "偶然的；意外的"
+            },
+            {
+              "word": "chamber",
+              "pos": "n. [C]",
+              "chinese": "（用於特定用途的）房間；室；廳"
+            },
+            {
+              "word": "cinema",
+              "pos": "n. [U]",
+              "chinese": "電影業；（總稱）電影"
+            },
+            {
+              "word": "clinic",
+              "pos": "n. [C]",
+              "chinese": "診所"
+            },
+            {
+              "word": "colony",
+              "pos": "n. [C]",
+              "chinese": "殖民地"
+            },
+            {
+              "word": "county",
+              "pos": "n. [C]",
+              "chinese": "縣"
+            },
+            {
+              "word": "curve",
+              "pos": "n. [C]",
+              "chinese": "（道路）轉彎處；曲線"
+            },
+            {
+              "word": "dam",
+              "pos": "n. [C]",
+              "chinese": "水壩"
+            },
+            {
+              "word": "deadline",
+              "pos": "n. [C]",
+              "chinese": "截止日期"
+            },
+            {
+              "word": "decade",
+              "pos": "n. [C]",
+              "chinese": "十年"
+            },
+            {
+              "word": "deck",
+              "pos": "n. [C]",
+              "chinese": "甲板"
+            },
+            {
+              "word": "district",
+              "pos": "n. [C]",
+              "chinese": "地區；地域"
+            },
+            {
+              "word": "ditch",
+              "pos": "n. [C]",
+              "chinese": "水溝；壕溝"
+            },
+            {
+              "word": "downtown",
+              "pos": "adj.",
+              "chinese": "市中心的"
+            },
+            {
+              "word": "drugstore",
+              "pos": "n. [C]",
+              "chinese": "藥妝店；藥局"
+            },
+            {
+              "word": "elsewhere",
+              "pos": "adv.",
+              "chinese": "在別處；到別處"
+            },
+            {
+              "word": "entry",
+              "pos": "n. [U]",
+              "chinese": "進入；加入"
+            },
+            {
+              "word": "era",
+              "pos": "n. [C]",
+              "chinese": "時代"
+            },
+            {
+              "word": "farther",
+              "pos": "adv.",
+              "chinese": "更遠地"
+            },
+            {
+              "word": "forever",
+              "pos": "adv.",
+              "chinese": "永遠"
+            },
+            {
+              "word": "fort",
+              "pos": "n. [C]",
+              "chinese": "要塞；堡壘"
+            }
+          ]
+        }
       ]
     },
     {
