@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拼字提取模式</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/header.css">
+    <style>
+        .game-container { max-width: 650px; margin: 20px auto; }
+        
+        /* 頂部資訊 */
+        .game-header { text-align: center; margin-bottom: 25px; }
+        .progress-box { background: #fff; padding: 15px; border-radius: 12px; box-shadow: var(--shadow); margin-bottom: 20px; }
+        .progress-label { font-weight: bold; color: var(--primary); margin-bottom: 8px; display: block; }
+        .progress-bar-bg { background: #eee; height: 12px; border-radius: 6px; overflow: hidden; }
+        .progress-bar-fill { background: var(--primary); height: 100%; width: 0%; transition: width 0.3s ease; }
+
+        /* 輸入區域 */
+        .input-box { margin: 30px 0; position: sticky; top: 10px; z-index: 100; }
+        .recall-input {
+            width: 100%; padding: 18px; font-size: 1.6rem; border: 3px solid #ddd;
+            border-radius: 15px; text-align: center; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .recall-input:focus { border-color: var(--primary); box-shadow: 0 4px 20px rgba(11,118,209,0.15); }
+        .recall-input.match { border-color: #2ecc71; animation: match-pulse 0.4s ease; }
+
+        @keyframes match-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        /* 已答對列表 */
+        .found-list { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .found-card {
+            background: #fff; padding: 15px 20px; border-radius: 12px; border: 1px solid #eef;
+            box-shadow: var(--shadow); display: flex; align-items: center; justify-content: space-between;
+            animation: slide-in 0.3s ease-out;
+        }
+        @keyframes slide-in {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .found-word { font-size: 1.3rem; font-weight: bold; color: var(--primary); }
+        .found-details { text-align: right; }
+        .found-pos { font-size: 0.8rem; color: #999; font-style: italic; }
+        .found-ch { font-size: 1.05rem; color: #444; margin-top: 2px; }
+
+        /* 完成畫面 */
+        .finish-screen { display: none; text-align: center; padding: 50px 20px; animation: fadeIn 0.5s; }
+        .finish-screen h2 { font-size: 2.5rem; color: #2ecc71; margin-bottom: 15px; }
+        .finish-screen p { font-size: 1.2rem; color: #666; margin-bottom: 30px; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="english.html" style="text-decoration:none; color:var(--primary); font-size:1.5rem; margin-right:10px;">⬅</a>
+            <span>拼字提取模式</span>
+        </div>
+    </header>
+
+    <main class="page-container game-container">
+        <div id="game-view">
+            <div class="progress-box">
+                <span class="progress-label">已提取單字：<span id="curr-count">0</span> / <span id="total-count">0</span></span>
+                <div class="progress-bar-bg">
+                    <div id="progress-fill" class="progress-bar-fill"></div>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <input type="text" id="recall-input" class="recall-input" placeholder="鍵入英文單字來提取..." autocomplete="off">
+            </div>
+
+            <div id="found-list" class="found-list">
+                <!-- 答對的單字詳情會顯示在這裡 -->
+            </div>
+        </div>
+
+        <div id="finish-view" class="finish-screen">
+            <h2>🎉 太厲害了！</h2>
+            <p>你已經成功提取了所有範圍內的單字。</p>
+            <button class="btn" onclick="location.href='english.html'">返回選課</button>
+        </div>
+    </main>
+
+    <script src="../scripts/utils.js"></script>
+    <script>
+        let pool = [];         // 剩餘單字池
+        let solved = [];       // 已答對單字
+        let totalWords = 0;
+
+        const inputEl = document.getElementById('recall-input');
+        const foundListEl = document.getElementById('found-list');
+        const currCountEl = document.getElementById('curr-count');
+        const totalCountEl = document.getElementById('total-count');
+        const progressFill = document.getElementById('progress-fill');
+
+        (async () => {
+            const sel = JSON.parse(localStorage.getItem('sel_lessons') || '[]');
+            if (!sel.length) { alert('請先選擇課程！'); location.href = 'english.html'; return; }
+
+            try {
+                const res = await fetch('../data/english.json');
+                const data = await res.json();
+                
+                // 根據選擇載入單字
+                data.sources.forEach(src => {
+                    src.lessons.forEach(l => {
+                        if (sel.some(s => s.source === src.name && s.lesson === l.lesson)) {
+                            (l.vocabulary || []).forEach(v => {
+                                pool.push(v);
+                            });
+                        }
+                    });
+                });
+
+                totalWords = pool.length;
+                if (totalWords === 0) { alert('所選課程中沒有單字資料！'); location.href = 'english.html'; return; }
+
+                totalCountEl.textContent = totalWords;
+                inputEl.focus();
+            } catch (e) { console.error(e); }
+        })();
+
+        inputEl.addEventListener('input', () => {
+            const val = inputEl.value.trim().toLowerCase();
+            if (!val) return;
+
+            // 尋找匹配的單字索引
+            const matchIdx = pool.findIndex(w => {
+                // 取得主要單字與標準答案
+                const primary = w.word.toLowerCase();
+                const standard = w.standard_ans ? w.standard_ans.toLowerCase() : null;
+
+                // 處理包含斜線或逗號的多重答案情況
+                const variants = primary.split(/[\/,]/).map(v => v.trim());
+                if (standard) variants.push(standard);
+
+                return variants.includes(val);
+            });
+
+            if (matchIdx !== -1) {
+                const wordData = pool.splice(matchIdx, 1)[0];
+                solved.push(wordData);
+                handleMatch(wordData);
+            }
+        });
+
+        function handleMatch(word) {
+            // 清空輸入框與特效
+            inputEl.value = '';
+            inputEl.classList.add('match');
+            setTimeout(() => inputEl.classList.remove('match'), 400);
+
+            // 朗讀單字
+            if ('speechSynthesis' in window) {
+                const u = new SpeechSynthesisUtterance(word.word);
+                u.lang = 'en-US';
+                window.speechSynthesis.speak(u);
+            }
+
+            // 更新介面
+            updateUI();
+
+            // 新增卡片到列表最上方
+            const card = document.createElement('div');
+            card.className = 'found-card';
+            card.innerHTML = `
+                <div class="found-word">${word.word}</div>
+                <div class="found-details">
+                    <div class="found-pos">${word.pos}</div>
+                    <div class="found-ch">${parseMarkdown(word.chinese)}</div>
+                </div>
+            `;
+            foundListEl.prepend(card);
+
+            // 檢查是否全數完成
+            if (pool.length === 0) {
+                setTimeout(() => {
+                    document.getElementById('game-view').style.display = 'none';
+                    document.getElementById('finish-view').style.display = 'block';
+                }, 600);
+            }
+        }
+
+        function updateUI() {
+            const count = solved.length;
+            currCountEl.textContent = count;
+            progressFill.style.width = (count / totalWords * 100) + '%';
+        }
+    </script>
+</body>
+</html>
