@@ -1,7 +1,7 @@
 {
   "sources": [
     {
-      "name": "龍騰",
+      "name": "龍騰 S1",
       "lessons": [
         {
           "lesson": 4,
@@ -2885,6 +2885,187 @@
               "word": "no longer",
               "pos": "phr.",
               "chinese": "不再"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "龍騰 S2",
+      "lessons": [
+        {
+          "lesson": 2,
+          "title": "第二課",
+          "vocabulary": [
+            {
+              "word": "warn",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "warning",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "announcement",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "announce",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "research",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "research",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "flavor",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "flavoring",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "pressure",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "pressure",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "normally",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "normal",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "distinguish",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "accurately",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "accurate",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "function",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "function",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "blame",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "affect",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "passenger",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "distract",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "distraction",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "indicate",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "indication",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "conditios",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "condition",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "solution",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "ingredient",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "recipe",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "comparison",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "compare",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "remain",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "provide",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "pleasant",
+              "pos": "",
+              "chinese": ""
             }
           ]
         }
