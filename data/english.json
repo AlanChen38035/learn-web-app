@@ -1082,6 +1082,393 @@
       ]
     },
     {
+      "name": "龍騰 S2",
+      "lessons": [
+        {
+          "lesson": 2,
+          "title": "第二課",
+          "vocabulary": [
+            {
+              "word": "warn",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "warning",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "announcement",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "announce",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "research",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "research",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "flavor",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "flavoring",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "pressure",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "pressure",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "normally",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "normal",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "distinguish",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "accurately",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "accurate",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "function",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "function",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "blame",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "affect",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "passenger",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "distract",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "distraction",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "indicate",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "indication",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "conditios",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "condition",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "solution",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "ingredient",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "recipe",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "comparison",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "compare",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "remain",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "provide",
+              "pos": "",
+              "chinese": ""
+            },
+            {
+              "word": "pleasant",
+              "pos": "",
+              "chinese": ""
+            }
+          ]
+        },
+        {
+          "lesson": 3,
+          "title": "第三課",
+          "vocabulary": [
+            {
+              "word": "grace",
+              "pos": "n. [U]",
+              "chinese": "優美；優雅"
+            },
+            {
+              "word": "graceful",
+              "pos": "adj.",
+              "chinese": "優美的；優雅的"
+            },
+            {
+              "word": "desperately",
+              "pos": "adv.",
+              "chinese": "拼命地"
+            },
+            {
+              "word": "desperate",
+              "pos": "adj.",
+              "chinese": "非常需要的；渴望的"
+            },
+            {
+              "word": "reluctantly",
+              "pos": "adv.",
+              "chinese": "勉強地；不情願地"
+            },
+            {
+              "word": "reluctant",
+              "pos": "adj.",
+              "chinese": "勉強的；不情願的"
+            },
+            {
+              "word": "describe",
+              "pos": "vt.",
+              "chinese": "描述"
+            },
+            {
+              "word": "description",
+              "pos": "n. [C, U]",
+              "chinese": "描述"
+            },
+            {
+              "word": "shiver",
+              "pos": "vi.",
+              "chinese": "顫抖"
+            },
+            {
+              "word": "faint",
+              "pos": "vi.",
+              "chinese": "昏厥；暈倒"
+            },
+            {
+              "word": "scientific",
+              "pos": "adj.",
+              "chinese": "科學的"
+            },
+            {
+              "word": "frustration",
+              "pos": "n. [U]",
+              "chinese": "懊惱；沮喪"
+            },
+            {
+              "word": "frustration",
+              "pos": "n. usually pl.",
+              "chinese": "令人沮喪的事物"
+            },
+            {
+              "word": "frustrate",
+              "pos": "vt.",
+              "chinese": "使懊惱；使沮喪"
+            },
+            {
+              "word": "stubborn",
+              "pos": "adj.",
+              "chinese": "頑固的；倔強的"
+            },
+            {
+              "word": "rage",
+              "pos": "n. [C, U]",
+              "chinese": "暴怒；狂怒"
+            },
+            {
+              "word": "concentration",
+              "pos": "n. [U]",
+              "chinese": "專注"
+            },
+            {
+              "word": "concentrate",
+              "pos": "vi. vt.",
+              "chinese": "專注；集中（注意力）"
+            },
+            {
+              "word": "explain",
+              "pos": "vt. vi.",
+              "chinese": "解釋"
+            },
+            {
+              "word": "explanation",
+              "pos": "n. [C, U]",
+              "chinese": "解釋"
+            },
+            {
+              "word": "sincerity",
+              "pos": "n. [U]",
+              "chinese": "真誠"
+            },
+            {
+              "word": "sincere",
+              "pos": "adj.",
+              "chinese": "真誠的；坦率的"
+            },
+            {
+              "word": "confess",
+              "pos": "vt. vi.",
+              "chinese": "坦白；認罪"
+            },
+            {
+              "word": "confession",
+              "pos": "n. [C]",
+              "chinese": "坦白；承認"
+            },
+            {
+              "word": "restore",
+              "pos": "vt.",
+              "chinese": "使恢復；使復原"
+            },
+            {
+              "word": "fade",
+              "pos": "vi.",
+              "chinese": "逐漸消失"
+            },
+            {
+              "word": "hardly",
+              "pos": "adv.",
+              "chinese": "幾乎不"
+            },
+            {
+              "word": "trace",
+              "pos": "n. [C, U]",
+              "chinese": "痕跡"
+            },
+            {
+              "word": "depart",
+              "pos": "vt.",
+              "chinese": "去世"
+            },
+            {
+              "word": "depart",
+              "pos": "vi.",
+              "chinese": "離開；出發"
+            },
+            {
+              "word": "departure",
+              "pos": "n. [C]",
+              "chinese": "離開"
+            },
+            {
+              "word": "regret",
+              "pos": "n. [U, C]",
+              "chinese": "懊悔；遺憾"
+            },
+            {
+              "word": "regret",
+              "pos": "vt.",
+              "chinese": "懊悔；遺憾"
+            },
+            {
+              "word": "put aside",
+              "pos": "phr.",
+              "chinese": "擱置"
+            },
+            {
+              "word": "from then on",
+              "pos": "phr.",
+              "chinese": "從那時起"
+            },
+            {
+              "word": "all the more",
+              "pos": "phr.",
+              "chinese": "更加；格外"
+            },
+            {
+              "word": "fly into a rage",
+              "pos": "phr.",
+              "chinese": "勃然大怒"
+            },
+            {
+              "word": "for one thing",
+              "pos": "phr.",
+              "chinese": "首先；一方面"
+            },
+            {
+              "word": "be/become filled with",
+              "pos": "phr.",
+              "chinese": "充滿"
+            },
+            {
+              "word": "slip away",
+              "pos": "phr.",
+              "chinese": "消逝；死去"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "字彙字識+ L3&4",
       "lessons": [
         {
@@ -2885,187 +3272,6 @@
               "word": "no longer",
               "pos": "phr.",
               "chinese": "不再"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "龍騰 S2",
-      "lessons": [
-        {
-          "lesson": 2,
-          "title": "第二課",
-          "vocabulary": [
-            {
-              "word": "warn",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "warning",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "announcement",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "announce",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "research",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "research",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "flavor",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "flavoring",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "pressure",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "pressure",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "normally",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "normal",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "distinguish",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "accurately",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "accurate",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "function",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "function",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "blame",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "affect",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "passenger",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "distract",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "distraction",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "indicate",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "indication",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "conditios",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "condition",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "solution",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "ingredient",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "recipe",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "comparison",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "compare",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "remain",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "provide",
-              "pos": "",
-              "chinese": ""
-            },
-            {
-              "word": "pleasant",
-              "pos": "",
-              "chinese": ""
             }
           ]
         }
